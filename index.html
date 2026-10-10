@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Kitora transforme tes objectifs en kits numériques personnalisés, simples et prêts à utiliser.">
+<title>Kitora — Tes objectifs, en version concrète</title>
+<style>
+:root{--ink:#18213b;--muted:#66708a;--blue:#5265f5;--blue2:#e9ecff;--cream:#fbfaf7;--line:#e8e9f0;--green:#e7f7ef}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+a{color:inherit;text-decoration:none}.wrap{width:min(1100px,92%);margin:auto}.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}.brand{font-weight:900;font-size:1.35rem;letter-spacing:-.06em}.brand span{color:var(--blue)}.navlinks{display:flex;gap:22px;align-items:center;font-size:.92rem;color:var(--muted)}.pill{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:white;border:0;border-radius:999px;padding:12px 18px;font-weight:750;cursor:pointer;transition:.2s}.pill:hover{transform:translateY(-1px);filter:brightness(.96)}.pill.light{background:white;color:var(--ink);border:1px solid var(--line)}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center;padding:65px 0 80px}.eyebrow{display:inline-block;background:var(--blue2);color:#3847c5;border-radius:999px;padding:6px 12px;font-size:.78rem;font-weight:800;letter-spacing:.04em}.hero h1{font-size:clamp(2.7rem,6vw,4.8rem);line-height:1.02;letter-spacing:-.065em;margin:18px 0}.hero h1 em{font-style:normal;color:var(--blue)}.lead{font-size:1.12rem;color:var(--muted);max-width:570px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0}.micro{font-size:.82rem;color:var(--muted)}.preview{background:white;border:1px solid var(--line);border-radius:26px;padding:22px;box-shadow:0 24px 80px #22294a12;transform:rotate(1deg)}.previewtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.dots{display:flex;gap:5px}.dots i{height:8px;width:8px;border-radius:50%;background:#d9dbea}.tag{font-size:.75rem;background:var(--green);color:#24754e;border-radius:999px;padding:5px 9px;font-weight:800}.task{padding:13px 14px;border:1px solid var(--line);border-radius:14px;margin:10px 0;display:flex;gap:12px;align-items:center}.check{height:22px;width:22px;border-radius:7px;background:var(--blue2);color:var(--blue);display:grid;place-items:center;font-weight:900}.task small{display:block;color:var(--muted)}section{padding:65px 0}.sectionhead{text-align:center;max-width:670px;margin:0 auto 32px}.sectionhead h2{font-size:clamp(2rem,4vw,3rem);line-height:1.1;letter-spacing:-.05em;margin:10px 0}.sectionhead p{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:white;border:1px solid var(--line);border-radius:20px;padding:22px}.emoji{font-size:1.7rem}.card h3{margin:12px 0 6px;letter-spacing:-.025em}.card p{color:var(--muted);font-size:.95rem;min-height:70px}.price{font-size:1.3rem;font-weight:900;margin:16px 0}.card .pill{width:100%}.featured{background:#f0f1ff;border-color:#d8dcff}.builder{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px;align-items:start}.panel{background:white;border:1px solid var(--line);border-radius:22px;padding:24px}.panel h3{margin-top:0}.field{margin:16px 0}.field label{display:block;font-weight:750;font-size:.9rem;margin-bottom:7px}.field select,.field input,.field textarea{width:100%;border:1px solid #dfe2ed;border-radius:12px;padding:12px;font:inherit;background:white;color:var(--ink)}.result{background:#f6f7ff;border:1px solid #dfe2ff;border-radius:18px;padding:22px;min-height:280px}.result h3{margin-top:0}.result ul{padding-left:20px}.result li{margin:9px 0}.result .note{font-size:.85rem;color:var(--muted)}.howgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.step{padding:22px;border-top:3px solid var(--blue);background:white;border-radius:0 0 16px 16px}.step b{font-size:.8rem;color:var(--blue)}.cta{background:var(--ink);color:white;border-radius:28px;padding:44px;text-align:center}.cta p{color:#c4cbe0}.cta .pill{background:white;color:var(--ink)}footer{padding:30px 0 40px;color:var(--muted);font-size:.84rem}.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:22px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:12px 18px;border-radius:12px;display:none;z-index:10;max-width:90%;box-shadow:0 10px 40px #0002}.fineprint{font-size:.78rem;color:var(--muted)}
+[hidden]{display:none!important}.auth-modal{position:fixed;inset:0;background:#11182bbd;display:grid;place-items:center;padding:18px;z-index:20;overflow:auto}.auth-card{position:relative;width:min(480px,100%);background:white;border-radius:24px;padding:28px;box-shadow:0 25px 90px #0003}.auth-card h2{margin:14px 0 4px;letter-spacing:-.04em}.auth-close{position:absolute;right:18px;top:12px;border:0;background:transparent;font-size:2rem;cursor:pointer;color:var(--muted)}.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0}.auth-tab{padding:10px;border:1px solid var(--line);background:#fff;border-radius:12px;font:inherit;cursor:pointer}.auth-tab.active{background:var(--blue2);border-color:#cdd2ff;color:#3847c5;font-weight:800}.auth-card .field{margin:12px 0}.auth-card input{width:100%;border:1px solid #dfe2ed;border-radius:12px;padding:12px;font:inherit}.navlinks button{font:inherit}.auth-card .tag{display:inline-flex}
+@media(max-width:760px){.navlinks a:not(.pill){display:none}.hero{grid-template-columns:1fr;padding:42px 0 55px;gap:28px}.hero h1{font-size:3.15rem}.grid,.howgrid,.builder{grid-template-columns:1fr}.card p{min-height:0}section{padding:48px 0}.cta{padding:30px 20px}.preview{transform:none}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <nav class="nav">
+    <a class="brand" href="#">kit<span>ora</span>.</a>
+    <div class="navlinks"><a href="#kits">Les kits</a><a href="#generateur">Générateur gratuit</a><a href="#comment">Comment ça marche</a><button class="pill light" id="authOpenBtn" type="button">Connexion</button><button class="pill" id="accountBtn" type="button" hidden>Mon compte</button></div>
+  </nav>
+</header>
+<main>
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow">TON ESPACE POUR PASSER À L’ACTION</span>
+      <h1>Moins de pages blanches.<br><em>Plus de progrès.</em></h1>
+      <p class="lead">Des kits numériques clairs et personnalisables pour organiser tes idées, tes études et tes projets — sans repartir de zéro.</p>
+      <div class="actions"><a class="pill" href="#generateur">Créer un kit gratuit →</a><a class="pill light" href="#kits">Découvrir les kits</a></div>
+      <p class="micro">✓ Simple à utiliser &nbsp; ✓ Personnalisable &nbsp; ✓ Téléchargement immédiat</p>
+    </div>
+    <div class="preview" aria-label="Aperçu d'un plan personnalisé">
+      <div class="previewtop"><strong>Mon plan de la semaine</strong><span class="tag">En cours</span></div>
+      <div class="task"><span class="check">✓</span><div><strong>Définir 3 priorités</strong><small>Clarté avant quantité</small></div></div>
+      <div class="task"><span class="check">2</span><div><strong>Découper le projet</strong><small>Une petite étape à la fois</small></div></div>
+      <div class="task"><span class="check">3</span><div><strong>Faire le point vendredi</strong><small>Garder ce qui fonctionne</small></div></div>
+      <div style="margin-top:18px;background:#f5f6ff;border-radius:14px;padding:15px"><small style="color:var(--muted)">TA RÈGLE DU JOUR</small><div style="font-weight:800;margin-top:4px">Commence petit. Termine quelque chose.</div></div>
+    </div>
+  </div>
+
+  <section id="kits" style="background:#f3f4fa">
+    <div class="wrap">
+      <div class="sectionhead"><span class="eyebrow">LA BOUTIQUE</span><h2>Un kit pour chaque prochain pas.</h2><p>Commence gratuitement, puis choisis des ressources plus complètes lorsque tu en as besoin.</p></div>
+      <div class="grid">
+        <article class="card"><div class="emoji">🗓️</div><h3>Reset de la semaine</h3><p>Un planificateur simple pour prioriser tes tâches, organiser tes journées et faire le point.</p><div class="price">Gratuit</div><button class="pill" onclick="generatePreset('organisation')">Essayer ce kit</button></article>
+        <article class="card featured"><div class="emoji">🎯</div><h3>Objectif en action</h3><p>Transforme un objectif vague en étapes concrètes, avec une feuille de route et des points de contrôle.</p><div class="price">À venir · 4,90 €</div><button class="pill" onclick="toast('Ce produit est en préparation. Aucun paiement ne sera demandé sur cette démo.')">Bientôt disponible</button></article>
+        <article class="card"><div class="emoji">📚</div><h3>Kit révisions zen</h3><p>Découpe les révisions en sessions courtes et suis tes chapitres sans te surcharger.</p><div class="price">À venir · 3,90 €</div><button class="pill light" onclick="toast('Ce produit est en préparation. Aucun paiement ne sera demandé sur cette démo.')">Bientôt disponible</button></article>
+      </div>
+      <p class="fineprint" style="text-align:center;margin-top:18px">Les prix « à venir » sont des exemples de lancement, pas des offres disponibles à l'achat.</p>
+    </div>
+  </section>
+
+  <section id="generateur">
+    <div class="wrap">
+      <div class="sectionhead"><span class="eyebrow">TON MINI-ASSISTANT</span><h2>Crée un premier kit personnalisé.</h2><p>Réponds à quelques questions. La démo construit une feuille de route que tu peux télécharger.</p></div>
+      <div class="builder">
+        <div class="panel">
+          <h3>Personnalise ton kit</h3>
+          <div class="field"><label for="kind">Qu'est-ce que tu veux organiser ?</label><select id="kind"><option value="organisation">Ma semaine</option><option value="etudes">Mes révisions</option><option value="projet">Un projet personnel</option><option value="habitude">Une nouvelle habitude</option></select></div>
+          <div class="field"><label for="goal">Ton objectif (en une phrase)</label><input id="goal" maxlength="140" placeholder="Ex. : réviser deux chapitres cette semaine"></div>
+          <div class="field"><label for="time">Temps disponible par jour</label><select id="time"><option value="15 minutes">15 minutes</option><option value="30 minutes" selected>30 minutes</option><option value="1 heure">1 heure</option><option value="2 heures">2 heures</option></select></div>
+          <div class="field"><label for="style">Ton style préféré</label><select id="style"><option value="simple">Simple et flexible</option><option value="structure">Structuré et détaillé</option><option value="motivant">Motivant et encourageant</option></select></div>
+          <button class="pill" style="width:100%" onclick="buildKit()">Générer mon kit ↗</button>
+          <p class="fineprint">Démo locale : tes réponses restent dans cette page et ne sont pas envoyées à un serveur.</p>
+        </div>
+        <div class="panel">
+          <div id="result" class="result" aria-live="polite"><h3>Ton kit apparaîtra ici</h3><p>Remplis les champs, puis clique sur « Générer mon kit ».</p><p class="note">Cette première version utilise des modèles intégrés. Elle ne se connecte pas encore à un grand modèle d'IA.</p></div>
+          <button class="pill light" style="width:100%;margin-top:12px" onclick="downloadKit()">Télécharger mon kit (.txt)</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="comment" style="background:#f3f4fa">
+    <div class="wrap">
+      <div class="sectionhead"><span class="eyebrow">SIMPLE PAR DESIGN</span><h2>De l'idée au plan en 3 étapes.</h2></div>
+      <div class="howgrid">
+        <div class="step"><b>ÉTAPE 01</b><h3>Tu expliques ton besoin</h3><p>Un objectif, un type de kit et le temps dont tu disposes.</p></div>
+        <div class="step"><b>ÉTAPE 02</b><h3>Kitora prépare une structure</h3><p>Le générateur organise tes priorités en petites actions réalistes.</p></div>
+        <div class="step"><b>ÉTAPE 03</b><h3>Tu télécharges et avances</h3><p>Garde ton kit, adapte-le et coche les étapes au fil de la semaine.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="cta"><span class="eyebrow" style="background:#343d5b;color:#e2e6ff">KITORA · VERSION BÊTA</span><h2 style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.05em;margin:15px 0 8px">Ton prochain pas commence ici.</h2><p>Teste le générateur gratuit et transforme une idée en première action.</p><a class="pill" href="#generateur">Créer mon kit gratuit ↑</a></div></div>
+  </section>
+</main>
+<footer><div class="wrap foot"><div><a class="brand" href="#">kit<span>ora</span>.</a><p>Des outils numériques pour avancer, un pas à la fois.</p></div><div><a href="#kits">Les kits</a> · <a href="#generateur">Générateur</a> · <a href="#comment">À propos</a><p class="fineprint">Prototype de démonstration — aucune vente n'est activée.</p></div></div></footer>
+<div id="toast" class="toast" role="status"></div>
+<div id="authModal" class="auth-modal" hidden>
+  <div class="auth-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <button type="button" class="auth-close" id="authCloseBtn" aria-label="Fermer">×</button>
+    <span class="eyebrow">TON ESPACE KITORA</span>
+    <h2 id="authTitle">Créer mon compte</h2>
+    <p id="authDescription" class="micro">Inscris-toi pour préparer ton espace personnel.</p>
+    <div class="auth-tabs"><button type="button" class="auth-tab active" id="signupTab">Créer un compte</button><button type="button" class="auth-tab" id="loginTab">Connexion</button></div>
+    <form id="authForm">
+      <div class="field" id="nameField"><label for="displayName">Prénom ou nom d'affichage</label><input id="displayName" name="displayName" autocomplete="nickname" maxlength="80" placeholder="Comment t'appeler ?"></div>
+      <div class="field"><label for="authEmail">Adresse e-mail</label><input id="authEmail" name="email" type="email" autocomplete="email" required placeholder="toi@exemple.fr"></div>
+      <div class="field"><label for="authPassword">Mot de passe</label><input id="authPassword" name="password" type="password" autocomplete="new-password" minlength="8" required placeholder="8 caractères minimum"></div>
+      <button class="pill" id="authSubmitBtn" type="submit" style="width:100%">Créer mon compte</button>
+      <p class="fineprint" id="authStatus" aria-live="polite">Tu devras confirmer ton adresse e-mail si cette option est activée dans Supabase.</p>
+    </form>
+    <div id="accountPanel" hidden><p id="accountEmail"></p><p id="accountPlan" class="tag">Offre gratuite</p><button class="pill light" id="signOutBtn" type="button" style="width:100%;margin-top:14px">Se déconnecter</button></div>
+  </div>
+</div>
+<script type="module">
+let currentKit = {title:"Mon kit Kitora", text:"Ton kit personnalisé apparaîtra ici."};
+function toast(message){const el=document.getElementById('toast');el.textContent=message;el.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.style.display='none',3600);}
+function generatePreset(kind){document.getElementById('kind').value=kind;document.getElementById('generateur').scrollIntoView({behavior:'smooth'});buildKit();}
+function buildKit(){
+ const kind=document.getElementById('kind').value;
+ const goal=document.getElementById('goal').value.trim()||"avancer sur mon objectif cette semaine";
+ const time=document.getElementById('time').value;
+ const style=document.getElementById('style').value;
+ const names={organisation:"Reset de la semaine",etudes:"Kit révisions",projet:"Plan de projet",habitude:"Nouvelle habitude"};
+ const intro={simple:"Garde le plan léger : adapte-le à ta journée.",structure:"Suis les étapes dans l'ordre, puis fais le point à la fin.",motivant:"Chaque petite étape compte. Cherche le progrès, pas la perfection."};
+ let steps=[];
+ if(kind==="organisation") steps=["Note tout ce qui te trotte dans la tête pendant 5 minutes.","Choisis les 3 priorités les plus utiles.","Réserve un créneau de "+time+" pour la première priorité.","Prépare ce dont tu auras besoin avant de commencer.","En fin de journée, note ce qui est fait et la prochaine étape."];
+ if(kind==="etudes") steps=["Liste les chapitres ou notions à revoir.","Choisis une seule notion pour commencer.","Travaille pendant "+time+" sans notifications.","Ferme tes notes et résume ce dont tu te souviens.","Note les questions à revoir lors de la prochaine session."];
+ if(kind==="projet") steps=["Décris le résultat final en une phrase.","Découpe le projet en 3 petites étapes.","Choisis la plus simple et définis une action de "+time+".","Rassemble les ressources nécessaires.","À la fin de la semaine, évalue le résultat et ajuste la suite."];
+ if(kind==="habitude") steps=["Choisis un déclencheur régulier (ex. après le petit-déjeuner).","Définis une version facile de l'habitude en moins de "+time+".","Prépare l'environnement pour réduire les obstacles.","Coche chaque essai sans chercher la perfection.","Fais le point après 7 jours et adapte la difficulté."];
+ currentKit={title:names[kind],goal,time,style,text:names[kind]+"\nMon objectif : "+goal+"\nTemps disponible : "+time+"\n\nMon plan :\n"+steps.map((s,i)=>(i+1)+". "+s).join("\n")+"\n\nRappel : "+intro[style]+"\n\nBilan de fin de semaine :\n- Ce qui a fonctionné :\n- Ce que je peux simplifier :\n- Ma prochaine étape :"};
+ document.getElementById('result').innerHTML="<span class='tag'>KIT PERSONNALISÉ</span><h3 style='margin-top:14px'>"+escapeHtml(names[kind])+"</h3><p><strong>Mon objectif :</strong> "+escapeHtml(goal)+"</p><p><strong>Temps prévu :</strong> "+escapeHtml(time)+" par jour</p><ul>"+steps.map(s=>"<li>"+escapeHtml(s)+"</li>").join("")+"</ul><p class='note'>"+escapeHtml(intro[style])+"</p><hr style='border:0;border-top:1px solid #dfe2f4'><strong>Bilan de fin de semaine</strong><p class='note'>Ce qui a fonctionné : __________<br>Ce que je peux simplifier : __________<br>Ma prochaine étape : __________</p>";
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function downloadKit(){if(!currentKit.text||currentKit.text==="Ton kit personnalisé apparaîtra ici."){buildKit();}const blob=new Blob([currentKit.text],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='kitora-mon-kit.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);toast('Ton kit a été préparé au format .txt.');}
+
+// CONFIGURATION KITORA : remplace uniquement la clé ci-dessous par la clé Publishable/anon de Supabase.
+const SUPABASE_URL = 'https://yxjxizxzjubhjaxskksh.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW';
+let supabaseClient = null;
+let authMode = 'signup';
+const modal = document.getElementById('authModal');
+const authForm = document.getElementById('authForm');
+const authStatus = document.getElementById('authStatus');
+const authTitle = document.getElementById('authTitle');
+const authDescription = document.getElementById('authDescription');
+const authSubmitBtn = document.getElementById('authSubmitBtn');
+const nameField = document.getElementById('nameField');
+const accountPanel = document.getElementById('accountPanel');
+function setAuthMode(mode){authMode=mode;const signup=mode==='signup';document.getElementById('signupTab').classList.toggle('active',signup);document.getElementById('loginTab').classList.toggle('active',!signup);nameField.hidden=!signup;document.getElementById('displayName').required=false;document.getElementById('authPassword').autocomplete=signup?'new-password':'current-password';authTitle.textContent=signup?'Créer mon compte':'Content de te revoir';authDescription.textContent=signup?'Inscris-toi pour préparer ton espace personnel.':'Connecte-toi pour retrouver ton espace Kitora.';authSubmitBtn.textContent=signup?'Créer mon compte':'Se connecter';authStatus.textContent=signup?'Tu devras confirmer ton adresse e-mail si cette option est activée dans Supabase.':'Entre l’adresse e-mail et le mot de passe associés à ton compte.';authForm.hidden=false;accountPanel.hidden=true;}
+function openAuth(){modal.hidden=false;setAuthMode('signup');document.body.style.overflow='hidden';}
+function closeAuth(){modal.hidden=true;document.body.style.overflow='';}
+document.getElementById('authOpenBtn').addEventListener('click',openAuth);
+document.getElementById('accountBtn').addEventListener('click',async()=>{modal.hidden=false;document.body.style.overflow='hidden';authForm.hidden=true;accountPanel.hidden=false;authTitle.textContent='Mon compte';authDescription.textContent='Ton espace personnel Kitora';if(supabaseClient){const {data:{user}}=await supabaseClient.auth.getUser();document.getElementById('accountEmail').textContent=user?.email||'Compte connecté';} });
+document.getElementById('authCloseBtn').addEventListener('click',closeAuth);
+modal.addEventListener('click',e=>{if(e.target===modal)closeAuth();});
+document.getElementById('signupTab').addEventListener('click',()=>setAuthMode('signup'));
+document.getElementById('loginTab').addEventListener('click',()=>setAuthMode('login'));
+document.getElementById('signOutBtn').addEventListener('click',async()=>{if(!supabaseClient)return;const {error}=await supabaseClient.auth.signOut();if(error){authStatus.textContent=error.message;return;}updateAuthUI(null);setAuthMode('login');toast('Tu es déconnecté de Kitora.');});
+function updateAuthUI(user){document.getElementById('authOpenBtn').hidden=!!user;document.getElementById('accountBtn').hidden=!user;}
+async function initSupabaseAuth(){if(!SUPABASE_PUBLISHABLE_KEY||SUPABASE_PUBLISHABLE_KEY==='COLLE_ICI_TA_CLE_PUBLIQUE_SUPABASE'){authStatus.textContent='Configuration nécessaire : remplace COLLE_ICI_TA_CLE_PUBLIQUE_SUPABASE par la clé publique de ton projet Supabase dans le code.';return;}
+ try{const {createClient}=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');supabaseClient=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);const {data:{session}}=await supabaseClient.auth.getSession();updateAuthUI(session?.user||null);supabaseClient.auth.onAuthStateChange((_event,session)=>updateAuthUI(session?.user||null));}catch(err){authStatus.textContent='Impossible de joindre Supabase. Vérifie la connexion et la configuration.';console.error(err);}}
+authForm.addEventListener('submit',async e=>{e.preventDefault();if(!supabaseClient){authStatus.textContent='Ajoute d’abord ta clé publique Supabase dans la configuration du fichier.';return;}const email=document.getElementById('authEmail').value.trim();const password=document.getElementById('authPassword').value;authSubmitBtn.disabled=true;authSubmitBtn.textContent='Patiente…';authStatus.textContent='';try{if(authMode==='signup'){const displayName=document.getElementById('displayName').value.trim();const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:{display_name:displayName},emailRedirectTo:window.location.href}});if(error)throw error;if(data.session){authStatus.textContent='Compte créé et connecté. Bienvenue sur Kitora !';updateAuthUI(data.user);}else{authStatus.textContent='Inscription envoyée ! Consulte ta boîte mail pour confirmer ton adresse, puis connecte-toi.';}}else{const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)throw error;authStatus.textContent='Connexion réussie. Bienvenue sur Kitora !';updateAuthUI(data.user);toast('Connexion réussie.');setTimeout(closeAuth,800);}}catch(err){authStatus.textContent=err?.message||'Une erreur est survenue. Réessaie.';}finally{authSubmitBtn.disabled=false;authSubmitBtn.textContent=authMode==='signup'?'Créer mon compte':'Se connecter';}});
+initSupabaseAuth();
+</script>
+</body>
+</html>
