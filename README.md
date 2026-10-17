@@ -85,3 +85,16 @@ Ces fonctionnalités utilisent actuellement `localStorage`. **Elles ne sont pas 
 3. Créer deux cartes Learn, afficher leurs réponses, marquer une carte retenue et contrôler le compteur Dashboard.
 4. Télécharger chacun des modèles Templates, puis ouvrir le TXT dans un éditeur compatible UTF-8.
 5. Vérifier les liens, le rendu mobile, les cas de stockage local saturé et les exports sur navigateur réel.
+
+## Offres proposées et sauvegarde cloud (phase commerciale)
+
+- `offres.html` : comparaison des formules gratuites et des packs envisagés.
+- **Free** : 0 €, outils locaux disponibles actuellement.
+- **Solo** : prix envisagé 1,99 €/mois pour un module choisi ; aucune facturation ni droit d'accès activé.
+- **Workspace** : prix envisagé 3,99 €/mois pour les modules de productivité et les futures capacités cloud ; non commercialisé.
+- **Kitora Plus** : offres existantes 5,99 €/mois et 59,90 €/an, Stripe en démonstration.
+- **Ultimate** : prix envisagé 8,99 €/mois, regroupant les modules et Plus ; non commercialisé.
+
+Les packs Solo, Workspace et Ultimate sont des propositions tarifaires uniquement. Ne pas ajouter de Checkout ou d'accès premium tant que la facturation test, les droits et la politique de confidentialité n'ont pas été explicitement validés.
+
+La table `public.kitora_workspace_backup` est réservée aux utilisateurs authentifiés via RLS, limitée aux modules Projects, Agenda, Learn, Notes, Défi et Focus, avec taille de sauvegarde plafonnée. **Le script client de synchronisation a été bloqué et n'a pas été déployé**. `synchronisation.html` présente donc un état de préparation : aucune sauvegarde ni restauration n'est opérationnelle depuis cette page. Priorités de vérification avant mise en service : séparation entre utilisateurs, conflits, restaurations, stockage maximal et comportement après déconnexion.
