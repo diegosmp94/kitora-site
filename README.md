@@ -97,4 +97,12 @@ Ces fonctionnalités utilisent actuellement `localStorage`. **Elles ne sont pas 
 
 Les packs Solo, Workspace et Ultimate sont des propositions tarifaires uniquement. Ne pas ajouter de Checkout ou d'accès premium tant que la facturation test, les droits et la politique de confidentialité n'ont pas été explicitement validés.
 
-La table `public.kitora_workspace_backup` est réservée aux utilisateurs authentifiés via RLS, limitée aux modules Projects, Agenda, Learn, Notes, Défi et Focus, avec taille de sauvegarde plafonnée. **Le script client de synchronisation a été bloqué et n'a pas été déployé**. `synchronisation.html` présente donc un état de préparation : aucune sauvegarde ni restauration n'est opérationnelle depuis cette page. Priorités de vérification avant mise en service : séparation entre utilisateurs, conflits, restaurations, stockage maximal et comportement après déconnexion.
+La table `public.kitora_workspace_backup` est réservée aux utilisateurs authentifiés via RLS, limitée aux modules Projects, Agenda, Learn, Notes, Défi et Focus, avec taille de sauvegarde plafonnée. **La synchronisation manuelle est déployée** via `synchronisation.js` et `synchronisation.html` (sauvegarde/restauration de six modules sur demande et après confirmation). Le transfert local JSON reste disponible via `transfert-local.js`. La synchronisation automatique en arrière-plan n'est pas disponible et une validation en navigateur connecté reste nécessaire. Priorités de vérification avant mise en service : séparation entre utilisateurs, conflits, restaurations, stockage maximal et comportement après déconnexion.
+
+## Découverte et mesure de la pertinence
+
+- `decouvrir.html` + `decouvrir.js` : parcours de découverte fondé sur huit besoins. Les recommandations sont locales et ne transmettent aucune donnée.
+- `cas-utilisation.html` : huit scénarios d'utilisation illustratifs, pas de témoignages ni résultats de clients.
+- `test-audience.html` + `test-audience.js` : outil d'enquête locale pour saisir jusqu'à 100 réponses réelles, puis exporter un CSV. Mesure la pertinence déclarée (« Oui ») et l'intention d'achat déclarée ; les ventes réelles exigent des données de commandes réelles en conformité avec la confidentialité des utilisateurs.
+- Objectif indicatif : au moins 75 réponses « Oui » sur un panel de 100 visiteurs diversifiés. Ne pas annoncer ce chiffre comme une conversion ou un résultat atteint sans enquête.
+- Test de génération PDF : huit cas fictifs testés avec un moteur jsPDF simulé ; aucune requête Groq ni aucun PDF réel n'ont été générés pendant ce test.
