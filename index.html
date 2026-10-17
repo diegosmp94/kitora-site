@@ -59,6 +59,38 @@ footer{padding-top:14px}.foot{border-color:#d9e4ee}.auth-card{border-radius:14px
 @media(max-width:760px){.nav{padding:17px 0}.brand{font-size:1.65rem}.hero{padding:65px 0 72px;gap:55px}.hero h1{font-size:clamp(3rem,11vw,4.4rem)}.preview{transform:none;box-shadow:8px 8px 0 #dce8f3}.hero:before{top:20px}.sectionhead h2{font-size:2.5rem}section{padding:62px 0}.card,.panel{padding:23px}.cta{padding:45px 22px}.navlinks{gap:10px}.navlinks button{padding:10px 13px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 
+
+/* Correctif mobile Kitora Porto — priorité à la lisibilité */
+@media(max-width:760px){
+ html,body{width:100%;max-width:100%;overflow-x:hidden}
+ .wrap{width:min(100% - 36px,540px)}
+ .nav{gap:12px;flex-wrap:nowrap}
+ .navlinks{margin-left:auto;min-width:0}
+ .navlinks button{white-space:nowrap;font-size:.86rem;padding:10px 12px}
+ .hero{display:flex;flex-direction:column;align-items:stretch;gap:58px;padding:58px 0 65px}
+ .hero>div{width:100%;min-width:0}
+ .hero:before{top:18px}
+ .hero h1{font-size:clamp(3.1rem,12vw,4.5rem);line-height:1.04;letter-spacing:-.055em;overflow-wrap:normal}
+ .hero .lead{font-size:1.04rem;line-height:1.7;max-width:100%}
+ .eyebrow{max-width:100%;font-size:.65rem;letter-spacing:.09em}
+ .preview{width:100%;max-width:100%;padding:22px;transform:none;box-shadow:7px 7px 0 #dce8f3}
+ .previewtop{gap:10px;flex-wrap:wrap}
+ .previewtop strong{font-size:1.2rem}
+ .task{gap:12px}
+ .task>div{min-width:0}
+ .task strong{overflow-wrap:break-word}
+ .grid,.plans-grid,.builder,.howgrid{grid-template-columns:minmax(0,1fr)}
+ .card,.panel,.result{min-width:0}
+ .sectionhead h2{font-size:clamp(2.15rem,9vw,3rem)}
+ .actions .pill{max-width:100%;text-align:center}
+}
+@media(max-width:380px){
+ .hero h1{font-size:clamp(2.65rem,11.8vw,3.15rem)}
+ .wrap{width:calc(100% - 30px)}
+ .brand{font-size:1.5rem}
+ .preview{padding:18px}
+}
+
 </style>
 </head>
 <body data-design="porto-20261017">
