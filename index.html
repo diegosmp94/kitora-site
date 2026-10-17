@@ -271,33 +271,7 @@ const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW
 let supabaseClient = null;
 let authMode = 'signup';
 let pendingCheckoutPlan = null;
-async function startCheckout(plan){
- if(!['plus_monthly','plus_yearly'].includes(plan))return;
- if(!supabaseClient){toast("La connexion est momentanément indisponible.");return;}
- const {data:{session},error:sessionError}=await supabaseClient.auth.getSession();
- if(sessionError || !session?.access_token){
-   pendingCheckoutPlan=plan;
-   openAuth();
-   setAuthMode('login');
-   authStatus.textContent="Connecte-toi pour choisir ton abonnement Kitora Plus.";
-   return;
- }
- const button=document.querySelector('[data-checkout-plan="'+plan+'"]');
- if(button){button.disabled=true;button.textContent="Redirection vers Stripe…";}
- try{
-  const response=await fetch(SUPABASE_URL+'/functions/v1/create-checkout',{
-   method:'POST',
-   headers:{'Content-Type':'application/json','apikey':SUPABASE_PUBLISHABLE_KEY,'Authorization':'Bearer '+session.access_token},
-   body:JSON.stringify({plan})
-  });
-  const result=await response.json();
-  if(!response.ok || !result?.url || !result.url.startsWith('https://checkout.stripe.com/')) throw new Error(result?.error||"Impossible d'ouvrir Stripe Checkout.");
-  window.location.assign(result.url);
- }catch(err){
-  toast(err?.message||"Erreur lors de la préparation du paiement.");
-  if(button){button.disabled=false;button.textContent=plan==='plus_monthly'?"Choisir l'abonnement mensuel":"Choisir l'abonnement annuel";}
- }
-}
+function startCheckout(plan){if(!['plus_monthly','plus_yearly'].includes(plan))return;localStorage.setItem("kitora_cart_v1",JSON.stringify({id:plan}));window.location.href="panier.html"}
 document.querySelectorAll('[data-checkout-plan]').forEach(button=>button.addEventListener('click',()=>startCheckout(button.dataset.checkoutPlan)));
 const checkoutQuery=new URLSearchParams(window.location.search).get('checkout');
 if(checkoutQuery==='success')toast("Retour Stripe reçu. Le statut de ton abonnement sera confirmé par le serveur.");
