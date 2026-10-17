@@ -1,0 +1,26 @@
+(()=>{"use strict";
+const themes={
+ organisation:{label:"ORGANISATION",color:[26,81,119],light:[232,243,249],accent:[207,168,99],icon:"01",heading:"Mes priorites"},
+ etudes:{label:"REVISION & APPRENTISSAGE",color:[63,73,141],light:[238,239,253],accent:[143,126,209],icon:"02",heading:"Mon parcours de revision"},
+ projet:{label:"PROJET PERSONNEL",color:[28,103,91],light:[232,246,240],accent:[109,175,149],icon:"03",heading:"Ma feuille de route"},
+ habitude:{label:"NOUVELLE HABITUDE",color:[153,91,55],light:[252,243,232],accent:[220,156,96],icon:"04",heading:"Mon suivi de progression"}
+};
+let pdfLoader=null;
+function loadPdf(){if(window.jspdf?.jsPDF)return Promise.resolve(window.jspdf);if(pdfLoader)return pdfLoader;pdfLoader=new Promise((resolve,reject)=>{const script=document.createElement("script");script.src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js";script.crossOrigin="anonymous";script.onload=()=>window.jspdf?.jsPDF?resolve(window.jspdf):reject(new Error("Librairie PDF indisponible"));script.onerror=()=>reject(new Error("Chargement PDF impossible"));document.head.append(script)}).catch(e=>{pdfLoader=null;throw e});return pdfLoader}
+function draw(doc,kit){const t=themes[kit.kind]||themes.organisation;const W=210,H=297;let page=1,y=0;const rgb=(c)=>doc.setFillColor(...c);const line=(x1,y1,x2,y2)=>doc.line(x1,y1,x2,y2);function label(str,x,yy,size=10,color=t.color,style="normal"){doc.setFont("helvetica",style);doc.setFontSize(size);doc.setTextColor(...color);doc.text(str,x,yy)}function wrapped(str,x,yy,maxWidth,size=11,leading=5.8,color=[38,57,75],style="normal"){doc.setFont("helvetica",style);doc.setFontSize(size);doc.setTextColor(...color);const lines=doc.splitTextToSize(String(str),maxWidth);for(const l of lines){if(yy>265){newPage();yy=y}doc.text(l,x,yy);yy+=leading}return yy}
+function frame(){rgb(t.color);doc.rect(0,0,W,43,"F");rgb(t.accent);doc.rect(0,42,W,2,"F");label("kitora.",16,19,22,[255,255,255],"bold");label(t.label,16,31,8,[240,238,224],"bold");label(String(page).padStart(2,"0"),190,19,10,[255,255,255],"bold");rgb(t.light);doc.rect(0,H-17,W,17,"F");label("KITORA STUDIO  /  TON PLAN PERSONNALISE",16,H-7,8,t.color,"bold");label(String(page).padStart(2,"0"),189,H-7,9,t.color);y=55}
+function newPage(){doc.addPage();page++;frame()}
+function section(title){if(y>247)newPage();label(title,16,y,13,t.color,"bold");y+=5;doc.setDrawColor(...t.accent);doc.setLineWidth(.7);line(16,y,194,y);y+=10}
+frame();label(kit.title,16,y,22,t.color,"bold");y+=11;label("OBJECTIF",16,y,9,t.color,"bold");y+=7;y=wrapped(kit.goal,16,y,175,13,7);y+=6;rgb(t.light);doc.roundedRect(16,y,178,17,3,3,"F");label("TEMPS / JOUR",23,y+7,8,t.color,"bold");label(kit.time,23,y+13,11,t.color,"bold");label("STYLE",108,y+7,8,t.color,"bold");label(({simple:"Flexible",structure:"Structure",motivant:"Motivant"})[kit.style]||"Personnalise",108,y+13,11,t.color,"bold");y+=30;
+section(t.heading);
+const steps=Array.isArray(kit.steps)?kit.steps:[];for(let i=0;i<steps.length;i++){if(y>245)newPage();rgb(t.light);doc.roundedRect(16,y-5,12,12,2,2,"F");label(String(i+1).padStart(2,"0"),19,y+3,10,t.color,"bold");const next=wrapped(steps[i],36,y+1,156,11,6.3);y=Math.max(y+17,next+7)}
+if(kit.kind==="habitude"){section("Mon suivi sur 7 jours");const days=["L","M","M","J","V","S","D"];for(let i=0;i<7;i++){const x=18+i*26;rgb(t.light);doc.roundedRect(x,y,22,19,2,2,"F");label(days[i],x+9,y+6,8,t.color,"bold");doc.setDrawColor(...t.color);doc.rect(x+8,y+9,7,7)}y+=31}
+else if(kit.kind==="etudes"){section("Verifier ce que j'ai retenu");y=wrapped("Apres chaque session, explique une notion sans regarder tes notes.",16,y,176,10.5,6);y+=9}
+else if(kit.kind==="projet"){section("Mes jalons");for(let i=0;i<3;i++){const x=22+i*62;doc.setDrawColor(...t.accent);doc.setLineWidth(1);doc.circle(x+6,y+4,5);label("ETAPE "+(i+1),x,y+17,8,t.color,"bold")}y+=30}
+else{section("Mes trois priorites");for(let i=0;i<3;i++){doc.setDrawColor(...t.color);doc.rect(18,y-4,6,6);doc.setDrawColor(192,205,214);line(30,y+2,190,y+2);y+=13}}
+section("Mon rappel");y=wrapped(kit.intro||"Chaque petite etape compte.",16,y,176,11,6.5);y+=13;
+section("Bilan de fin de semaine");for(const question of ["Ce qui a fonctionne","Ce que je peux simplifier","Ma prochaine etape"]){if(y>260)newPage();label(question,16,y,10,t.color,"bold");y+=8;doc.setDrawColor(197,207,219);line(16,y,194,y);y+=14}
+return doc}
+async function exportPdf(){const feedback=document.querySelector("#pdfFeedback"),button=document.querySelector("#downloadPdfBtn");if(button)button.disabled=true;if(feedback)feedback.textContent="Preparation du PDF en cours…";try{if(typeof window.buildKit!=="function")throw new Error("Generateur indisponible");window.buildKit();const kit=window.kitoraPdfKit?.();if(!kit?.steps?.length)throw new Error("Aucun kit a exporter");const {jsPDF}=await loadPdf();const doc=new jsPDF({orientation:"portrait",unit:"mm",format:"a4",compress:true});draw(doc,kit);doc.save("kitora-"+kit.kind+"-personnalise.pdf");if(feedback)feedback.textContent="Ton PDF personnalise est pret. Le fichier TXT reste disponible."}catch(e){if(feedback)feedback.textContent="Impossible de creer le PDF : "+e.message}finally{if(button)button.disabled=false}}
+window.kitoraDownloadPdf=exportPdf;
+})();
