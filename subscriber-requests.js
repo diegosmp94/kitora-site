@@ -1,4 +1,4 @@
-import{generatePlusKit,generateAiPlusPdf,downloadPlusTxt}from"./plus-pdf.js";
+import{generatePlusKit,generateAiPlusPdf,downloadPlusTxt}from"./plus-pdf.js?v=20261017-fix2";
 import{createClient}from"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 const client=createClient("https://yxjxizxzjubhjaxskksh.supabase.co","sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW");
 const $=id=>document.getElementById(id);
