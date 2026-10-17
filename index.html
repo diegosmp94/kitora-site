@@ -91,6 +91,32 @@ footer{padding-top:14px}.foot{border-color:#d9e4ee}.auth-card{border-radius:14px
  .preview{padding:18px}
 }
 
+
+/* Mobile-first override: handles iPhone browsers requesting desktop-sized viewport */
+@media(max-width:1100px){
+ .hero{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:52px!important}
+ .hero>div{width:100%!important;min-width:0!important;max-width:100%!important}
+ .hero .preview{width:100%!important;max-width:680px!important;align-self:center!important;transform:none!important}
+ .hero h1{max-width:100%;overflow-wrap:normal}
+ .grid,.howgrid{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+ .builder{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:900px){
+ .hero{padding:55px 0 70px!important}
+ .hero h1{font-size:clamp(3.2rem,9vw,5rem)!important;line-height:1.04!important}
+ .hero .lead{max-width:680px!important}
+ .preview{padding:24px!important}
+ .previewtop strong{font-size:1.35rem}
+ .wrap{width:calc(100% - 44px)}
+ .plans-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:520px){
+ .wrap{width:calc(100% - 32px)}
+ .hero h1{font-size:clamp(2.9rem,11vw,4rem)!important}
+ .preview{padding:20px!important}
+ .hero{gap:60px!important}
+}
+
 </style>
 </head>
 <body data-design="porto-20261017">
