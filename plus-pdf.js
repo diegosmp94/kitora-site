@@ -17,7 +17,7 @@ export async function generateAiPlusPdf(item,result){
  // Built-in jsPDF fonts are not Unicode fonts. Convert ALL content to safe Latin ASCII
  // before measuring/wrapping it, to prevent broken glyphs and PDF overflow.
  function clean(value){
-  return String(value??"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
+  return String(value??"").normalize("NFC")
    .replace(/[\u2018\u2019\u02BC]/g,"'").replace(/[\u2013\u2014\u2212]/g,"-")
    .replace(/[\u00A0\u202F\u2000-\u200B]/g," ")
    .replace(/\u2026/g,"...").replace(/\u2022/g,"-")
@@ -60,7 +60,7 @@ export async function generateAiPlusPdf(item,result){
  if(result.weekly_plan?.length){
   head("Programme detaille");
   for(const w of result.weekly_plan){
-   text("Semaine "+w.week+" - "+w.objective,11,true);
+   text("Etape "+w.week+" - "+w.objective,11,true);
    for(const task of w.tasks||[])text("- "+task);
   }
  }
