@@ -117,14 +117,34 @@ footer{padding-top:14px}.foot{border-color:#d9e4ee}.auth-card{border-radius:14px
  .hero{gap:60px!important}
 }
 
+
+/* Kitora International — navigation, surfaces, contrastes */
+body{background-color:#f1f5fa;background-image:radial-gradient(circle at 12% 9%,#d6e6f5 0,transparent 28%),radial-gradient(circle at 93% 36%,#e3e9f4 0,transparent 30%),radial-gradient(#174c8009 .7px,transparent .7px);background-size:auto,auto,20px 20px}
+header.wrap{width:100%;max-width:none;padding:0 max(4.5%,calc((100% - 1250px)/2));background:#f7fafded;backdrop-filter:blur(16px);position:sticky;top:0;z-index:12;border-bottom:1px solid #d9e5ef}
+header .nav{border:0;gap:24px}.navlinks{gap:clamp(9px,1.5vw,23px);font-size:.85rem;flex-wrap:wrap;justify-content:flex-end}.navlinks>a{white-space:nowrap;color:#284764}.navlinks>a:hover{color:#174c80}
+.hero{isolation:isolate}.hero:after{content:"";position:absolute;z-index:-1;right:-4%;top:7%;width:42%;height:76%;background:radial-gradient(ellipse,#bad4ed7a,transparent 68%);pointer-events:none}
+#kits{background:linear-gradient(130deg,#e5eef8,#f2f7fc 45%,#e5edf6)!important}
+#plus{background:linear-gradient(145deg,#123b66,#1d5485 60%,#102d4e);color:#fff}
+#plus .sectionhead p,#plus .fineprint{color:#d6e6f4}
+#plus .eyebrow{background:#ffffff1a;border-color:#ffffff33;color:#fff}
+#plus .card{background:#ffffff;color:#172a42}
+#plus .featured{background:#e9f2fa}
+#generateur{background:linear-gradient(180deg,#f5f8fc,#e8f0f9)}
+#comment{background:linear-gradient(120deg,#e1eaf5,#f3f7fb)!important}
+footer{background:#102c4b;color:#dce9f5;padding:45px 0}footer .brand,footer a{color:#fff}footer .fineprint{color:#bbd0e5}footer .foot{border-color:#ffffff30}
+.kitora-strip{background:#102c4b;color:#e4f0fc;text-align:center;padding:11px 20px;font-size:.77rem;letter-spacing:.07em;font-weight:650}
+.kitora-strip span{color:#d7b57b}
+@media(max-width:1100px){header .navlinks>a{display:none}header .navlinks{gap:8px}header .nav{min-height:72px}.hero{display:flex!important;flex-direction:column!important;gap:50px!important}.hero>div{width:100%!important;min-width:0!important}.hero .preview{max-width:690px!important;width:100%!important;align-self:center!important}}
+@media(max-width:760px){header.wrap{padding:0 16px}.navlinks button{font-size:.85rem;padding:10px 12px}.hero h1{font-size:clamp(2.9rem,11vw,4rem)!important}.hero{padding-top:48px!important}}
+
 </style>
 </head>
 <body data-design="porto-20261017">
+<div class="kitora-strip">KITORA STUDIO <span>✦</span> Des idées aux projets, un kit à la fois</div>
 <header class="wrap">
   <nav class="nav">
     <a class="brand" href="#">kit<span>ora</span>.</a>
-    <div class="navlinks"><a href="#kits">Les kits</a><a href="#generateur">Générateur gratuit</a><a href="#comment">Comment ça marche</a><button class="pill light" id="authOpenBtn" type="button">Connexion</button><button class="pill" id="accountBtn" type="button" hidden>Mon compte</button></div>
-  </nav>
+    <div class="navlinks"><a href="index.html">Accueil</a><a href="boutique.html">Boutique</a><a href="index.html#generateur">Studio gratuit</a><a href="index.html#plus">Kitora Plus</a><a href="a-propos.html">Notre histoire</a><a href="aide.html">Aide</a><button class="pill light" id="authOpenBtn" type="button">Connexion</button><button class="pill" id="accountBtn" type="button" hidden>Mon compte</button></div></nav>
 </header>
 <main>
   <div class="wrap hero">
@@ -132,7 +152,7 @@ footer{padding-top:14px}.foot{border-color:#d9e4ee}.auth-card{border-radius:14px
       <span class="eyebrow">LE STUDIO DE TES PROCHAINS PROJETS</span>
       <h1>Donne une forme<br>à <em>tes idées.</em></h1>
       <p class="lead">Des outils pensés comme de petits ateliers : une idée, une méthode, un plan concret. Pour créer, apprendre et avancer à ta manière.</p>
-      <div class="actions"><a class="pill" href="#generateur">Créer un kit gratuit →</a><a class="pill light" href="#kits">Découvrir les kits</a></div>
+      <div class="actions"><a class="pill" href="#generateur">Créer un kit gratuit →</a><a class="pill light" href="boutique.html">Découvrir la boutique</a></div>
       <p class="micro">✓ Simple à utiliser &nbsp; ✓ Personnalisable &nbsp; ✓ Téléchargement immédiat</p>
     </div>
     <div class="preview" aria-label="Aperçu d'un plan personnalisé">
@@ -203,7 +223,7 @@ footer{padding-top:14px}.foot{border-color:#d9e4ee}.auth-card{border-radius:14px
     <div class="wrap"><div class="cta"><span class="eyebrow" style="background:#343d5b;color:#e2e6ff">KITORA STUDIO · VERSION BÊTA</span><h2 style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.05em;margin:15px 0 8px">Ton prochain pas commence ici.</h2><p>Teste le générateur gratuit et transforme une idée en première action.</p><a class="pill" href="#generateur">Créer mon kit gratuit ↑</a></div></div>
   </section>
 </main>
-<footer><div class="wrap foot"><div><a class="brand" href="#">kit<span>ora</span>.</a><p>Des outils numériques pour avancer, un pas à la fois.</p></div><div><a href="#kits">Les kits</a> · <a href="#generateur">Générateur</a> · <a href="#comment">À propos</a><p class="fineprint">Prototype de démonstration — aucune vente n'est activée.</p></div></div></footer>
+<footer><div class="wrap foot"><div><a class="brand" href="#">kit<span>ora</span>.</a><p>Des outils numériques pour avancer, un pas à la fois.</p></div><div><a href="boutique.html">Les kits</a> · <a href="#generateur">Générateur</a> · <a href="#comment">À propos</a><p class="fineprint">Prototype de démonstration — aucune vente n'est activée.</p></div></div></footer>
 <div id="toast" class="toast" role="status"></div>
 <div id="authModal" class="auth-modal" hidden>
   <div class="auth-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
