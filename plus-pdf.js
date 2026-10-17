@@ -75,7 +75,7 @@ export function downloadAiPlusTxt(item,result){
  if(result.weekly_plan?.length){lines.push("","## Programme detaille");for(const step of result.weekly_plan){lines.push("Etape "+step.week+" : "+step.objective);for(const task of step.tasks||[])lines.push("- "+task)}}
  if(result.questions?.length)lines.push("","## Questions pour affiner",...result.questions.map(q=>"- "+q));
  if(result.success_metrics?.length)lines.push("","## Indicateurs de reussite",...result.success_metrics.map(q=>"- "+q));
- const value=lines.join("\\n").replaceAll("\\n","\n");
- save(new Blob(["\\uFEFF".replace("\\uFEFF","\uFEFF"),value],{type:"text/plain;charset=utf-8"}),"kitora-plus-ia-"+String(item.id||"document").slice(0,8)+".txt");
+ const value=lines.join("\n");
+ save(new Blob(["\uFEFF",value],{type:"text/plain;charset=utf-8"}),"kitora-plus-ia-"+String(item.id||"document").slice(0,8)+".txt");
 }
 export function downloadPlusTxt(item){const p=plans[item.category]||plans.autre;const txt=["KITORA PLUS - "+item.title,"","DEMANDE",item.details,"","PLAN D'ACTION",...p.steps.map((s,i)=>(i+1)+". "+s),"","PROGRAMME SUR 4 SEMAINES","S1 : cadrage","S2 : mise en pratique","S3 : ajustements","S4 : bilan","",...p.sections.map(s=>s+" : ____________________")].join("\n");save(new Blob([txt],{type:"text/plain;charset=utf-8"}),"kitora-plus-"+(item.id||"personnalise").slice(0,8)+".txt")}
