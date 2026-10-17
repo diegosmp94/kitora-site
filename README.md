@@ -65,3 +65,23 @@ Les expériences gratuites restent entièrement dans le navigateur, sans appeler
 ### Contrôle automatisé local
 
 Depuis la racine du dépôt, utiliser `node tests/site-smoke.mjs` (Node.js 18 ou plus récent). Ce test n'utilise aucune API payante et vérifie l'existence des pages, l'équilibre des balises principales, les liens locaux et la syntaxe des scripts des expériences.
+
+## Workspace Kitora — étapes 1 et 2
+
+Cinq espaces gratuits, développés avec les mêmes couleurs, cartes, composants et navigation que la boutique :
+
+- `dashboard.html` + `dashboard.js` : résumé local des projets, notes, étapes du défi, séances Focus, révisions et événements.
+- `projects.html` + `projects.js` : projets, tâches, échéances, cases terminées, export TXT et import depuis un brief Atelier enregistré.
+- `learn.html` + `learn.js` : flashcards créées par l'utilisateur, quiz avec réponse, validation de mémorisation et export TXT.
+- `agenda.html` + `agenda.js` : calendrier mensuel, événements locaux et lecture des échéances créées dans Projects.
+- `templates.html` + `templates.js` : six modèles éditables téléchargés en TXT (brief, révision, semaine, compte rendu, création, progression).
+
+Ces fonctionnalités utilisent actuellement `localStorage`. **Elles ne sont pas synchronisées entre appareils ni avec le compte Supabase**, même si une page « Mon espace » propose des liens pour y accéder. Aucun paiement réel et aucun appel supplémentaire à Groq ne sont déclenchés. La confidentialité reste limitée à la sécurité de l'appareil et du navigateur ; les données locales peuvent disparaître si le stockage est effacé. Les exports TXT peuvent servir de sauvegardes manuelles.
+
+### Contrôles de réception
+
+1. Créer un brief Atelier, l'importer dans Projects, ajouter/cocher une tâche puis consulter le résultat sur Dashboard.
+2. Ajouter une échéance de projet et vérifier sa lecture dans Agenda ; ajouter et supprimer un événement local.
+3. Créer deux cartes Learn, afficher leurs réponses, marquer une carte retenue et contrôler le compteur Dashboard.
+4. Télécharger chacun des modèles Templates, puis ouvrir le TXT dans un éditeur compatible UTF-8.
+5. Vérifier les liens, le rendu mobile, les cas de stockage local saturé et les exports sur navigateur réel.
