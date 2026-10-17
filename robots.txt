@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Sitemap: https://diegosmp94.github.io/kitora-site/sitemap.xml
