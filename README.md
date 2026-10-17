@@ -41,3 +41,23 @@ Les paiements Stripe restent en mode test : aucune activation de paiement réel 
 ## Sécurité de maintenance
 
 Ne jamais publier les secrets Supabase Service Role, Stripe ou Groq. Ne pas changer les politiques RLS ou les fonctions de paiement sans vérification préalable. Ne jamais activer un paiement réel par accident.
+
+## Expériences ajoutées
+
+- `atelier.html` + `atelier.js` : brief de projet local, copie et export TXT.
+- `methodes.html` : ressources pratiques pour apprendre, s'organiser et créer.
+- `defi-7-jours.html` + script associé : progression locale d'un défi en sept étapes, à reprendre librement.
+- `comparateur.html` + `comparateur.js` : comparaison de trois options sur des critères pondérés, export TXT.
+- `focus.html` + `focus.js` : minuterie de concentration et pause, compteur de séances local.
+- `plus-lab.html` + `plus-lab.js` : modèles guidés de demandes Plus, avec authentification, contrôle d'abonnement et création via les RLS Supabase.
+- `sitemap.xml` et `robots.txt` : découverte des pages publiques.
+
+Les expériences gratuites restent entièrement dans le navigateur, sans appeler Groq ou Stripe. Le Plus Lab n'exécute pas de génération immédiatement : il enregistre la demande afin qu'elle soit retrouvée depuis `compte.html#demandes-plus`. Pour préserver l'apparence, les nouvelles pages reprennent la structure, les couleurs, le bandeau et les cartes de la boutique existante.
+
+### Vérifications à faire après publication
+
+1. Confirmer le rendu responsive de chaque nouveau formulaire sur téléphone et ordinateur.
+2. Vérifier qu'un visiteur non connecté ne peut pas soumettre de demande dans le Plus Lab et qu'un abonné Plus actif le peut.
+3. Tester les exports UTF-8 et les préférences locales, notamment l'effacement via les boutons Réinitialiser.
+4. Tester l'actualisation de GitHub Pages et les liens de l'accueil vers chaque nouvel outil.
+5. Vérifier le bon fonctionnement du minuteur après suspension et reprise de l'onglet.
