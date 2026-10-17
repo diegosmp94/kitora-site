@@ -145,7 +145,7 @@ footer{background:#102c4b;color:#dce9f5;padding:45px 0}footer .brand,footer a{co
 <header class="wrap">
   <nav class="nav">
     <a class="brand" href="#">kit<span>ora</span>.</a>
-    <div class="navlinks"><a href="index.html">Accueil</a><a href="boutique.html">Boutique</a><a href="index.html#generateur">Studio gratuit</a><a href="index.html#plus">Kitora Plus</a><a href="a-propos.html">Notre histoire</a><a href="aide.html">Aide</a><button class="pill light" id="authOpenBtn" type="button">Connexion</button><button class="pill" id="accountBtn" type="button" hidden>Mon compte</button></div><details class="site-mobile-menu"><summary aria-label="Ouvrir le menu de navigation">☰ Menu</summary><div class="site-mobile-panel"><a href="index.html">Accueil</a><a href="boutique.html">Boutique</a><a href="index.html#generateur">Studio gratuit</a><a href="index.html#plus">Kitora Plus</a><a href="a-propos.html">Notre histoire</a><a href="aide.html">Aide</a></div></details></nav>
+    <div class="navlinks"><a href="index.html">Accueil</a><a href="boutique.html">Boutique</a><a href="index.html#generateur">Studio gratuit</a><a href="index.html#plus">Kitora Plus</a><a href="a-propos.html">Notre histoire</a><a href="aide.html" data-i18n="help">Aide</a><a href="compte.html" data-i18n="account">Mon espace</a><button class="pill light" id="authOpenBtn" type="button">Connexion</button><button class="pill" id="accountBtn" type="button" hidden>Mon compte</button></div><details class="site-mobile-menu"><summary aria-label="Ouvrir le menu de navigation">☰ Menu</summary><div class="site-mobile-panel"><a href="index.html">Accueil</a><a href="boutique.html">Boutique</a><a href="index.html#generateur">Studio gratuit</a><a href="index.html#plus">Kitora Plus</a><a href="a-propos.html">Notre histoire</a><a href="aide.html" data-i18n="help">Aide</a><a href="compte.html" data-i18n="account">Mon espace</a></div></details><select id="languageSwitcher" aria-label="Language" style="border:1px solid #c6d9e9;background:white;color:#174c80;padding:8px;border-radius:8px"><option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option><option value="pt">PT</option></select></nav>
 </header>
 <main>
   <div class="wrap hero">
@@ -328,5 +328,5 @@ authForm.addEventListener('submit',async e=>{e.preventDefault();if(!supabaseClie
 Object.assign(window,{toast,generatePreset,buildKit,downloadKit});
 initSupabaseAuth();
 </script>
-</body>
+<script src="language.js" defer></script></body>
 </html>
