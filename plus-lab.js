@@ -12,6 +12,7 @@ function compose(){
 }
 function preview(){const p=compose();$("labPreview").textContent=p.title+"\n\n"+p.details+"\n\nFormat : "+p.format.toUpperCase()+"\n\nLe document final dépendra de la génération IA et des données fournies."}
 for(const e of form.querySelectorAll("input,textarea,select"))e.addEventListener("input",preview);
+$("labCopy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("labPreview").textContent);message.textContent="Brief copié."}catch{message.textContent="Copie indisponible. Sélectionne le texte dans l’aperçu."}});
 async function check(){
  try{
   const{data:{user},error}=await client.auth.getUser();
