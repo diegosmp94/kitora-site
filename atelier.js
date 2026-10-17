@@ -11,7 +11,8 @@ function format(x){
 }
 function render(){const x=data();if(!x.briefName||!x.briefGoal){output="";preview.textContent="Indique au moins le nom du projet et le résultat souhaité.";down.disabled=copy.disabled=true;return}output=format(x);preview.textContent=output;down.disabled=copy.disabled=false}
 try{const saved=JSON.parse(localStorage.getItem(KEY)||"null");if(saved&&typeof saved==="object")for(const id of ids)if(typeof saved[id]==="string")document.getElementById(id).value=saved[id]}catch{}
-for(const id of ids)document.getElementById(id).addEventListener("input",()=>{try{localStorage.setItem(KEY,JSON.stringify(data()))}catch{}});
+for(const id of ids)document.getElementById(id).addEventListener("input",()=>{try{localStorage.setItem(KEY,JSON.stringify(data()))}catch{}render()});
+render();
 form.addEventListener("submit",e=>{e.preventDefault();if(!form.reportValidity())return;render();status.textContent="Brief prêt. Tu peux le copier ou l'exporter."});
 down.addEventListener("click",()=>{if(!output)return;const blob=new Blob(["\uFEFF",output],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="kitora-mon-brief.txt";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);status.textContent="Téléchargement lancé."});
 copy.addEventListener("click",async()=>{if(!output)return;try{await navigator.clipboard.writeText(output);status.textContent="Brief copié."}catch{status.textContent="Copie indisponible sur ce navigateur. Utilise l'export TXT."}});
