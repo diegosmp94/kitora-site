@@ -1,0 +1,17 @@
+(()=>{"use strict";
+const KEY="kitora_recherche_audience_v1",$=id=>document.getElementById(id);
+let records=[];try{const v=JSON.parse(localStorage.getItem(KEY)||"[]");if(Array.isArray(v))records=v.filter(x=>x&&typeof x.need==="string"&&["yes","partial","no"].includes(x.fit)&&["yes","maybe","no"].includes(x.intent)).slice(0,100)}catch{}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(records));return true}catch{$("audienceStatus").textContent="Stockage indisponible. Exporte les résultats pour conserver ton travail.";return false}}
+function ratio(n){return records.length?Math.round(100*n/records.length)+" %":"—"}
+function render(){const yes=records.filter(r=>r.fit==="yes").length,partial=records.filter(r=>r.fit==="partial").length,interested=records.filter(r=>r.intent==="yes").length;
+ $("audienceTotal").textContent=records.length+" / 100";$("audienceFit").textContent=ratio(yes);$("audienceBuy").textContent=ratio(interested);
+ const guide=$("audienceGuidance");if(!records.length)guide.textContent="Ajoute des réponses réelles pour commencer.";else if(records.length<100)guide.textContent="Échantillon provisoire : "+yes+" personnes sur "+records.length+" répondent « Oui ». Continue jusqu'à 100 réponses et vérifie la diversité des besoins.";else if(yes>=75)guide.textContent="Objectif de pertinence atteint sur ce panel : "+yes+" répondants sur 100 se reconnaissent dans une offre. Les achats réels restent à mesurer séparément.";else guide.textContent="Objectif de pertinence non atteint : "+yes+" répondants sur 100. Analyse les besoins « Non » et « Partiellement », puis adapte les descriptions et les parcours.";
+ $("audienceStatus").textContent=records.length+" réponse(s) dans ce panel, dont "+partial+" partielle(s).";
+}
+$("audienceForm").addEventListener("submit",e=>{e.preventDefault();if(records.length>=100){$("audienceStatus").textContent="Panel complet : exporte les résultats puis crée un nouveau panel.";return}
+ const r={need:$("audienceNeed").value,fit:$("audienceFitInput").value,intent:$("audienceInterest").value,offer:$("audienceOffer").value};records.push(r);if(!save()){records.pop();return}render()});
+$("audienceExport").addEventListener("click",()=>{if(!records.length){$("audienceStatus").textContent="Aucune réponse à exporter.";return}
+ const header="numero;besoin;pertinence;intention_declaree;formule";const rows=records.map((r,i)=>[i+1,r.need,r.fit,r.intent,r.offer].join(";"));const csv=["\uFEFF",header,...rows].join("\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});const u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download="kitora-etude-audience.csv";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)});
+$("audienceReset").addEventListener("click",()=>{if(!confirm("Effacer définitivement les réponses de ce panel sur cet appareil ? Exporte-les d'abord si nécessaire."))return;records=[];try{localStorage.removeItem(KEY)}catch{}render()});
+render();
+})();
