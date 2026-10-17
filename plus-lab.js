@@ -2,7 +2,7 @@ import{createClient}from"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+e
 const client=createClient("https://yxjxizxzjubhjaxskksh.supabase.co","sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW");
 const $=id=>document.getElementById(id),form=$("labForm"),status=$("labEligibility"),message=$("labMessage");
 const choices={cours:{category:"etudes",header:"Cours personnalisé, exemples, exercices et corrigés",details:"Inclure des explications progressives, des exemples commentés, des exercices et les réponses détaillées. Respecter la langue cible du sujet."},revision:{category:"etudes",header:"Programme de révisions personnalisé",details:"Créer des séances adaptées, des questions d'autoévaluation, les corrections et des checkpoints réalistes."},projet:{category:"projet",header:"Dossier de projet opérationnel",details:"Présenter le besoin, les livrables, les étapes concrètes, les risques, les indicateurs et les hypothèses à confirmer."},organisation:{category:"organisation",header:"Planning personnalisé et priorités",details:"Décomposer les objectifs en actions réalistes, respecter les contraintes de temps et proposer une méthode de suivi."},creation:{category:"projet",header:"Plan de création de contenu",details:"Définir l'objectif, le public, des idées originales, les étapes de production et les indicateurs de progression."}};
-let authorizedUser=null;
+let authorizedUser=null,checking=0;
 function compose(){
  const type=choices[$("labType").value]||choices.projet;
  const topic=$("labTopic").value.trim(),deadline=$("labDeadline").value.trim(),level=$("labLevel").value.trim(),constraints=$("labConstraints").value.trim();
@@ -14,8 +14,10 @@ function preview(){const p=compose();$("labPreview").textContent=p.title+"\n\n"+
 for(const e of form.querySelectorAll("input,textarea,select"))e.addEventListener("input",preview);
 $("labCopy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("labPreview").textContent);message.textContent="Brief copié."}catch{message.textContent="Copie indisponible. Sélectionne le texte dans l’aperçu."}});
 async function check(){
+ const attempt=++checking;authorizedUser=null;form.hidden=true;status.textContent="Vérification de l’abonnement…";
  try{
   const{data:{user},error}=await client.auth.getUser();
+  if(attempt!==checking)return;
   if(error||!user){status.textContent="Connecte-toi pour accéder à l'espace exclusif Kitora Plus.";return}
   const{data:sub,error:subError}=await client.from("subscriptions").select("plan,status").eq("user_id",user.id).maybeSingle();
   if(subError)throw Error("Vérification de l'abonnement indisponible.");
@@ -27,6 +29,7 @@ form.addEventListener("submit",async e=>{
  e.preventDefault();if(!authorizedUser||!form.reportValidity())return;
  const btn=$("labSubmit");btn.disabled=true;message.textContent="Envoi de ta demande…";
  try{
+  const current=await client.auth.getUser();if(current.error||current.data.user?.id!==authorizedUser)throw Error("Session expirée. Reconnecte-toi.");
   const p=compose();
   if(p.title.length<5||p.details.length<20)throw Error("Précise le sujet et l'objectif.");
   const{data,error}=await client.from("subscriber_requests").insert({user_id:authorizedUser,...p}).select("id").single();
