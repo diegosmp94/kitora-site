@@ -61,3 +61,7 @@ Les expériences gratuites restent entièrement dans le navigateur, sans appeler
 3. Tester les exports UTF-8 et les préférences locales, notamment l'effacement via les boutons Réinitialiser.
 4. Tester l'actualisation de GitHub Pages et les liens de l'accueil vers chaque nouvel outil.
 5. Vérifier le bon fonctionnement du minuteur après suspension et reprise de l'onglet.
+
+### Contrôle automatisé local
+
+Depuis la racine du dépôt, utiliser `node tests/site-smoke.mjs` (Node.js 18 ou plus récent). Ce test n'utilise aucune API payante et vérifie l'existence des pages, l'équilibre des balises principales, les liens locaux et la syntaxe des scripts des expériences.
