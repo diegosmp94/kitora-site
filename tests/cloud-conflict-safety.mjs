@@ -1,0 +1,15 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const code=readFileSync("auto-cloud.js","utf8");
+const sql=readFileSync("release/V1_CLOUD_CAS_MIGRATION.sql","utf8");
+assert.match(code,/db\.rpc\("kitora_cloud_save_cas"/);
+assert.match(code,/p_expected_payload:expected/);
+assert.match(code,/saved\?\.status==="conflict"/);
+assert.doesNotMatch(code,/\.upsert\(\{user_id:user\.id,module:name,payload:/);
+assert.match(sql,/security invoker/);
+assert.match(sql,/pg_advisory_xact_lock/);
+assert.match(sql,/for update/);
+assert.match(sql,/is distinct from p_expected_payload/);
+assert.match(sql,/s\.plan in \('workspace','ultimate'\)/);
+assert.match(sql,/grant execute on function public\.kitora_cloud_save_cas.*to authenticated/);
+console.log("Atomic cloud backup: source and migration regression checks passed.");
