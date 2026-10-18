@@ -4,13 +4,15 @@ const BASE_PROMPT="Tu es Kitora Plus, rédacteur de documents concrets en franç
 const schema={type:"object",additionalProperties:false,required:["summary","questions","sections","weekly_plan","success_metrics"],properties:{summary:{type:"string"},questions:{type:"array",items:{type:"string"}},sections:{type:"array",items:{type:"object",additionalProperties:false,required:["heading","analysis","actions"],properties:{heading:{type:"string"},analysis:{type:"string"},actions:{type:"array",items:{type:"string"}}}}},weekly_plan:{type:"array",items:{type:"object",additionalProperties:false,required:["week","objective","tasks"],properties:{week:{type:"integer"},objective:{type:"string"},tasks:{type:"array",items:{type:"string"}}}}},success_metrics:{type:"array",items:{type:"string"}}}};
 Deno.serve(async req=>{
  if(req.method!=="POST")return reply({error:"Method not allowed"},405);
- const expected=Deno.env.get("KITORA_WORKER_TOKEN");
- if(!expected||expected.length<32||req.headers.get("Authorization")!=="Bearer "+expected)return reply({error:"Unauthorized worker"},401);
+ const token=(req.headers.get("Authorization")||"").replace(/^Bearer /,"");
+ if(token.length!==64||! /^[a-f0-9]{64}$/i.test(token))return reply({error:"Unauthorized worker"},401);
  const url=Deno.env.get("SUPABASE_URL"),secret=Deno.env.get("KITORA_SERVICE_ROLE_KEY")||Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
  if(!url||!secret)return reply({error:"Supabase configuration missing"},503);
  if(Deno.env.get("KITORA_GROQ_ENABLED")!=="true")return reply({status:"disabled",reason:"AI provider calls are disabled"});
  const groq=Deno.env.get("GROQ_API_KEY");if(!groq)return reply({error:"AI provider not configured"},503);
  const db=createClient(url,secret,{auth:{persistSession:false,autoRefreshToken:false}});
+ const {data:authorized,error:verifyError}=await db.rpc("kitora_verify_worker_token",{p_token:token});
+ if(verifyError||!authorized)return reply({error:"Unauthorized worker"},401);
  const {data:claimed,error:claimError}=await db.rpc("kitora_claim_ai_job");
  if(claimError)return reply({error:"Claim failed"},503);
  const job=claimed?.[0];if(!job)return reply({status:"idle"});
