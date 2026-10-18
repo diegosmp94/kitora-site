@@ -9,7 +9,8 @@ async function canUse(){
  if(err||sub?.status!=="active"||!["workspace","ultimate"].includes(sub.plan))return false;
  user=current;return true;
 }
-function snapshot(name,key){try{const raw=localStorage.getItem(key);if(!raw)return null;const p=JSON.parse(raw);if(name==="focus"?!Number.isInteger(p)||p<0:!Array.isArray(p))return null;if(raw.length>150000)return null;return {raw,p}}catch{return null}}
+const stable=value=>JSON.stringify(value,(key,v)=>v&&typeof v==="object"&&!Array.isArray(v)?Object.fromEntries(Object.entries(v).sort(([a],[b])=>a.localeCompare(b))):v);
+function snapshot(name,key){try{const raw=localStorage.getItem(key);if(!raw)return null;const p=JSON.parse(raw);if(name==="focus"?!Number.isInteger(p)||p<0:!Array.isArray(p))return null;if(raw.length>150000)return null;return {raw:stable(p),p}}catch{return null}}
 function settingKey(){return control+"_"+user.id}
 function baselineKey(name){return "kitora_auto_cloud_base_"+user.id+"_"+name}
 function readBase(name){try{return JSON.parse(localStorage.getItem(baselineKey(name))||"null")}catch{return null}}
@@ -23,8 +24,8 @@ async function synchronize(){
    if(baseline?.raw===v.raw)continue;
    const {data:remote,error:readErr}=await db.from("kitora_workspace_backup").select("payload,updated_at").eq("user_id",user.id).eq("module",name).maybeSingle();
    if(readErr)throw readErr;
-   if(remote&&!baseline&&JSON.stringify(remote.payload)===v.raw){writeBase(name,remote.updated_at,v.raw);continue;}
-   if(remote&&(!baseline||JSON.stringify(remote.payload)!==baseline.raw)){conflicts++;continue;}
+   if(remote&&!baseline&&stable(remote.payload)===v.raw){writeBase(name,remote.updated_at,v.raw);continue;}
+   if(remote&&(!baseline||stable(remote.payload)!==baseline.raw)){conflicts++;continue;}
    const stamp=new Date().toISOString();
    const {error:writeErr}=await db.from("kitora_workspace_backup").upsert({user_id:user.id,module:name,payload:v.p,updated_at:stamp},{onConflict:"user_id,module"});
    if(writeErr)throw writeErr;
