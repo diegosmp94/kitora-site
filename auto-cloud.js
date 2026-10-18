@@ -47,6 +47,6 @@ async function init(){
   toggle.addEventListener("change",()=>{enabled=toggle.checked;localStorage.setItem(settingKey(),enabled?"yes":"no");document.getElementById("kitoraAutoCloudStatus").textContent=enabled?"Activation enregistrée. Les conflits seront ignorés, jamais écrasés.":"Sauvegarde automatique désactivée.";if(enabled)synchronize()});
   document.getElementById("kitoraAutoCloudStatus").textContent=enabled?"Sauvegarde automatique active sur cet appareil.":"Désactivée.";
  }
- if(enabled){synchronize();setInterval(synchronize,45000);window.addEventListener("focus",synchronize)}
+ if(enabled)synchronize();setInterval(synchronize,45000);window.addEventListener("focus",synchronize)
 }
 init();
