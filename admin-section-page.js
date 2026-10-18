@@ -10,6 +10,66 @@ async function loadOrders(){const body=$("#adminOrderRows");empty(body,5,"Charge
 async function loadRequests(){const root=$("#adminRequestList");root.replaceChildren();root.textContent="Chargement des demandes…";const{data,error}=await client.from("subscriber_requests").select("id,user_id,category,title,details,format,status,admin_reply,created_at").order("created_at",{ascending:false}).limit(100);if(error){root.textContent="Impossible de charger les demandes : "+error.message;return}root.replaceChildren();if(!data?.length){root.textContent="Aucune demande reçue.";return}for(const req of data){const article=document.createElement("article");article.className="kitora-request-admin";const title=document.createElement("h3");title.textContent=req.title;const meta=document.createElement("small");meta.textContent=new Date(req.created_at).toLocaleString("fr-FR")+" · "+req.category+" · "+req.format.toUpperCase()+" · Client : "+req.user_id.slice(0,8);const description=document.createElement("p");description.textContent=req.details;const status=document.createElement("select");status.setAttribute("aria-label","Statut de "+req.title);for(const [value,label] of Object.entries({new:"Nouvelle",in_progress:"En cours",completed:"Terminée",declined:"Refusée"})){const option=document.createElement("option");option.value=value;option.textContent=label;status.append(option)}status.value=req.status;const reply=document.createElement("textarea");reply.maxLength=3000;reply.placeholder="Réponse à l'abonné, instructions ou lien de livraison…";reply.value=req.admin_reply||"";reply.setAttribute("aria-label","Réponse pour "+req.title);const button=document.createElement("button");button.className="btn";button.type="button";button.textContent="Enregistrer la réponse";const feedback=document.createElement("p");feedback.setAttribute("role","status");button.addEventListener("click",async()=>{button.disabled=true;feedback.textContent="Enregistrement…";const{error}=await client.from("subscriber_requests").update({status:status.value,admin_reply:reply.value.trim()||null,updated_at:new Date().toISOString()}).eq("id",req.id);feedback.textContent=error?"Erreur : "+error.message:"Demande mise à jour.";button.disabled=false});article.append(title,meta,description,status,reply,button,feedback);root.append(article)}}
 
 const page=document.body.dataset.adminPage||({"admin-products.html":"products","admin-orders.html":"orders","admin-requests.html":"requests"}[location.pathname.split("/").pop()]);
+
+function filterRows(kind){
+ const prefix=kind==="products"?"Products":"Orders";
+ const tbody=document.getElementById(kind==="products"?"adminProductRows":"adminOrderRows");
+ const term=document.getElementById("admin"+prefix+"Search").value.trim().toLocaleLowerCase("fr");
+ const state=document.getElementById("admin"+prefix+"Filter").value;
+ const labels=kind==="products"?{published:"Publié",draft:"Brouillon",archived:"Archivé"}:{test:"Enregistrée",pending:"En attente",paid:"Payée",canceled:"Annulée",refunded:"Remboursée"};
+ let shown=0;
+ for(const row of tbody.querySelectorAll("tr")){
+  if(row.cells.length<4)continue;
+  const text=row.textContent.toLocaleLowerCase("fr");
+  const match=text.includes(term)&&(!state||text.includes((labels[state]||state).toLocaleLowerCase("fr")));
+  row.hidden=!match;if(match)shown++;
+ }
+ document.getElementById("admin"+prefix+"Count").textContent=shown+" ligne(s) affichée(s), dans la limite des données chargées.";
+}
+function filterRequests(){
+ const term=document.getElementById("adminRequestsSearch").value.trim().toLocaleLowerCase("fr");
+ const state=document.getElementById("adminRequestsFilter").value;
+ let shown=0;
+ for(const card of document.querySelectorAll("#adminRequestList .kitora-request-admin")){
+  const choice=card.querySelector("select");
+  const match=card.textContent.toLocaleLowerCase("fr").includes(term)&&(!state||choice?.value===state);
+  card.hidden=!match;if(match)shown++;
+ }
+ document.getElementById("adminRequestsCount").textContent=shown+" demande(s) affichée(s), dans la limite des données chargées.";
+}
+function csvCell(value){let s=String(value??"");if(/^[\s]*[=+@\-]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'}
+async function exportPage(kind){
+ const button=document.getElementById("admin"+({products:"Products",orders:"Orders",requests:"Requests"}[kind])+"Export");
+ button.disabled=true;
+ try{
+  const {data:{user},error:authError}=await client.auth.getUser();
+  if(authError||!user)throw Error("Session expirée.");
+  const {data:role,error:roleError}=await client.from("kitora_admins").select("user_id").eq("user_id",user.id).maybeSingle();
+  if(roleError||!role)throw Error("Droits administrateur requis.");
+  const specs={products:["catalog_products","id,title,price_cents,status"],orders:["orders","id,created_at,product_name,payment_reference,amount_cents,currency,status"],requests:["subscriber_requests","id,created_at,title,category,format,status"]};
+  const [table,fields]=specs[kind];
+  const {data,error}=await client.from(table).select(fields).order("created_at",{ascending:false}).limit(200);
+  if(error)throw error;
+  const columns=fields.split(",");
+  const lines=[columns.map(csvCell).join(";"),...(data||[]).map(row=>columns.map(key=>csvCell(row[key])).join(";"))];
+  const blob=new Blob(["\uFEFF",lines.join("\r\n")],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);const a=document.createElement("a");
+  a.href=url;a.download="kitora-"+kind+"-"+new Date().toISOString().slice(0,10)+".csv";
+  document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+ }catch(e){document.getElementById("adminStatus").textContent="Export impossible : "+(e.message||"erreur inconnue");}
+ finally{button.disabled=false;}
+}
+function addFilters(kind){
+ const prefix=kind==="products"?"Products":kind==="orders"?"Orders":"Requests";
+ const fn=kind==="requests"?filterRequests:()=>filterRows(kind);
+ document.getElementById("admin"+prefix+"Search").addEventListener("input",fn);
+ document.getElementById("admin"+prefix+"Filter").addEventListener("change",fn);
+ document.getElementById("admin"+prefix+"Export").addEventListener("click",()=>exportPage(kind));
+ const root=document.getElementById(kind==="products"?"adminProductRows":kind==="orders"?"adminOrderRows":"adminRequestList");
+ new MutationObserver(fn).observe(root,{childList:true});
+ if(kind==="requests")root.addEventListener("change",event=>{if(event.target.matches("select"))fn()});
+ fn();
+}
 async function initPage(){
  const status=$("#adminStatus");
  try{
@@ -21,11 +81,11 @@ async function initPage(){
   if(page==="products"){
    $("#adminProductsRefresh").addEventListener("click",loadProducts);
    $("#productReset").addEventListener("click",resetForm);$("#productPreviewButton").addEventListener("click",()=>{const title=$("#productTitle").value.trim(),desc=$("#productDescription").value.trim(),price=Number($("#productPrice").value),visibility=$("#productStatus").value;if(!title){$("#productFeedback").textContent="Renseigne d'abord le titre du produit.";return}$("#productPreviewTitle").textContent=title;$("#productPreviewDescription").textContent=desc||"Aucune description saisie.";$("#productPreviewPrice").textContent=Number.isFinite(price)&&price>=0?new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"}).format(price):"Prix invalide";$("#productPreviewStatus").textContent="Visibilité : "+({draft:"Brouillon",published:"Publié",archived:"Archivé"}[visibility]||visibility)+" · Achats à l'unité non activés.";$("#productPreview").hidden=false;});$("#adminProductForm").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget;if(!form.reportValidity())return;const button=$("#productSave"),feedback=$("#productFeedback"),id=$("#productId").value.trim();const price=Number($("#productPrice").value);if(!Number.isFinite(price)||price<0||price>100000){feedback.textContent="Prix invalide.";return}const payload={id,title:$("#productTitle").value.trim(),description:$("#productDescription").value.trim(),price_cents:Math.round(price*100),status:$("#productStatus").value};const editing=$("#productId").readOnly;if(payload.status==="published"&&!confirm("Publier cette fiche dans le catalogue visible par tous les visiteurs ? Les achats à l’unité restent désactivés."))return;button.disabled=true;feedback.textContent="Enregistrement…";try{const result=editing?await client.from("catalog_products").update({title:payload.title,description:payload.description,price_cents:payload.price_cents,status:payload.status,updated_at:new Date().toISOString()}).eq("id",id).select("id").single():await client.from("catalog_products").insert(payload).select("id").single();if(result.error)throw result.error;feedback.textContent="Produit enregistré.";await loadProducts();form.reset();$("#productId").readOnly=false;$("#productPreview").hidden=true}catch(error){feedback.textContent="Erreur : "+error.message}finally{button.disabled=false}});
-   await loadProducts();
+   addFilters("products");await loadProducts();
   }else if(page==="orders"){
-   $("#adminOrdersRefresh").addEventListener("click",loadOrders);await loadOrders();
+   $("#adminOrdersRefresh").addEventListener("click",loadOrders);addFilters("orders");await loadOrders();
   }else if(page==="requests"){
-   $("#adminRequestsRefresh").addEventListener("click",loadRequests);await loadRequests();
+   $("#adminRequestsRefresh").addEventListener("click",loadRequests);addFilters("requests");await loadRequests();
   }
  }catch(e){$("#adminProtected").hidden=true;status.textContent=e.message||"Administration indisponible."}
 }
