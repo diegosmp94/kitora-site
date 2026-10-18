@@ -25,6 +25,22 @@ async function refresh(){
    ["Erreur de vérification",data.stripe?.error||"Aucune signalée"]
   ];
   for(const [label,value] of metrics){const p=document.createElement("p");const b=document.createElement("strong");b.textContent=label+" : ";p.append(b,document.createTextNode(value));info.append(p)}
+  const audit=data.subscription_audit;
+  const auditHeading=document.createElement("h3");auditHeading.textContent="Rapprochement des abonnements payants";
+  info.append(auditHeading);
+  if(audit){
+    for(const[label,value]of [
+     ["Abonnements actifs côté Kitora",String(audit.total)],
+     ["Vérifiés actifs dans Stripe TEST",String(audit.verified)],
+     ["Absents ou non actifs dans Stripe",String(audit.missing)],
+     ["Non vérifiés",String(audit.unknown)],
+     ["Audit exhaustif et sans erreur",audit.complete?"Oui":"Non"]
+    ]){
+     const line=document.createElement("p"),bold=document.createElement("strong");bold.textContent=label+" : ";
+     line.append(bold,document.createTextNode(value));info.append(line);
+    }
+    if(audit.missing>0){const warning=document.createElement("p");warning.style.color="#a13b43";warning.textContent="Attention : certains droits actifs dans Kitora ne sont pas confirmés par le compte Stripe TEST utilisé sur le serveur.";info.append(warning)}
+  }
   root.append(info);
   for(const [key,label]of Object.entries(labels)){
    const value=Number(data.metrics?.[key]||0);
