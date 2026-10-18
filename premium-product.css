@@ -1,0 +1,42 @@
+/* Kitora — premium experience layer across product pages
+   Scope: body.kitora-premium. No behavioral selectors or remote assets. */
+body.kitora-premium{--kp-ink:#122b45;--kp-night:#081725;--kp-gold:#e6c18a;--kp-muted:#657a8f;background:radial-gradient(ellipse 52% 34% at 85% 0%,#dce7f2a1,transparent 85%),#f8fafc;color:var(--kp-ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body.kitora-premium>.bar{background:#081725;color:#e4d1b7;letter-spacing:.17em;font-size:11px}
+body.kitora-premium header.kitora-header{background:#081725!important;box-shadow:0 12px 40px #0615251b!important}
+body.kitora-premium main{min-height:60vh}
+body.kitora-premium main>.section:first-child{padding-top:70px}
+body.kitora-premium main>.section:first-child>.wrap>.kicker{display:inline-block;letter-spacing:.17em;color:#956c3b;font-weight:800;font-size:.72rem;margin-bottom:10px}
+body.kitora-premium main>.section:first-child>.wrap>h1{font:750 clamp(2.9rem,5.2vw,5.4rem)/1.04 system-ui,-apple-system,sans-serif;letter-spacing:-.075em;max-width:920px;margin:8px 0 15px;text-wrap:balance}
+body.kitora-premium main>.section:first-child>.wrap>p{font-size:clamp(1rem,1.5vw,1.16rem);color:#64778a;line-height:1.8;max-width:830px}
+body.kitora-premium .workspace-grid{gap:22px}
+body.kitora-premium .workspace-nav{margin:27px 0 30px}
+body.kitora-premium .workspace-nav a{font-size:.88rem;border-radius:12px;padding:10px 17px;background:white;border:1px solid #dce5ee;box-shadow:0 5px 15px #173b6010;transition:background .22s,transform .22s,border-color .22s}
+body.kitora-premium .workspace-nav a:hover{background:#eef4fa;transform:translateY(-2px)}
+body.kitora-premium .workspace-nav a[aria-current="page"]{background:#112e49;color:#fff;border-color:#112e49;box-shadow:0 8px 25px #0d2e4a24}
+body.kitora-premium .workspace-panel,body.kitora-premium .notes-panel,body.kitora-premium .panel,body.kitora-premium .plan-card{background:linear-gradient(150deg,#fff,#fcfdff);border:1px solid #dfe8f0;border-radius:24px;box-shadow:0 18px 50px #1034550d;transition:box-shadow .3s,transform .3s}
+body.kitora-premium .workspace-panel:hover,body.kitora-premium .notes-panel:hover,body.kitora-premium .plan-card:hover{box-shadow:0 23px 57px #1034551a;transform:translateY(-3px)}
+body.kitora-premium .workspace-panel h2,body.kitora-premium .notes-panel h2,body.kitora-premium .plan-card h2{letter-spacing:-.05em}
+body.kitora-premium input,body.kitora-premium textarea,body.kitora-premium select{accent-color:#1b4e72}
+body.kitora-premium main input:focus-visible,body.kitora-premium main textarea:focus-visible,body.kitora-premium main select:focus-visible{outline:3px solid #d9ae70;outline-offset:2px;border-color:#b68a50}
+body.kitora-premium .btn,body.kitora-premium main button.btn{border-radius:12px;transition:transform .2s,box-shadow .2s}
+body.kitora-premium a.btn:hover,body.kitora-premium button.btn:hover{transform:translateY(-2px)}
+body.kitora-premium .workspace-item{border-radius:14px;background:#f6f9fc;border-color:#e3ebf2}
+body.kitora-premium .kicker{color:#926637}
+body.kitora-premium .workspace-note,body.kitora-premium .muted{color:#64778a}
+body.kitora-premium .kp-context{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;margin:24px 0 32px;padding:18px 22px;border-radius:18px;background:linear-gradient(115deg,#102d48,#193b57);border:1px solid #33516c;color:#ecf3fa;box-shadow:0 15px 40px #0d29402a}
+body.kitora-premium .kp-context strong{display:block;color:#f4d5a7;font-size:.82rem;letter-spacing:.11em;text-transform:uppercase}
+body.kitora-premium .kp-context p{color:#cedbe7;margin:6px 0 0;line-height:1.55;font-size:.92rem}
+body.kitora-premium .kp-context a{white-space:nowrap;color:#0c2b45;background:#f0d1a4;border-radius:999px;font-size:.82rem;font-weight:780;padding:11px 16px;text-decoration:none}
+body.kitora-premium .kp-context a:hover{background:#fff1d5}
+body.kitora-premium .kp-context a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+body.kitora-premium [data-kp-stagger]{animation:kp-rise .6s both}
+@keyframes kp-rise{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:760px){
+ body.kitora-premium main>.section:first-child{padding-top:40px}
+ body.kitora-premium main>.section:first-child>.wrap>h1{font-size:clamp(2.65rem,10vw,4.2rem)}
+ body.kitora-premium .kp-context{grid-template-columns:minmax(0,1fr);padding:20px}
+ body.kitora-premium .kp-context a{justify-self:start}
+ body.kitora-premium .workspace-nav{overflow-x:auto;flex-wrap:nowrap;padding:2px 0 12px;scrollbar-width:thin}
+ body.kitora-premium .workspace-nav a{flex-shrink:0}
+}
+@media(prefers-reduced-motion:reduce){body.kitora-premium [data-kp-stagger]{animation:none!important}body.kitora-premium .workspace-panel,body.kitora-premium .notes-panel,body.kitora-premium .workspace-nav a,body.kitora-premium .btn{transition:none!important;transform:none!important}}
