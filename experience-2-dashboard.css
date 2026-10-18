@@ -49,3 +49,12 @@ body.kitora-dashboard [data-dash-reveal]{animation:dash-fade-in .72s both}
 @media(max-width:760px){body.kitora-dashboard .dash-hero{padding:73px 0 90px}body.kitora-dashboard .dash-hero h1{font-size:clamp(3rem,11.5vw,4.5rem)}body.kitora-dashboard .dash-overview{padding:23px;border-radius:22px}body.kitora-dashboard .workspace-stats{grid-template-columns:repeat(2,minmax(0,1fr))}body.kitora-dashboard .workspace-panel{padding:23px}body.kitora-dashboard .dash-main{margin-top:-33px}}
 @media(max-width:380px){body.kitora-dashboard .workspace-stats{grid-template-columns:minmax(0,1fr)}body.kitora-dashboard .dash-shortcuts a{width:100%}}
 @media(prefers-reduced-motion:reduce){body.kitora-dashboard [data-dash-reveal]{animation:none!important}body.kitora-dashboard .workspace-stat,body.kitora-dashboard .workspace-panel,body.kitora-dashboard .dash-hero-actions a{transition:none!important;transform:none!important}}
+
+/* Accessible skip link, restrained parallax and optical polish */
+.dash-skip-link{position:fixed;left:16px;top:12px;z-index:999;transform:translateY(-170%);padding:12px 18px;background:#f5d4a0;color:#10283f;border-radius:10px;font-weight:850;text-decoration:none;box-shadow:0 12px 35px #0713234d}
+.dash-skip-link:focus{transform:translateY(0);outline:3px solid #fff;outline-offset:3px}
+#dash-main-content:focus{outline:none}
+body.kitora-dashboard .dash-floating-symbol{transform:translate3d(0,calc(var(--dash-scroll,0) * 30px),0) rotate(-12deg)}
+body.kitora-dashboard a:focus-visible,body.kitora-dashboard button:focus-visible{outline:3px solid #d8a85e;outline-offset:4px}
+body.kitora-dashboard .dash-overview,body.kitora-dashboard .workspace-panel{contain:layout style}
+@media(prefers-reduced-motion:reduce){body.kitora-dashboard .dash-floating-symbol{transform:none!important}.dash-skip-link{transition:none!important}}
