@@ -29,3 +29,9 @@ jobs:
           node tests/payment-security.mjs
       - name: Verify deployed API rejects unauthenticated requests
         run: node tests/public-api-smoke.mjs
+      - name: Install headless browser for guest onboarding
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Test three guest trials and signup in Chromium
+        run: node tests/browser-guest-onboarding.mjs
