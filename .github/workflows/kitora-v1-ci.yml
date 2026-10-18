@@ -36,3 +36,5 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Test three guest trials and signup in Chromium
         run: node tests/browser-guest-onboarding.mjs
+      - name: Test plan access for guest, Free and paid subscribers
+        run: node tests/browser-plan-entitlements.mjs
