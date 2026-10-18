@@ -2,7 +2,7 @@ import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
 const db=createClient("https://yxjxizxzjubhjaxskksh.supabase.co","sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW");
 const modules=[["projects","kitora_projects_v1"],["agenda","kitora_agenda_v1"],["learn","kitora_learn_cards_v1"],["notes","kitora_notes_v1"],["challenge","kitora_challenge_7_v1"],["focus","kitora_focus_completed_v1"]];
 const control="kitora_auto_cloud_enabled_v1";
-let user=null,enabled=false,busy=false,last={};
+let user=null,enabled=false,busy=false;
 async function canUse(){
  const {data:{user:current},error}=await db.auth.getUser();if(error||!current)return false;
  const {data:sub,error:err}=await db.from("subscriptions").select("plan,status").eq("user_id",current.id).maybeSingle();
@@ -26,10 +26,12 @@ async function synchronize(){
    if(readErr)throw readErr;
    if(remote&&!baseline&&stable(remote.payload)===v.raw){writeBase(name,remote.updated_at,v.raw);continue;}
    if(remote&&(!baseline||stable(remote.payload)!==baseline.raw)){conflicts++;continue;}
-   const stamp=new Date().toISOString();
-   const {error:writeErr}=await db.from("kitora_workspace_backup").upsert({user_id:user.id,module:name,payload:v.p,updated_at:stamp},{onConflict:"user_id,module"});
+   const expected=baseline?JSON.parse(baseline.raw):null;
+   const {data:saved,error:writeErr}=await db.rpc("kitora_cloud_save_cas",{p_module:name,p_payload:v.p,p_expected_payload:expected});
    if(writeErr)throw writeErr;
-   writeBase(name,stamp,v.raw);updated++;
+   if(saved?.status==="conflict"){conflicts++;continue;}
+   if(saved?.status!=="saved")throw Error("Sauvegarde non autorisée : "+(saved?.status||"erreur"));
+   writeBase(name,saved.updated_at,v.raw);updated++;
   }
   if(location.pathname.endsWith("synchronisation.html")){
    const msg=document.getElementById("kitoraAutoCloudStatus");
