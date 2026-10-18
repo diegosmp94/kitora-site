@@ -48,7 +48,7 @@ async function loadUsers(){
  if(busyUsers)return;busyUsers=true;$("usersRefresh").disabled=true;message($("usersRows"),5,"Chargement sécurisé des comptes…");
  try{users=await request("list",usersPage);renderUsers();}
  catch(e){users=[];renderUsers();$("usersCount").textContent="Liste indisponible.";message($("usersRows"),5,e.message||"Service indisponible.");}
- finally{busyUsers=false;$("usersRefresh").disabled=false;renderUsers();}
+ finally{busyUsers=false;$("usersRefresh").disabled=false;$("usersPrevious").disabled=usersPage<=1;$("usersNext").disabled=users.length<50;}
 }
 async function loadAudit(){
  if(busyAudit)return;busyAudit=true;$("usersAuditRefresh").disabled=true;$("usersAuditStatus").textContent="Chargement du journal…";
