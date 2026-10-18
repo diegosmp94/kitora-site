@@ -16,9 +16,10 @@ async function choose(plan){
  if(!user)return refresh();
  $("toolChoiceStatus").textContent="Vérification de ta formule…";
  try{
-  if(plan==="plus"){
+  if(plan!=="free"){
    const {data:sub,error}=await db.from("subscriptions").select("status,plan").eq("user_id",user.id).maybeSingle();
-   if(error||sub?.status!=="active"||!["plus_monthly","plus_yearly"].includes(sub.plan))throw Error("Aucun abonnement Plus actif. Tu peux choisir Free ou consulter les abonnements.");
+   const plans={solo:["solo"],workspace:["workspace"],plus:["plus_monthly","plus_yearly"],ultimate:["ultimate"]};
+   if(error||sub?.status!=="active"||!plans[plan]?.includes(sub.plan))throw Error("Aucun abonnement "+plan+" actif. Pour tester une formule, passe par le panier Stripe TEST puis reviens choisir cette offre.");
   }
   const {error}=await db.from("kitora_tool_access").upsert({user_id:user.id,chosen_plan:plan,updated_at:new Date().toISOString()},{onConflict:"user_id"});
   if(error)throw error;
@@ -27,6 +28,7 @@ async function choose(plan){
 }
 $("toolChoiceFree").addEventListener("click",()=>choose("free"));
 $("toolChoicePlus").addEventListener("click",()=>choose("plus"));
+for(const plan of ["solo","workspace","ultimate"]){const button=$("toolChoice"+plan[0].toUpperCase()+plan.slice(1));if(button)button.addEventListener("click",()=>choose(plan))}
 $("toolChoiceLogin").addEventListener("submit",async event=>{
  event.preventDefault();
  const email=$("toolChoiceEmail").value.trim(),password=$("toolChoicePassword").value,display_name=$("toolChoiceName").value.trim();
