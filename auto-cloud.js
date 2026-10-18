@@ -23,6 +23,7 @@ async function synchronize(){
    if(baseline?.raw===v.raw)continue;
    const {data:remote,error:readErr}=await db.from("kitora_workspace_backup").select("payload,updated_at").eq("user_id",user.id).eq("module",name).maybeSingle();
    if(readErr)throw readErr;
+   if(remote&&!baseline&&JSON.stringify(remote.payload)===v.raw){writeBase(name,remote.updated_at,v.raw);continue;}
    if(remote&&(!baseline||JSON.stringify(remote.payload)!==baseline.raw)){conflicts++;continue;}
    const stamp=new Date().toISOString();
    const {error:writeErr}=await db.from("kitora_workspace_backup").upsert({user_id:user.id,module:name,payload:v.p,updated_at:stamp},{onConflict:"user_id,module"});
