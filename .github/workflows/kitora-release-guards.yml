@@ -15,6 +15,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --check cart.js
-      - run: node --check subscriber-requests.js
+      - run: node scripts/check-js-syntax.mjs
       - run: node scripts/check-live-checkout.mjs
