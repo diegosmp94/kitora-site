@@ -43,3 +43,5 @@ jobs:
         run: node tests/browser-plan-entitlements.mjs
       - name: Test hybrid immersive homepage responsive, accessibility and performance
         run: node tests/browser-home-immersive.mjs
+      - name: Test homepage keyboard support and auth modal focus
+        run: node tests/browser-home-keyboard.mjs
