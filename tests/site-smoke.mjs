@@ -1,6 +1,6 @@
 import {readFileSync,existsSync} from "node:fs";
-const pages=["index.html","boutique.html","boutique-gratuit.html","boutique-plus.html","compte.html","aide.html","a-propos.html","atelier.html","methodes.html","defi-7-jours.html","comparateur.html","plus-lab.html","focus.html","dashboard.html","projects.html","learn.html","agenda.html","templates.html","notes.html","offres.html","synchronisation.html","decouvrir.html","cas-utilisation.html","test-audience.html"];
-const scripts=["atelier.js","comparateur.js","defi-7-jours.js","plus-lab.js","focus.js","dashboard.js","projects.js","learn.js","agenda.js","templates.js","notes.js","transfert-local.js","synchronisation.js","decouvrir.js","test-audience.js"];
+const pages=["index.html","boutique.html","boutique-gratuit.html","boutique-plus.html","compte.html","aide.html","a-propos.html","atelier.html","methodes.html","defi-7-jours.html","comparateur.html","plus-lab.html","focus.html","dashboard.html","projects.html","learn.html","agenda.html","templates.html","notes.html","offres.html","synchronisation.html","trouver-mon-outil.html","parcours.html","collection.html","etude-clients.html","decouvrir.html","cas-utilisation.html","test-audience.html"];
+const scripts=["atelier.js","comparateur.js","defi-7-jours.js","plus-lab.js","focus.js","dashboard.js","projects.js","learn.js","agenda.js","templates.js","notes.js","transfert-local.js","trouver-mon-outil.js","collection-outils.js","etude-clients.js","synchronisation.js","decouvrir.js","test-audience.js"];
 let tests=0;
 for(const path of [...pages,...scripts]){
  if(!existsSync(path))throw Error("Fichier absent : "+path);
