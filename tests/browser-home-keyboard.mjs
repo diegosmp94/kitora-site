@@ -33,10 +33,10 @@ try{
  assert.equal(await page.evaluate(()=>document.activeElement?.id),"authOpenBtn","Closing modal should restore focus");
  await page.locator("#authOpenBtn").click();
  await page.locator("#authCloseBtn").focus();
+ await page.keyboard.press("Shift+Tab");
+ assert.equal(await page.evaluate(()=>document.activeElement?.id),"authSubmitBtn","Shift+Tab from first control should wrap to last");
  await page.keyboard.press("Tab");
  assert.equal(await page.evaluate(()=>document.activeElement?.id),"authCloseBtn","Tab from last control should wrap to first");
- await page.keyboard.press("Shift+Tab");
- assert.equal(await page.evaluate(()=>document.activeElement?.id),"authSubmitBtn","Shift+Tab must stay inside dialog");
  assert.ok((await page.locator("#nouveautes").innerText()).includes("compte Kitora Free"));
  assert.ok((await page.locator("#mon-besoin-kitora").innerText()).includes("compte Kitora Free"));
  console.log("Homepage keyboard navigation, modal Escape/focus trap, and account copy: passed.");
