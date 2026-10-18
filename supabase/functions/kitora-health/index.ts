@@ -35,6 +35,35 @@ Deno.serve(async req=>{
    stripeHealth.webhook_events_ok=!!found&&["checkout.session.completed","customer.subscription.created","customer.subscription.updated","customer.subscription.deleted","invoice.paid","invoice.payment_failed"].every(event=>found.enabled_events?.includes(event)||found.enabled_events?.includes("*"));
   }catch{stripeHealth.error="Stripe diagnostics unavailable"}
  }else{stripeHealth.error="Stripe TEST key missing (or a non-test key configured)";}
+ // Reconcile currently active Supabase subscriptions against the SAME Stripe TEST account.
+ // The result is aggregate-only and does not expose customer identifiers.
+ let subscriptionAudit={total:0,verified:0,missing:0,unknown:0,complete:false};
+ const {count:paidCount,error:countError}=await admin.from("subscriptions").select("user_id",{head:true,count:"exact"}).eq("status","active").neq("plan","free");
+ if(!countError){
+  subscriptionAudit.total=paidCount||0;
+  if(stripeHealth.test_only&&!stripeHealth.error){
+   const {data:sample,error:sampleError}=await admin.from("subscriptions").select("payment_subscription_id").eq("status","active").neq("plan","free").limit(10);
+   if(!sampleError&&sample){
+    const states=await Promise.all(sample.map(async (entry:{payment_subscription_id:string|null})=>{
+     const id=entry.payment_subscription_id;
+     if(!id||! /^sub_[A-Za-z0-9]+$/.test(id))return "missing";
+     try{
+      const response=await fetch("https://api.stripe.com/v1/subscriptions/"+encodeURIComponent(id),{
+       headers:{Authorization:"Bearer "+stripeKey},signal:AbortSignal.timeout(7000)
+      });
+      if(response.status===404)return "missing";
+      if(!response.ok)return "unknown";
+      const subscription=await response.json();
+      return subscription.status==="active"||subscription.status==="trialing"?"verified":"missing";
+     }catch{return "unknown"}
+    }));
+    subscriptionAudit.verified=states.filter(x=>x==="verified").length;
+    subscriptionAudit.missing=states.filter(x=>x==="missing").length;
+    subscriptionAudit.unknown=states.filter(x=>x==="unknown").length;
+    subscriptionAudit.complete=subscriptionAudit.total<=10&&subscriptionAudit.unknown===0;
+   }
+  }
+ }
  const staleBefore=new Date(Date.now()-10*60*1000).toISOString();
  const [pending,stale,pastDue,active,usage,queueWaiting,queueRunning,queueFailed,ultimateWaiting]=await Promise.all([
   admin.from("kitora_stripe_webhook_events").select("event_id",{head:true,count:"exact"}).is("processed_at",null),
@@ -49,6 +78,6 @@ Deno.serve(async req=>{
  ]);
  const entries={pending_webhooks:pending,stale_webhooks:stale,past_due_subscriptions:pastDue,active_subscriptions:active,stale_ai_reservations:usage,ai_queue_waiting:queueWaiting,ai_queue_running:queueRunning,ai_queue_failed:queueFailed,ai_queue_ultimate_waiting:ultimateWaiting};
  if(Object.values(entries).some(x=>x.error))return reply({error:"Monitoring query failed"},503);
- return reply({checked_at:new Date().toISOString(),mode:"test",stripe:stripeHealth,metrics:Object.fromEntries(Object.entries(entries).map(([name,r])=>[name,r.count??0])),limits:{webhook_stale_minutes:10,ai_stale_minutes:10}});
+ return reply({checked_at:new Date().toISOString(),mode:"test",stripe:stripeHealth,subscription_audit:subscriptionAudit,metrics:Object.fromEntries(Object.entries(entries).map(([name,r])=>[name,r.count??0])),limits:{webhook_stale_minutes:10,ai_stale_minutes:10}});
  }catch(error){console.error("health check failed",error);return reply({error:"Monitoring unavailable"},503)}
 });
