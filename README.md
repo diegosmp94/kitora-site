@@ -122,3 +122,25 @@ La table `public.kitora_workspace_backup` est réservée aux utilisateurs authen
 - `tests/site-smoke.mjs` : contrôles statiques de liens, structure et scripts.
 
 Un objectif réaliste pour une enquête de 100 personnes est qu'au moins 75 déclarent qu'un outil répond à leur besoin. Le nombre d'achats nécessite des observations réelles de clients et un moyen de comptabiliser les transactions confirmées. Tant que Stripe est en mode démonstration, ne pas assimiler les tentatives de paiement à des ventes réelles. Le design graphique historique reste inchangé et aucun paiement réel n'a été activé durant cette phase.
+
+## Administration — console de pilotage
+
+L'interface `admin.html` conserve les composants et la palette Kitora. Elle comprend désormais quatre onglets : Produits, Commandes, Demandes abonnés et Pilotage. Le module `admin-insights.js` ajoute :
+
+- recherche et filtre par statut pour les listes de produits, commandes et demandes ;
+- actualisation à la demande ;
+- indicateurs opérationnels (demandes ouvertes, anciennes demandes de plus de sept jours, produits publiés, commandes de démonstration) ;
+- exports CSV limités aux enregistrements consultables par l'administrateur ;
+- répartition des statuts et montants de commandes de test, sans les présenter comme chiffre d'affaires encaissé ;
+- aperçu avant publication d'une fiche produit, et confirmation de publication.
+
+Le module vérifie l'utilisateur connecté et son rôle via `kitora_admins` avant d'interroger Supabase. Les autorisations réelles restent contrôlées par les politiques RLS du serveur. Les consultations sont plafonnées aux enregistrements récents ; les chiffres du panneau Pilotage ne sont **pas** une mesure de trafic, de ventes réelles ni de conversion.
+
+### Tests administrateur nécessaires
+
+1. Confirmer qu'une personne non connectée et un compte standard ne peuvent accéder à aucune donnée administrative.
+2. Vérifier les filtres et les compteurs sur chaque onglet avec un compte administrateur autorisé.
+3. Tester les exports CSV dans un tableur, notamment les accents et les cellules commençant par des caractères de formule.
+4. Prévisualiser et publier une fiche de test, puis vérifier son affichage public dans le catalogue.
+5. Vérifier les états vide, erreur réseau et chargement de gros catalogues.
+6. Ne pas activer de paiement réel, ni modifier des statuts de commandes côté navigateur.
