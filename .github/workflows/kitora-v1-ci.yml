@@ -30,6 +30,8 @@ jobs:
           node tests/cloud-conflict-safety.mjs
       - name: Verify deployed API rejects unauthenticated requests
         run: node tests/public-api-smoke.mjs
+      - name: Verify sensitive database tables expose no anonymous records
+        run: node tests/anonymous-database-access.mjs
       - name: Install headless browser for guest onboarding
         run: |
           npm install --no-save playwright@1.58.2
