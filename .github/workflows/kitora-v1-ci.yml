@@ -27,6 +27,7 @@ jobs:
           node tests/ai-queue-readiness.mjs
           node tests/plus-generation-smoke.mjs
           node tests/payment-security.mjs
+          node tests/cloud-conflict-safety.mjs
       - name: Verify deployed API rejects unauthenticated requests
         run: node tests/public-api-smoke.mjs
       - name: Install headless browser for guest onboarding
