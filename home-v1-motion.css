@@ -72,3 +72,11 @@ body.kitora-home .sectionhead .eyebrow{color:#79532d;background:#f6e9d8;border-c
 @media(max-width:760px){.k-hero-stage .hero{min-height:0;padding:82px 0 65px;gap:65px}.k-hero-stage .hero h1{font-size:clamp(3rem,11vw,5rem)}.k-orbit.one{left:5%;top:-32px}.k-orbit.two{right:2%;bottom:-30px}.k-orientation .k-choices{grid-template-columns:1fr}.k-orientation .k-choice{min-height:0;padding:23px}.k-hero-foot{justify-content:center;text-align:center}.k-hero-stage .preview{box-shadow:0 20px 45px #0006}.k-hero-stage .hero:before{right:0;top:25px}}
 @media(max-width:390px){.k-orbit{font-size:.69rem;padding:8px 10px}.k-hero-stage .hero h1{font-size:2.75rem}.k-hero-stage .preview{padding:19px}.k-preview-tabs button{padding:7px 9px}}
 @media(prefers-reduced-motion:reduce){.k-ambient,.k-orbit,.k-scroll-cue:after{animation:none!important}.k-hero-stage .preview{transform:none!important;transition:none!important}.k-motion-ready [data-k-reveal]{opacity:1!important;transform:none!important;transition:none!important}.k-orientation .k-choice,.k-preview-tabs button{transition:none!important}}
+
+/* V1 keyboard navigation and stable anchor offsets */
+.k-skip-link{position:fixed;left:16px;top:12px;z-index:999;transform:translateY(-180%);background:#f8e3b9;color:#10283f;padding:12px 18px;border-radius:10px;font-weight:800;text-decoration:none;box-shadow:0 8px 30px #0005}
+.k-skip-link:focus{transform:translateY(0);outline:3px solid #fff;outline-offset:3px}
+#contenu-principal:focus{outline:none}
+body.kitora-home section[id]{scroll-margin-top:90px}
+body.kitora-home a:focus-visible,body.kitora-home button:focus-visible,body.kitora-home select:focus-visible{outline:3px solid #d7a75f;outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.k-skip-link{transition:none!important}}
