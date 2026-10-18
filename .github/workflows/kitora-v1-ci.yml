@@ -27,3 +27,5 @@ jobs:
           node tests/ai-queue-readiness.mjs
           node tests/plus-generation-smoke.mjs
           node tests/payment-security.mjs
+      - name: Verify deployed API rejects unauthenticated requests
+        run: node tests/public-api-smoke.mjs
