@@ -1,0 +1,18 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const read=p=>readFileSync(p,"utf8");
+const checkout=read("supabase/functions/create-checkout/index.ts");
+const webhook=read("supabase/functions/stripe-webhook/index.ts");
+const offers=read("offres.html"),chooser=read("choisir-offre.html"),cart=read("panier.html");
+assert.match(checkout,/startsWith\("sk_test_"\)/,"Checkout must reject all live keys");
+assert.match(webhook,/if \(event\.livemode\)/,"Webhook must not process live events");
+assert.match(webhook,/constructEventAsync/,"Webhook signature must be checked");
+assert.match(checkout,/existingResponse/,"Prevent duplicate subscription");
+assert.match(checkout,/line_items\[0\]\[price_data\]\[unit_amount\]/,"Prices must be server-defined");
+assert.match(offers,/Stripe TEST/);
+assert.match(cart,/Continuer vers Stripe TEST/);
+assert.match(chooser,/La file prioritaire Ultimate est installée/);
+assert.doesNotMatch(offers,/Aucune souscription possible aujourd'hui/);
+assert.match(read("release/PRODUCTION_PAYMENT_GO_NO_GO.md"),/NO-GO paiements réels/);
+assert.match(read("release/V1_SPECIFICATIONS_ET_DOCUMENTS_DRAFT.md"),/file prioritaire Ultimate/);
+console.log("Live payments remain disabled. Production copy and release checklist consistent.");

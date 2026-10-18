@@ -10,11 +10,11 @@ Date : 18 octobre 2026.
 | Solo | 1,99 €/mois | Outils Free, exports avancés CSV/Markdown sur Projects, Notes, Agenda, Learn | Étendre les exports à tous les outils pertinents et valider la différenciation |
 | Workspace | 3,99 €/mois | Solo, indicateurs avancés, sauvegarde automatique cloud **sur activation manuelle** | Résolution robuste des conflits multi-appareils, synchronisation bidirectionnelle |
 | Plus | 5,99 €/mois ou 59,90 €/an | Outils Free, demandes personnalisées, quota 10 documents IA/mois si le moteur est activé | Recette réelle du moteur IA, coût et qualité, politique de quota |
-| Ultimate | 8,99 €/mois | Workspace et Plus, quota IA de 30 documents/mois si moteur activé | File de traitement prioritaire mesurable (non encore fournie), SLA défini |
+| Ultimate | 8,99 €/mois | Workspace et Plus, quota IA de 30 documents/mois si moteur activé | File prioritaire installée sous Supabase ; génération de bout en bout, délais et SLA non validés |
 
 ### Limites actuelles
-- Le système de sauvegarde auto est une **sauvegarde unidirectionnelle prudente**, pas une synchronisation bidirectionnelle complète. En cas de conflit, il ne restaure pas ou n'écrase pas silencieusement la version distante.
-- La priorité de traitement Ultimate n'est pas activée tant qu'une vraie file de tâches serveur avec ordonnanceur n'existe pas.
+- Le système de sauvegarde auto utilise une comparaison atomique pour détecter les conflits. C'est une **sauvegarde unidirectionnelle prudente**, pas une synchronisation bidirectionnelle complète. En cas de conflit, il ne restaure pas ou n'écrase pas silencieusement la version distante.
+- Une file prioritaire Ultimate et un worker Supabase Cron existent ; la priorité et les durées d'attente doivent encore être validées sur des générations réelles. Aucun SLA garanti.
 - Les appels au fournisseur d'IA restent coupés par défaut via `KITORA_GROQ_ENABLED`.
 - Tous les abonnements et prix disponibles sont actuellement en environnement Stripe TEST.
 
