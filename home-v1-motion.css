@@ -10,7 +10,7 @@ body.kitora-home header .navlinks a:hover{color:#f4d8a6}
 body.kitora-home header #authOpenBtn{background:#ffffff15;color:#fff;border-color:#ffffff50;box-shadow:none}
 body.kitora-home header #accountBtn{background:#e7c38d;color:#11263a;box-shadow:none}
 body.kitora-home header .site-mobile-menu summary,body.kitora-home header .kitora-mobile summary{color:#f8f1e5}
-.k-hero-stage{isolation:isolate;position:relative;overflow:hidden;background:radial-gradient(ellipse 62% 68% at 82% 37%,#29476b9f 0,transparent 72%),radial-gradient(ellipse 48% 50% at 9% 85%,#4d4b395c 0,transparent 68%),linear-gradient(120deg,#081526,#112c47 60%,#0a192c);color:#f5f7fb}
+.k-hero-stage{isolation:isolate;position:relative;overflow:hidden;padding:0;background:radial-gradient(ellipse 62% 68% at 82% 37%,#29476b9f 0,transparent 72%),radial-gradient(ellipse 48% 50% at 9% 85%,#4d4b395c 0,transparent 68%),linear-gradient(120deg,#081526,#112c47 60%,#0a192c);color:#f5f7fb}
 .k-hero-stage:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(#ffffff09 1px,transparent 1px),linear-gradient(90deg,#ffffff09 1px,transparent 1px);background-size:70px 70px;mask-image:linear-gradient(90deg,transparent,#0008)}
 .k-hero-stage:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.26;background:radial-gradient(circle at var(--pointer-x,78%) var(--pointer-y,42%),#e5bd7054,transparent 32%);transition:opacity .4s}
 .k-ambient{pointer-events:none;position:absolute;border:1px solid #e7c38d28;border-radius:50%;z-index:-1;animation:k-drift 16s ease-in-out infinite}
@@ -31,7 +31,7 @@ body.kitora-home header .site-mobile-menu summary,body.kitora-home header .kitor
 .k-hero-stage .preview .task small{color:#65748a}
 .k-hero-stage .preview .tag{background:#d8efdf;color:#246a43}
 .k-preview-tabs{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 16px;position:relative;z-index:2}
-.k-preview-tabs button{font:700 .75rem/1.1 inherit;font-family:inherit;cursor:pointer;color:#29425d;background:#f2f6fa;border:1px solid #dbe5ed;border-radius:999px;padding:8px 12px;transition:background .22s,border-color .22s}
+.k-preview-tabs button{font-weight:700;font-size:.75rem;line-height:1.1;font-family:inherit;cursor:pointer;color:#29425d;background:#f2f6fa;border:1px solid #dbe5ed;border-radius:999px;padding:8px 12px;transition:background .22s,border-color .22s}
 .k-preview-tabs button[aria-pressed="true"]{background:#1d4163;color:white;border-color:#1d4163}
 .k-preview-tabs button:focus-visible{outline:3px solid #b8792a;outline-offset:2px}
 .k-preview-note{background:#eaf0f7;border:1px solid #d7e3ef;border-radius:14px;padding:14px 16px;color:#1d3550}
