@@ -9,10 +9,11 @@ async function load(){
   const {data:{user},error}=await supabase.auth.getUser();
   if(error||!user){location.replace(chooser);return;}
   const {data:row,error:choiceError}=await supabase.from("kitora_tool_access").select("chosen_plan").eq("user_id",user.id).maybeSingle();
-  if(choiceError||!row||!["free","plus"].includes(row.chosen_plan)){location.replace(chooser);return;}
-  if(row.chosen_plan==="plus"){
+  if(choiceError||!row||!["free","solo","workspace","plus","ultimate"].includes(row.chosen_plan)){location.replace(chooser);return;}
+  if(row.chosen_plan!=="free"){
    const {data:sub,error:subError}=await supabase.from("subscriptions").select("status,plan").eq("user_id",user.id).maybeSingle();
-   if(subError||sub?.status!=="active"||!["plus_monthly","plus_yearly"].includes(sub.plan)){location.replace(chooser);return;}
+   const plans={solo:["solo"],workspace:["workspace"],plus:["plus_monthly","plus_yearly"],ultimate:["ultimate"]};
+   if(subError||sub?.status!=="active"||!plans[row.chosen_plan]?.includes(sub.plan)){location.replace(chooser);return;}
   }
   for(const old of document.querySelectorAll("script[data-kitora-protected-src]")){
    const source=old.dataset.kitoraProtectedSrc;

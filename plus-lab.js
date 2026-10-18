@@ -21,7 +21,7 @@ async function check(){
   if(error||!user){status.textContent="Connecte-toi pour accéder à l'espace exclusif Kitora Plus.";return}
   const{data:sub,error:subError}=await client.from("subscriptions").select("plan,status").eq("user_id",user.id).maybeSingle();
   if(subError)throw Error("Vérification de l'abonnement indisponible.");
-  if(sub?.status!=="active"||!["plus_monthly","plus_yearly"].includes(sub.plan)){status.textContent="Cet atelier est réservé aux abonnements Kitora Plus actifs.";return}
+  if(sub?.status!=="active"||!["plus_monthly","plus_yearly","ultimate"].includes(sub.plan)){status.textContent="Cet atelier est réservé aux abonnements Kitora Plus actifs.";return}
   authorizedUser=user.id;status.textContent="Kitora Plus actif — tu peux préparer une demande.";form.hidden=false;preview();
  }catch(e){status.textContent="Impossible de confirmer l'accès : "+e.message}
 }
