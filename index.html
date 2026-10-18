@@ -188,7 +188,7 @@ footer{background:#102c4b;color:#dce9f5;padding:45px 0}footer .brand,footer a{co
     </div>
   </section>
 
-  <section id="generateur">
+  <section id="generateur"><div class="wrap"><p id="guestTrialStatus" role="status" aria-live="polite" style="padding:9px 0;color:#102c4b;font-weight:600">3 générations gratuites disponibles sans compte.</p></div>
     <div class="wrap">
       <div class="sectionhead"><span class="eyebrow">L'ATELIER · 02</span><h2>À toi de composer.</h2><p>Réponds à quelques questions. La démo construit une feuille de route que tu peux télécharger.</p></div>
       <div class="builder">
@@ -246,8 +246,10 @@ footer{background:#102c4b;color:#dce9f5;padding:45px 0}footer .brand,footer a{co
 <script type="module">
 let currentKit = {title:"Mon kit Kitora", text:"Ton kit personnalisé apparaîtra ici."};
 function toast(message){const el=document.getElementById('toast');el.textContent=message;el.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.style.display='none',3600);}
-function generatePreset(kind){document.getElementById('kind').value=kind;document.getElementById('generateur').scrollIntoView({behavior:'smooth'});buildKit();}
-function buildKit(){
+async function generatePreset(kind){document.getElementById('kind').value=kind;document.getElementById('generateur').scrollIntoView({behavior:'smooth'});await buildKit();}
+async function buildKit(){
+ const allowed=await window.KitoraFreeTrial.consume(document.getElementById('guestTrialStatus'),()=>{document.getElementById('result').textContent="Crée un compte gratuit pour continuer à générer des kits.";});
+ if(!allowed)return false;
  const kind=document.getElementById('kind').value;
  const goal=document.getElementById('goal').value.trim()||"avancer sur mon objectif cette semaine";
  const time=document.getElementById('time').value;
@@ -261,9 +263,10 @@ function buildKit(){
  if(kind==="habitude") steps=["Choisis un déclencheur régulier (ex. après le petit-déjeuner).","Définis une version facile de l'habitude en moins de "+time+".","Prépare l'environnement pour réduire les obstacles.","Coche chaque essai sans chercher la perfection.","Fais le point après 7 jours et adapte la difficulté."];
  currentKit={kind,steps,intro:intro[style],title:names[kind],goal,time,style,text:names[kind]+"\nMon objectif : "+goal+"\nTemps disponible : "+time+"\n\nMon plan :\n"+steps.map((s,i)=>(i+1)+". "+s).join("\n")+"\n\nRappel : "+intro[style]+"\n\nBilan de fin de semaine :\n- Ce qui a fonctionné :\n- Ce que je peux simplifier :\n- Ma prochaine étape :"};
  document.getElementById('result').innerHTML="<span class='tag'>KIT PERSONNALISÉ</span><h3 style='margin-top:14px'>"+escapeHtml(names[kind])+"</h3><p><strong>Mon objectif :</strong> "+escapeHtml(goal)+"</p><p><strong>Temps prévu :</strong> "+escapeHtml(time)+" par jour</p><ul>"+steps.map(s=>"<li>"+escapeHtml(s)+"</li>").join("")+"</ul><p class='note'>"+escapeHtml(intro[style])+"</p><hr style='border:0;border-top:1px solid #dfe2f4'><strong>Bilan de fin de semaine</strong><p class='note'>Ce qui a fonctionné : __________<br>Ce que je peux simplifier : __________<br>Ma prochaine étape : __________</p>";
+ return true;
 }
 function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function downloadKit(){if(!currentKit.text||currentKit.text==="Ton kit personnalisé apparaîtra ici."){buildKit();}const blob=new Blob([currentKit.text],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='kitora-mon-kit.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);toast('Ton kit a été préparé au format .txt.');}
+async function downloadKit(){if(!currentKit.text||currentKit.text==="Ton kit personnalisé apparaîtra ici."){const created=await buildKit();if(!created)return;}const blob=new Blob([currentKit.text],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='kitora-mon-kit.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);toast('Ton kit a été préparé au format .txt.');}
 
 // CONFIGURATION KITORA : remplace uniquement la clé ci-dessous par la clé Publishable/anon de Supabase.
 const SUPABASE_URL = 'https://yxjxizxzjubhjaxskksh.supabase.co';
@@ -286,6 +289,7 @@ const nameField = document.getElementById('nameField');
 const accountPanel = document.getElementById('accountPanel');
 function setAuthMode(mode){authMode=mode;const signup=mode==='signup';document.getElementById('signupTab').classList.toggle('active',signup);document.getElementById('loginTab').classList.toggle('active',!signup);nameField.hidden=!signup;document.getElementById('displayName').required=false;document.getElementById('authPassword').autocomplete=signup?'new-password':'current-password';authTitle.textContent=signup?'Créer mon compte':'Content de te revoir';authDescription.textContent=signup?'Inscris-toi pour préparer ton espace personnel.':'Connecte-toi pour retrouver ton espace Kitora.';authSubmitBtn.textContent=signup?'Créer mon compte':'Se connecter';authStatus.textContent=signup?'Tu devras confirmer ton adresse e-mail si cette option est activée dans Supabase.':'Entre l’adresse e-mail et le mot de passe associés à ton compte.';authForm.hidden=false;accountPanel.hidden=true;}
 function openAuth(){modal.hidden=false;setAuthMode('signup');document.body.style.overflow='hidden';}
+if(new URLSearchParams(location.search).get('signup')==='1'){openAuth();history.replaceState(null,'',location.pathname+location.hash);}
 function closeAuth(){modal.hidden=true;document.body.style.overflow='';}
 document.getElementById('authOpenBtn').addEventListener('click',openAuth);
 document.getElementById('accountBtn').addEventListener('click',async()=>{modal.hidden=false;document.body.style.overflow='hidden';authForm.hidden=true;accountPanel.hidden=false;authTitle.textContent='Mon compte';authDescription.textContent='Ton espace personnel Kitora';if(supabaseClient){const {data:{user}}=await supabaseClient.auth.getUser();document.getElementById('accountEmail').textContent=user?.email||'Compte connecté';} });
@@ -302,5 +306,5 @@ authForm.addEventListener('submit',async e=>{e.preventDefault();if(!supabaseClie
 Object.assign(window,{kitoraPdfKit:()=>({...currentKit,steps:[...(currentKit.steps||[])]}),toast,generatePreset,buildKit,downloadKit,downloadKitPdf:()=>window.kitoraDownloadPdf?.()||toast("Le module PDF se charge. Réessaie dans un instant.")});
 initSupabaseAuth();
 </script>
-<script src="language.js?v=20261018-users1" defer></script><script src="pdf-kit.js" defer></script></body>
+<script src="free-trials.js?v=20261018-guest3" defer></script><script src="language.js?v=20261018-users1" defer></script><script src="pdf-kit.js" defer></script></body>
 </html>
