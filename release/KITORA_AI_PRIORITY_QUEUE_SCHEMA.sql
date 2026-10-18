@@ -29,6 +29,8 @@ begin
  where j.status='processing' and j.started_at<now()-interval '3 minutes' and j.attempts<j.max_attempts;
  update public.kitora_ai_jobs j set status='failed',finished_at=now(),error_code='timeout'
  where j.status='processing' and j.started_at<now()-interval '3 minutes' and j.attempts>=j.max_attempts;
+ delete from public.kitora_ai_reservations r using public.kitora_ai_jobs j
+ where r.request_id=j.request_id and j.status='failed' and j.error_code='timeout' and r.completed_at is null;
  return query with next as (
  select j.request_id from public.kitora_ai_jobs j
  where j.status='queued' and j.run_after<=now()
