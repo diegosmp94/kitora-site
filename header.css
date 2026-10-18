@@ -19,3 +19,8 @@ header.kitora-header .kitora-mobile-group-links{display:grid;gap:2px;padding:2px
 header.kitora-header .kitora-mobile .kitora-mobile-group-links a{color:#d9e7f6!important;padding:10px 12px;font-size:13px}
 header.kitora-header .kitora-mobile .kitora-mobile-links{max-height:min(76vh,650px);overflow-y:auto;overscroll-behavior:contain}
 @media(max-width:1170px){header.kitora-header .kitora-header-links .kitora-nav-group{display:none!important}}
+
+/* Admin menu only appears after authenticated role check. */
+header.kitora-header [data-kitora-admin-link][hidden]{display:none!important}
+header.kitora-header .kitora-admin-menu:not([hidden])>summary{color:#f1d5a8!important}
+header.kitora-header .kitora-admin-menu:not([hidden]){border-color:#d3ac7360}
