@@ -8,7 +8,7 @@ const cards=[...document.querySelectorAll("[data-offer-plan]")];
 const feedback=document.getElementById("billing-feedback");
 const params=new URLSearchParams(location.search);
 let period=params.get("periode")==="annuel"?"yearly":"monthly";
-const euro=n=>new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"}).format(n);
+const euro=n=>new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"}).format(n/100);
 function render(){
  buttons.forEach(button=>{const active=button.dataset.billingPeriod===period;button.setAttribute("aria-pressed",String(active));});
  cards.forEach(card=>{
