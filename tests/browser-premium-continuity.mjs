@@ -23,7 +23,7 @@ try{
   await page.route(/https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@2\/\+esm/,route=>route.fulfill({status:200,contentType:"text/javascript",body:mock}));
   for(const route of ["projects.html","learn.html","agenda.html","notes.html","offres.html","compte.html"]){
    await page.goto(base+"/"+route,{waitUntil:"domcontentloaded"});
-   await page.locator(".kp-context").waitFor();
+   await page.locator(".kp-context").waitFor({state:"attached"});
    const result=await page.evaluate(()=>({
     viewport:innerWidth,document:document.documentElement.scrollWidth,
     style:getComputedStyle(document.body).backgroundImage,
@@ -33,6 +33,7 @@ try{
    assert.ok(result.document<=result.viewport+2,route+" overflows at "+width+": "+JSON.stringify(result));
    assert.ok(result.style.includes("gradient"),route+" premium design not loaded");
    assert.ok(result.title&&result.link,route+" content missing");
+   // Tool entitlement and authenticated visibility are tested separately in browser-plan-entitlements.mjs.
   }
   await page.close();
  }
