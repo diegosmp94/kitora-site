@@ -35,9 +35,11 @@ jobs:
         run: node tests/anonymous-database-access.mjs
       - name: Install headless browser for guest onboarding
         run: |
-          npm install --no-save playwright@1.58.2
+          npm install --no-save playwright@1.58.2 axe-core@4.10.3
           npx playwright install --with-deps chromium
       - name: Test three guest trials and signup in Chromium
         run: node tests/browser-guest-onboarding.mjs
       - name: Test plan access for guest, Free and paid subscribers
         run: node tests/browser-plan-entitlements.mjs
+      - name: Test hybrid immersive homepage responsive, accessibility and performance
+        run: node tests/browser-home-immersive.mjs
