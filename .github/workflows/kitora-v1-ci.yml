@@ -21,6 +21,7 @@ jobs:
         run: |
           set -eu
           node tests/site-smoke.mjs
+          node tests/premium-continuity.mjs
           node tests/experience-2-assets.mjs
           node tests/free-tools-access.mjs
           node tests/test-three-tiers.mjs
@@ -50,3 +51,5 @@ jobs:
         run: node tests/browser-home-cinema.mjs
       - name: Test Experience 2.0 connected dashboard responsive and secure
         run: node tests/browser-experience-2-dashboard.mjs
+      - name: Test premium pages on mobile, tablet and desktop
+        run: node tests/browser-premium-continuity.mjs
