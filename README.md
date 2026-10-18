@@ -106,3 +106,19 @@ La table `public.kitora_workspace_backup` est réservée aux utilisateurs authen
 - `test-audience.html` + `test-audience.js` : outil d'enquête locale pour saisir jusqu'à 100 réponses réelles, puis exporter un CSV. Mesure la pertinence déclarée (« Oui ») et l'intention d'achat déclarée ; les ventes réelles exigent des données de commandes réelles en conformité avec la confidentialité des utilisateurs.
 - Objectif indicatif : au moins 75 réponses « Oui » sur un panel de 100 visiteurs diversifiés. Ne pas annoncer ce chiffre comme une conversion ou un résultat atteint sans enquête.
 - Test de génération PDF : huit cas fictifs testés avec un moteur jsPDF simulé ; aucune requête Groq ni aucun PDF réel n'ont été générés pendant ce test.
+
+## Étude de besoins, catalogue et tests clients (octobre 2026)
+
+- `trouver-mon-outil.html` et `trouver-mon-outil.js` : questionnaire de 3 choix, recommandations de 3 outils gratuits déjà disponibles. Les retours facultatifs sont conservés **localement**, sans remontée analytique vers le serveur.
+- `parcours.html` : quatre parcours correspondant aux études, à la création, aux projets et à l'organisation du quotidien.
+- `collection.html` et `collection-outils.js` : catalogue filtrable, basé sur `products.js` ; dix références au total, dont huit gratuites et deux en préparation.
+- `produit.html` : fiches produits mises à jour pour diriger les visiteurs vers les outils gratuits propres à chaque référence.
+- `etude-clients.html` : feuille d'enquête manuelle pour calculer séparément la reconnaissance déclarée et la conversion d'achats confirmés. Les nombres sont saisis par l'utilisateur et ne représentent pas une mesure automatique du trafic.
+
+### Tests disponibles
+
+- `tests/orientation-100.mjs` : cent profils **synthétiques** (dix intentions, différents degrés d'avancement et préférences). L'évaluation ponctuelle a trouvé au moins une suggestion pertinente dans 100 cas sur 100 et une première suggestion pertinente dans 88 cas sur 100, selon le barème prédéfini. **Ce n'est pas un taux d'achat, un sondage réel, ni une preuve que 100 % des clients se reconnaissent dans le site.**
+- `tests/generate-client-products.mjs` : trois exemples de documents clients, avec une bibliothèque PDF simulée ; vérifie la conservation du titre, du contenu, des étapes et de l'export TXT. **Ne remplace pas un rendu visuel complet dans le navigateur.**
+- `tests/site-smoke.mjs` : contrôles statiques de liens, structure et scripts.
+
+Un objectif réaliste pour une enquête de 100 personnes est qu'au moins 75 déclarent qu'un outil répond à leur besoin. Le nombre d'achats nécessite des observations réelles de clients et un moyen de comptabiliser les transactions confirmées. Tant que Stripe est en mode démonstration, ne pas assimiler les tentatives de paiement à des ventes réelles. Le design graphique historique reste inchangé et aucun paiement réel n'a été activé durant cette phase.
