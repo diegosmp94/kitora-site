@@ -28,7 +28,7 @@ try{
  for(const scenario of fixtures){
   const ctx=await browser.newContext();
   const page=await ctx.newPage();
-  const mocked=`export function createClient(){const user=${JSON.stringify(scenario.user?{id:"test-user"}:null)}; const selected=${JSON.stringify(scenario.selection)}; const plan=${JSON.stringify(scenario.plan)};return {auth:{getUser:async()=>({data:{user},error:null}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})},from(table){return{select(){return this},eq(){return this},maybeSingle:async()=>({data:table==="kitora_tool_access"?(selected?{chosen_plan:selected}:null):table==="subscriptions"?(plan?{status:"active",plan}:null):null,error:null})}}}}}`;
+  const mocked=`export function createClient(){const user=${JSON.stringify(scenario.user?{id:"test-user"}:null)}; const selected=${JSON.stringify(scenario.selection)}; const plan=${JSON.stringify(scenario.plan)};return {auth:{getUser:async()=>({data:{user},error:null}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})},from(table){return{select(){return this},eq(){return this},maybeSingle:async()=>({data:table==="kitora_tool_access"?(selected?{chosen_plan:selected}:null):table==="subscriptions"?(plan?{status:"active",plan}:null):null,error:null})}}}}`;
   await page.route(/https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@2\/\+esm/,route=>route.fulfill({status:200,contentType:"application/javascript",body:mocked}));
   await page.goto(base+"/projects.html",{waitUntil:"domcontentloaded"});
   if(scenario.expected==="loaded"){
