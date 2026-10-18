@@ -14,6 +14,18 @@ async function refresh(){
   $("healthProtected").hidden=false;
   $("healthChecked").textContent="Dernière vérification : "+new Date(data.checked_at).toLocaleString("fr-FR")+" · Stripe TEST";
   const root=$("healthMetrics");root.replaceChildren();
+  const info=document.createElement("section");
+  const heading=document.createElement("h3");heading.textContent="Diagnostic Stripe TEST";
+  info.append(heading);
+  const metrics=[
+   ["Clé serveur test",data.stripe?.test_only?"Oui":"Non / non vérifiable"],
+   ["Compte Stripe connecté",data.stripe?.account_id||"Indisponible"],
+   ["Webhook pour ce compte",data.stripe?.endpoint_status||"Indisponible"],
+   ["Six événements requis",data.stripe?.webhook_events_ok?"Configurés":"Non vérifiés / incomplets"],
+   ["Erreur de vérification",data.stripe?.error||"Aucune signalée"]
+  ];
+  for(const [label,value] of metrics){const p=document.createElement("p");const b=document.createElement("strong");b.textContent=label+" : ";p.append(b,document.createTextNode(value));info.append(p)}
+  root.append(info);
   for(const [key,label]of Object.entries(labels)){
    const value=Number(data.metrics?.[key]||0);
    const p=document.createElement("p"),strong=document.createElement("strong");
