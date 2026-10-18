@@ -32,6 +32,8 @@ try{
  assert.ok(await page.locator("#authModal").isHidden(),"Escape should close modal");
  assert.equal(await page.evaluate(()=>document.activeElement?.id),"authOpenBtn","Closing modal should restore focus");
  await page.locator("#authOpenBtn").click();
+ // Wait until requestAnimationFrame has placed the dialog's initial focus.
+ await page.waitForFunction(()=>document.activeElement?.id==="authEmail");
  await page.locator("#authCloseBtn").focus();
  await page.keyboard.press("Shift+Tab");
  assert.equal(await page.evaluate(()=>document.activeElement?.id),"authSubmitBtn","Shift+Tab from first control should wrap to last");
