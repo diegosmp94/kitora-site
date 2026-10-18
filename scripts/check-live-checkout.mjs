@@ -1,0 +1,13 @@
+import { readFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
+const cart = readFileSync('cart.js','utf8');
+const page = readFileSync('panier.html','utf8');
+const account = readFileSync('compte.html','utf8');
+assert.match(cart, /create-checkout-live/, 'Plus LIVE checkout route is missing');
+assert.match(cart, /create-checkout/, 'TEST checkout route is missing');
+assert.match(cart, /plus_monthly/);
+assert.match(cart, /plus_yearly/);
+assert.match(account, /customer-portal-live/, 'LIVE billing portal route is missing');
+assert.match(page, /Stripe LIVE/, 'Customer-facing LIVE billing disclosure is missing');
+assert.doesNotMatch(cart, /sk_live_|rk_live_|whsec_/, 'Never put Stripe secrets in client code');
+console.log('Kitora LIVE checkout static integration checks passed');
