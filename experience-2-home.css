@@ -1,0 +1,47 @@
+/* Kitora Experience 2.0 — visual direction
+   Obsidian navy, brushed champagne, editorial whitespace.
+   No remote font, imagery or animation framework. */
+:root{--kx-night:#071323;--kx-ink:#132a43;--kx-gold:#eac58e;--kx-gold-muted:#ae8855;--kx-cloud:#f8fafc}
+body.kitora-home{background:var(--kx-cloud);color:var(--kx-ink)}
+body.kitora-home .kitora-strip{background:#071323;letter-spacing:.13em;font-size:.67rem}
+body.kitora-home header.kitora-header{background:#071323!important;box-shadow:none!important;border-color:#ffffff20!important}
+body.kitora-home .k-hero-stage{background:radial-gradient(ellipse 55% 65% at 80% 18%,#385876b8 0,transparent 72%),radial-gradient(ellipse 40% 75% at 2% 82%,#373e3b80 0,transparent 78%),linear-gradient(145deg,#071323,#102943 56%,#081626)}
+body.kitora-home .k-hero-stage .hero{min-height:min(780px,89svh);padding-block:110px 130px;gap:clamp(30px,4vw,80px)}
+body.kitora-home .k-hero-stage .hero h1{font-size:clamp(3.6rem,7vw,7rem);max-width:780px;line-height:.98;letter-spacing:-.085em;text-wrap:balance}
+body.kitora-home .k-hero-stage .hero h1 em{font-family:Georgia,serif;font-weight:400;font-style:italic;color:#f8dba7}
+body.kitora-home .k-hero-stage .lead{font-size:clamp(1.05rem,1.6vw,1.2rem);max-width:550px;line-height:1.85}
+body.kitora-home .k-hero-stage .preview{border-radius:26px;box-shadow:0 48px 130px #010710a8,0 0 0 1px #ffffff50,0 0 0 10px #ffffff08}
+body.kitora-home .k-hero-stage .hero .pill:not(.light){border-radius:999px;padding:16px 25px;box-shadow:0 16px 48px #cfb47a20;transition:transform .28s ease,box-shadow .28s ease}
+body.kitora-home .k-hero-stage .hero .pill:hover{box-shadow:0 20px 65px #f6cd7b4a;transform:translateY(-3px)}
+body.kitora-home .k-cinema-intro h2{max-width:980px;font-size:clamp(3.3rem,6.4vw,7.2rem)}
+body.kitora-home .k-cinema{padding-block:130px;background:linear-gradient(175deg,#fcfdfd 2%,#edf3f8 52%,#f8fafc)}
+body.kitora-home .k-cinema-stage{border-radius:36px;box-shadow:0 60px 120px #0c284533}
+body.kitora-home .k-cinema-chapter h3{font-size:clamp(3rem,4.7vw,5.6rem)}
+body.kitora-home .k-cinema-chapter a{display:inline-flex;align-items:center;gap:16px;transition:gap .3s ease}
+body.kitora-home .k-cinema-chapter a:hover{gap:24px}
+body.kitora-home .k-cinema-chapter a:focus-visible{outline-color:#b28246}
+body.kitora-home .k-orientation{background:linear-gradient(180deg,#f8fafc,#fff)}
+body.kitora-home .k-orientation .k-choice{border-radius:26px;min-height:220px;box-shadow:0 24px 64px #1736540d}
+body.kitora-home .k-orientation .k-choice:hover{transform:translateY(-8px);box-shadow:0 30px 70px #17365421}
+body.kitora-home .k-orientation .k-recommendation{border-radius:26px;background:linear-gradient(130deg,#091c32,#143956)}
+body.kitora-home .sectionhead h2{letter-spacing:-.065em;text-wrap:balance}
+body.kitora-home section:not(.k-hero-stage):not(.k-cinema) .card{border-radius:24px;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+body.kitora-home .cta{border-radius:28px;background:linear-gradient(145deg,#0a1a2c,#123d5b);box-shadow:0 25px 80px #0c294123}
+body.kitora-home .k-experience-bridge{overflow:clip;position:relative;background:#071323;color:#fff;text-align:center;padding:clamp(85px,12vw,170px) 0}
+body.kitora-home .k-experience-bridge:before{content:"";position:absolute;inset:-25%;background:radial-gradient(ellipse at 50% 50%,#ca985c3f,transparent 43%);pointer-events:none}
+.k-experience-bridge .wrap{position:relative;z-index:1}
+.k-experience-bridge .k-experience-label{color:#f0cb93;font-size:.72rem;font-weight:800;letter-spacing:.23em}
+.k-experience-bridge h2{font-size:clamp(3rem,7.2vw,7.5rem);letter-spacing:-.085em;line-height:1.02;margin:25px auto 22px;max-width:980px;text-wrap:balance}
+.k-experience-bridge h2 em{font:italic 400 1em Georgia,serif;color:#f2d09d}
+.k-experience-bridge p{color:#ced9e5;font-size:1.12rem;max-width:610px;margin:0 auto 35px;line-height:1.8}
+.k-experience-bridge .pill{background:#f0cf9b;color:#0b243c;box-shadow:none}
+.k-experience-bridge .k-experience-ring{position:absolute;inset:50% auto auto 50%;width:68vw;max-width:880px;aspect-ratio:1;border:1px solid #f0cd8a26;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 0 0 90px #e1c18a05,0 0 0 190px #e1c18a04}
+@media(max-width:1100px){body.kitora-home .k-hero-stage .hero{min-height:0;padding-block:75px 95px}}
+@media(max-width:760px){
+ body.kitora-home .k-hero-stage .hero h1{font-size:clamp(3.1rem,11vw,5.5rem)!important}
+ body.kitora-home .k-cinema{padding-block:80px}
+ body.kitora-home .k-cinema-stage{border-radius:24px}
+ body.kitora-home .k-orientation .k-choice{min-height:0}
+ .k-experience-bridge h2{font-size:clamp(3rem,11vw,4.7rem)}
+}
+@media(prefers-reduced-motion:reduce){body.kitora-home *,body.kitora-home *::before,body.kitora-home *::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}

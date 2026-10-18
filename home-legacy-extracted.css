@@ -1,0 +1,135 @@
+/* Existing functional layout extracted from inline styles; cascade preserved. */
+
+:root{--ink:#18213b;--muted:#66708a;--blue:#5265f5;--blue2:#e9ecff;--cream:#fbfaf7;--line:#e8e9f0;--green:#e7f7ef}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+a{color:inherit;text-decoration:none}.wrap{width:min(1100px,92%);margin:auto}.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}.brand{font-weight:900;font-size:1.35rem;letter-spacing:-.06em}.brand span{color:var(--blue)}.navlinks{display:flex;gap:22px;align-items:center;font-size:.92rem;color:var(--muted)}.pill{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:white;border:0;border-radius:999px;padding:12px 18px;font-weight:750;cursor:pointer;transition:.2s}.pill:hover{transform:translateY(-1px);filter:brightness(.96)}.pill.light{background:white;color:var(--ink);border:1px solid var(--line)}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center;padding:65px 0 80px}.eyebrow{display:inline-block;background:var(--blue2);color:#3847c5;border-radius:999px;padding:6px 12px;font-size:.78rem;font-weight:800;letter-spacing:.04em}.hero h1{font-size:clamp(2.7rem,6vw,4.8rem);line-height:1.02;letter-spacing:-.065em;margin:18px 0}.hero h1 em{font-style:normal;color:var(--blue)}.lead{font-size:1.12rem;color:var(--muted);max-width:570px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0}.micro{font-size:.82rem;color:var(--muted)}.preview{background:white;border:1px solid var(--line);border-radius:26px;padding:22px;box-shadow:0 24px 80px #22294a12;transform:rotate(1deg)}.previewtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.dots{display:flex;gap:5px}.dots i{height:8px;width:8px;border-radius:50%;background:#d9dbea}.tag{font-size:.75rem;background:var(--green);color:#24754e;border-radius:999px;padding:5px 9px;font-weight:800}.task{padding:13px 14px;border:1px solid var(--line);border-radius:14px;margin:10px 0;display:flex;gap:12px;align-items:center}.check{height:22px;width:22px;border-radius:7px;background:var(--blue2);color:var(--blue);display:grid;place-items:center;font-weight:900}.task small{display:block;color:var(--muted)}section{padding:65px 0}.sectionhead{text-align:center;max-width:670px;margin:0 auto 32px}.sectionhead h2{font-size:clamp(2rem,4vw,3rem);line-height:1.1;letter-spacing:-.05em;margin:10px 0}.sectionhead p{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:white;border:1px solid var(--line);border-radius:20px;padding:22px}.emoji{font-size:1.7rem}.card h3{margin:12px 0 6px;letter-spacing:-.025em}.card p{color:var(--muted);font-size:.95rem;min-height:70px}.price{font-size:1.3rem;font-weight:900;margin:16px 0}.card .pill{width:100%}.featured{background:#f0f1ff;border-color:#d8dcff}.builder{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px;align-items:start}.panel{background:white;border:1px solid var(--line);border-radius:22px;padding:24px}.panel h3{margin-top:0}.field{margin:16px 0}.field label{display:block;font-weight:750;font-size:.9rem;margin-bottom:7px}.field select,.field input,.field textarea{width:100%;border:1px solid #dfe2ed;border-radius:12px;padding:12px;font:inherit;background:white;color:var(--ink)}.result{background:#f6f7ff;border:1px solid #dfe2ff;border-radius:18px;padding:22px;min-height:280px}.result h3{margin-top:0}.result ul{padding-left:20px}.result li{margin:9px 0}.result .note{font-size:.85rem;color:var(--muted)}.howgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.step{padding:22px;border-top:3px solid var(--blue);background:white;border-radius:0 0 16px 16px}.step b{font-size:.8rem;color:var(--blue)}.cta{background:var(--ink);color:white;border-radius:28px;padding:44px;text-align:center}.cta p{color:#c4cbe0}.cta .pill{background:white;color:var(--ink)}footer{padding:30px 0 40px;color:var(--muted);font-size:.84rem}.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:22px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:12px 18px;border-radius:12px;display:none;z-index:10;max-width:90%;box-shadow:0 10px 40px #0002}.fineprint{font-size:.78rem;color:var(--muted)}
+[hidden]{display:none!important}.auth-modal{position:fixed;inset:0;background:#11182bbd;display:grid;place-items:center;padding:18px;z-index:20;overflow:auto}.auth-card{position:relative;width:min(480px,100%);background:white;border-radius:24px;padding:28px;box-shadow:0 25px 90px #0003}.auth-card h2{margin:14px 0 4px;letter-spacing:-.04em}.auth-close{position:absolute;right:18px;top:12px;border:0;background:transparent;font-size:2rem;cursor:pointer;color:var(--muted)}.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0}.auth-tab{padding:10px;border:1px solid var(--line);background:#fff;border-radius:12px;font:inherit;cursor:pointer}.auth-tab.active{background:var(--blue2);border-color:#cdd2ff;color:#3847c5;font-weight:800}.auth-card .field{margin:12px 0}.auth-card input{width:100%;border:1px solid #dfe2ed;border-radius:12px;padding:12px;font:inherit}.navlinks button{font:inherit}.auth-card .tag{display:inline-flex}
+@media(max-width:760px){.navlinks a:not(.pill){display:none}.hero{grid-template-columns:1fr;padding:42px 0 55px;gap:28px}.hero h1{font-size:3.15rem}.grid,.howgrid,.builder{grid-template-columns:1fr}.card p{min-height:0}section{padding:48px 0}.cta{padding:30px 20px}.preview{transform:none}}
+.plans-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:850px;margin:auto}.plans-grid .card{display:flex;flex-direction:column}.plans-grid .card p{min-height:0}.plans-grid .card .pill{margin-top:auto}.plan-price{font-size:1.7rem;font-weight:900;margin:14px 0}.plan-price small{font-size:.85rem;color:var(--muted);font-weight:500}.plan-message{text-align:center;margin-top:18px}@media(max-width:760px){.plans-grid{grid-template-columns:1fr}}
+
+/* KITORA STUDIO — bleu signature, azulejos et esthétique éditoriale */
+:root{--ink:#172a42;--muted:#65748a;--blue:#174c80;--blue2:#e7f0f8;--cream:#f8fafc;--line:#dce5ef;--green:#e8f0f8}
+body{background:var(--cream);background-image:radial-gradient(#174c800b 0.8px,transparent .8px);background-size:19px 19px}
+::selection{background:#c6dbee;color:#173655}
+:focus-visible{outline:3px solid #d2a66a;outline-offset:3px}
+.wrap{width:min(1160px,91%)}
+header{position:relative;z-index:3}.nav{padding:25px 0;border-bottom:1px solid var(--line)}
+.brand{font-family:Georgia,"Times New Roman",serif;font-size:1.8rem;font-weight:800;letter-spacing:-.09em}.brand span{color:var(--blue)}
+.navlinks{gap:25px;font-weight:600}.navlinks a:not(.pill){transition:color .2s}.navlinks a:hover{color:var(--blue)}
+.pill{background:var(--blue);border-radius:9px;padding:13px 19px;box-shadow:0 3px 0 #10395f;transition:transform .2s,box-shadow .2s,background .2s}
+.pill:hover{transform:translateY(-2px);box-shadow:0 5px 0 #10395f;filter:none}
+.pill.light{background:#ffffff;border-color:#d5e1ed;box-shadow:0 3px 0 #d9e5ef}
+.pill.light:hover{box-shadow:0 5px 0 #d9e5ef}
+.hero{position:relative;grid-template-columns:1.05fr .95fr;gap:72px;padding:100px 0 105px}
+.hero:before{content:"K / 01";position:absolute;right:0;top:33px;color:#6e91b2;font-size:.7rem;font-weight:800;letter-spacing:.22em}
+.eyebrow{background:#e5eff8;color:#174c80;border:1px solid #cbdfee;border-radius:5px;padding:7px 11px;font-size:.7rem;letter-spacing:.12em}
+.hero h1,.sectionhead h2,.cta h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;letter-spacing:-.065em}
+.hero h1{font-size:clamp(3.4rem,6.7vw,6.1rem);line-height:.99;margin:24px 0 26px}
+.hero h1 em{font-style:italic;color:var(--blue)}
+.lead{font-size:1.15rem;line-height:1.75;max-width:540px}
+.micro{font-size:.78rem;letter-spacing:.015em}
+.preview{position:relative;transform:rotate(2deg);background:#ffffff;border:1px solid #c7d9e8;border-radius:14px;padding:30px;box-shadow:14px 14px 0 #dce8f3,0 30px 65px #183e6616}
+.preview:before{content:"APERÇU / KITORA 001";position:absolute;top:-31px;left:4px;font-size:.65rem;letter-spacing:.2em;color:#6e91b2;font-weight:800}
+.previewtop{padding-bottom:18px;border-bottom:1px solid var(--line)}.previewtop strong{font-family:Georgia,serif;font-size:1.35rem;font-weight:600}
+.dots i{background:#c9dbe9}.dots i:first-child{background:#c19b69}.tag{background:#e5f0f8;color:#215a89;border-radius:4px}
+.task{border:0;border-bottom:1px solid #e4ebf2;border-radius:0;padding:15px 3px;margin:0}
+.check{background:#e6f0f8;color:#245d90;border-radius:50%;font-family:Georgia,serif}
+section{padding:88px 0}.sectionhead{max-width:730px;margin-bottom:43px}.sectionhead h2{font-size:clamp(2.4rem,4.6vw,3.8rem);line-height:1.12;margin:18px 0}.sectionhead p{font-size:1.04rem}
+#kits,#comment{background:#edf3f9!important;border-top:1px solid #dfe8f1;border-bottom:1px solid #dfe8f1}
+.grid{gap:19px}.card,.panel{background:#ffffff;border:1px solid #d9e4ee;border-radius:13px;padding:28px;box-shadow:0 7px 0 #e1eaf2}
+.card{transition:transform .2s,box-shadow .2s}.card:hover{transform:translateY(-4px);box-shadow:0 11px 0 #e1eaf2}
+.card h3,.panel h3,.step h3{font-family:Georgia,serif;font-size:1.45rem;font-weight:600;letter-spacing:-.035em}
+.card p{line-height:1.75}.emoji{display:grid;place-items:center;width:54px;height:54px;background:#e9f2fa;border:1px solid #d2e3f0;border-radius:12px}
+.featured{background:#e8f1f9;border-color:#b8d1e6}.featured .pill{background:#123f6d}
+.price,.plan-price{font-family:Georgia,serif;font-weight:600;letter-spacing:-.035em}
+.plan-price{font-size:2.4rem}.plans-grid{max-width:900px}
+.builder{gap:24px}.field label{color:#2e4c68}.field select,.field input,.field textarea,.auth-card input{border-color:#cfdfed;border-radius:8px;background:#fff}
+.field select:focus,.field input:focus,.field textarea:focus,.auth-card input:focus{border-color:#174c80;outline:2px solid #c8dded}
+.result{background:#f1f6fb;border-color:#d6e5f1;border-radius:10px}
+.step{background:#ffffff;border-top:3px solid #174c80;border-radius:5px;box-shadow:0 6px 0 #e1eaf2}.step b{color:#174c80;letter-spacing:.13em}
+.cta{position:relative;overflow:hidden;background:#123c66;border-radius:15px;padding:67px 32px}.cta:after{content:"K";position:absolute;right:-20px;bottom:-170px;font:500 430px/1 Georgia,serif;color:#ffffff0b;pointer-events:none}.cta>*{position:relative;z-index:1}.cta p{color:#d8e8f6}.cta .pill{color:#123c66;box-shadow:0 3px 0 #d2e2ef}
+footer{padding-top:14px}.foot{border-color:#d9e4ee}.auth-card{border-radius:14px;background:#ffffff}.auth-tab{border-radius:7px}.auth-tab.active{background:#e5eff8;border-color:#b8d1e6;color:#1a4f7f}
+@media(max-width:900px){.hero{gap:35px}.hero h1{font-size:clamp(3.1rem,6vw,5rem)}}
+@media(max-width:760px){.nav{padding:17px 0}.brand{font-size:1.65rem}.hero{padding:65px 0 72px;gap:55px}.hero h1{font-size:clamp(3rem,11vw,4.4rem)}.preview{transform:none;box-shadow:8px 8px 0 #dce8f3}.hero:before{top:20px}.sectionhead h2{font-size:2.5rem}section{padding:62px 0}.card,.panel{padding:23px}.cta{padding:45px 22px}.navlinks{gap:10px}.navlinks button{padding:10px 13px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Correctif mobile Kitora — priorité à la lisibilité */
+@media(max-width:760px){
+ html,body{width:100%;max-width:100%;overflow-x:hidden}
+ .wrap{width:min(100% - 36px,540px)}
+ .nav{gap:12px;flex-wrap:nowrap}
+ .navlinks{margin-left:auto;min-width:0}
+ .navlinks button{white-space:nowrap;font-size:.86rem;padding:10px 12px}
+ .hero{display:flex;flex-direction:column;align-items:stretch;gap:58px;padding:58px 0 65px}
+ .hero>div{width:100%;min-width:0}
+ .hero:before{top:18px}
+ .hero h1{font-size:clamp(3.1rem,12vw,4.5rem);line-height:1.04;letter-spacing:-.055em;overflow-wrap:normal}
+ .hero .lead{font-size:1.04rem;line-height:1.7;max-width:100%}
+ .eyebrow{max-width:100%;font-size:.65rem;letter-spacing:.09em}
+ .preview{width:100%;max-width:100%;padding:22px;transform:none;box-shadow:7px 7px 0 #dce8f3}
+ .previewtop{gap:10px;flex-wrap:wrap}
+ .previewtop strong{font-size:1.2rem}
+ .task{gap:12px}
+ .task>div{min-width:0}
+ .task strong{overflow-wrap:break-word}
+ .grid,.plans-grid,.builder,.howgrid{grid-template-columns:minmax(0,1fr)}
+ .card,.panel,.result{min-width:0}
+ .sectionhead h2{font-size:clamp(2.15rem,9vw,3rem)}
+ .actions .pill{max-width:100%;text-align:center}
+}
+@media(max-width:380px){
+ .hero h1{font-size:clamp(2.65rem,11.8vw,3.15rem)}
+ .wrap{width:calc(100% - 30px)}
+ .brand{font-size:1.5rem}
+ .preview{padding:18px}
+}
+
+
+/* Mobile-first override: handles iPhone browsers requesting desktop-sized viewport */
+@media(max-width:1100px){
+ .hero{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:52px!important}
+ .hero>div{width:100%!important;min-width:0!important;max-width:100%!important}
+ .hero .preview{width:100%!important;max-width:680px!important;align-self:center!important;transform:none!important}
+ .hero h1{max-width:100%;overflow-wrap:normal}
+ .grid,.howgrid{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+ .builder{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:900px){
+ .hero{padding:55px 0 70px!important}
+ .hero h1{font-size:clamp(3.2rem,9vw,5rem)!important;line-height:1.04!important}
+ .hero .lead{max-width:680px!important}
+ .preview{padding:24px!important}
+ .previewtop strong{font-size:1.35rem}
+ .wrap{width:calc(100% - 44px)}
+ .plans-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:520px){
+ .wrap{width:calc(100% - 32px)}
+ .hero h1{font-size:clamp(2.9rem,11vw,4rem)!important}
+ .preview{padding:20px!important}
+ .hero{gap:60px!important}
+}
+
+
+/* Kitora International — navigation, surfaces, contrastes */
+body{background-color:#f1f5fa;background-image:radial-gradient(circle at 12% 9%,#d6e6f5 0,transparent 28%),radial-gradient(circle at 93% 36%,#e3e9f4 0,transparent 30%),radial-gradient(#174c8009 .7px,transparent .7px);background-size:auto,auto,20px 20px}
+header.wrap{width:100%;max-width:none;padding:0 max(4.5%,calc((100% - 1250px)/2));background:#f7fafded;backdrop-filter:blur(16px);position:sticky;top:0;z-index:12;border-bottom:1px solid #d9e5ef}
+header .nav{border:0;gap:24px}.navlinks{gap:clamp(9px,1.5vw,23px);font-size:.85rem;flex-wrap:wrap;justify-content:flex-end}.navlinks>a{white-space:nowrap;color:#284764}.navlinks>a:hover{color:#174c80}
+.hero{isolation:isolate}.hero:after{content:"";position:absolute;z-index:-1;right:-4%;top:7%;width:42%;height:76%;background:radial-gradient(ellipse,#bad4ed7a,transparent 68%);pointer-events:none}
+#kits{background:linear-gradient(130deg,#e5eef8,#f2f7fc 45%,#e5edf6)!important}
+#plus{background:linear-gradient(145deg,#123b66,#1d5485 60%,#102d4e);color:#fff}
+#plus .sectionhead p,#plus .fineprint{color:#d6e6f4}
+#plus .eyebrow{background:#ffffff1a;border-color:#ffffff33;color:#fff}
+#plus .card{background:#ffffff;color:#172a42}
+#plus .featured{background:#e9f2fa}
+#generateur{background:linear-gradient(180deg,#f5f8fc,#e8f0f9)}
+#comment{background:linear-gradient(120deg,#e1eaf5,#f3f7fb)!important}
+footer{background:#102c4b;color:#dce9f5;padding:45px 0}footer .brand,footer a{color:#fff}footer .fineprint{color:#bbd0e5}footer .foot{border-color:#ffffff30}
+.kitora-strip{background:#102c4b;color:#e4f0fc;text-align:center;padding:11px 20px;font-size:.77rem;letter-spacing:.07em;font-weight:650}
+.kitora-strip span{color:#d7b57b}
+@media(max-width:1100px){header .navlinks>a{display:none}header .navlinks{gap:8px}header .nav{min-height:72px}.hero{display:flex!important;flex-direction:column!important;gap:50px!important}.hero>div{width:100%!important;min-width:0!important}.hero .preview{max-width:690px!important;width:100%!important;align-self:center!important}}
+@media(max-width:760px){header.wrap{padding:0 16px}.navlinks button{font-size:.85rem;padding:10px 12px}.hero h1{font-size:clamp(2.9rem,11vw,4rem)!important}.hero{padding-top:48px!important}}
+
+.site-mobile-menu{display:none;position:relative}.site-mobile-menu summary{list-style:none;cursor:pointer;font-weight:750;color:#174c80;border:1px solid #c7d8e7;background:white;padding:10px 12px;border-radius:8px;white-space:nowrap}.site-mobile-menu summary::-webkit-details-marker{display:none}.site-mobile-panel{position:absolute;right:0;top:calc(100% + 12px);width:min(285px,84vw);background:#fff;border:1px solid #d6e3ef;border-radius:12px;box-shadow:0 18px 38px #102c4b25;padding:14px;display:grid;gap:3px}.site-mobile-panel a{display:block;padding:10px 12px;border-radius:7px;font-size:.95rem;color:#183d64}.site-mobile-panel a:hover{background:#e8f1f9}@media(max-width:1100px){.site-mobile-menu{display:block}.nav{flex-wrap:nowrap}.navlinks{margin-left:auto}.navlinks button{white-space:nowrap}}@media(max-width:380px){.site-mobile-menu summary{font-size:.8rem;padding:9px}.brand{font-size:1.4rem}}
+.kitora-download-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.kitora-download-actions .pill{width:100%;min-width:0}@media(max-width:620px){.kitora-download-actions{grid-template-columns:1fr}}
