@@ -53,3 +53,5 @@ jobs:
         run: node tests/browser-experience-2-dashboard.mjs
       - name: Test premium pages on mobile, tablet and desktop
         run: node tests/browser-premium-continuity.mjs
+      - name: Test monthly yearly billing selector
+        run: node tests/browser-offer-billing-period.mjs
