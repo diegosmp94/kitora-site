@@ -1,0 +1,16 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const source=readFileSync("supabase/functions/kitora-health/index.ts","utf8");
+const admin=readFileSync("admin-health-page.js","utf8");
+assert.match(source,/admin\.from\("kitora_admins"\)/);
+assert.match(source,/if\(roleError\|\|!role\)return reply\(\{error:"Forbidden"\},403\)/);
+assert.ok(source.indexOf('if(roleError||!role)')<source.indexOf('const stripeKey='),"Stripe queries must follow admin check");
+assert.match(source,/startsWith\("sk_test_"\)/);
+assert.match(source,/stripe\.com\/v1\/account/);
+assert.match(source,/stripe\.com\/v1\/webhook_endpoints/);
+assert.match(source,/stripe\.com\/v1\/subscriptions/);
+assert.match(source,/\.limit\(10\)/);
+assert.match(source,/subscription_audit:subscriptionAudit/);
+assert.match(admin,/Rapprochement des abonnements payants/);
+assert.match(admin,/audit\.missing>0/);
+console.log("Stripe TEST admin reconciliation security and metrics checks passed.");
