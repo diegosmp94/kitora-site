@@ -42,7 +42,7 @@ function render(){
    }else checkout.href=available?"panier.html?plan="+plan:"offres.html?periode=annuel";
    checkout.setAttribute("aria-disabled",String(!available));
    checkout.tabIndex=available?0:-1;
-   checkout.textContent=available?"Essayer avec Stripe TEST →":"Annuel à venir";
+   checkout.textContent=available?(plan==="plus"?"Essayer Plus "+(period==="yearly"?"annuel":"mensuel")+" (Stripe TEST) →":"Essayer avec Stripe TEST →"):"Annuel à venir";
   }
  });
  if(feedback)feedback.textContent=period==="yearly"?"Plus est disponible à 59,90 € / an en mode TEST. Les autres offres payantes n'ont pas encore de formule annuelle.":"Les formules payantes mensuelles sont disponibles uniquement pour des essais Stripe TEST.";
