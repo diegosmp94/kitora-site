@@ -1,0 +1,51 @@
+/* Kitora Experience 2.0 / protected workspace — scoped to dashboard */
+body.kitora-dashboard{--xd-night:#081526;--xd-gold:#edc890;--xd-ink:#142c45;background:#f6f8fb;background-image:radial-gradient(ellipse at 75% 8%,#dfeaf388,transparent 44%);color:var(--xd-ink)}
+body.kitora-dashboard .bar{background:#071323;color:#e9d2ac;letter-spacing:.14em}
+body.kitora-dashboard header.kitora-header{background:#081526!important;border-bottom:1px solid #ffffff28!important;box-shadow:0 10px 40px #07132317!important}
+body.kitora-dashboard .workspace-experience{padding:0 0 110px}
+body.kitora-dashboard .dash-hero{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(128deg,#071323,#122f4a 68%,#10223b);color:#f6f7f9;padding:clamp(70px,10vw,125px) 0 105px}
+body.kitora-dashboard .dash-hero:before{content:"";position:absolute;inset:-22% 0 0;background:radial-gradient(ellipse at 80% 25%,#d3a36540,transparent 47%),linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:auto,80px 80px,80px 80px;mask-image:linear-gradient(90deg,transparent,#000)}
+body.kitora-dashboard .dash-hero .wrap{position:relative;z-index:1}
+body.kitora-dashboard .dash-kicker{font-size:.7rem;font-weight:850;letter-spacing:.2em;color:#f1cc97}
+body.kitora-dashboard .dash-hero h1{font:750 clamp(3.2rem,7vw,6.5rem)/.99 system-ui,-apple-system,sans-serif;letter-spacing:-.08em;max-width:900px;margin:19px 0 24px;text-wrap:balance}
+body.kitora-dashboard .dash-hero h1 em{font:italic 400 1em Georgia,serif;color:#f4d4a0}
+body.kitora-dashboard .dash-hero p{color:#c5d4e2;font-size:clamp(1rem,1.5vw,1.17rem);max-width:630px;line-height:1.8}
+body.kitora-dashboard .dash-hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+body.kitora-dashboard .dash-hero-actions a{padding:13px 20px;border-radius:999px;font-weight:770;background:#eed2a3;color:#132c43;text-decoration:none;transition:transform .25s ease,box-shadow .25s}
+body.kitora-dashboard .dash-hero-actions a:hover{transform:translateY(-3px);box-shadow:0 12px 35px #e6be7e30}
+body.kitora-dashboard .dash-hero-actions a:nth-child(2){background:#ffffff15;border:1px solid #ffffff40;color:#fff}
+body.kitora-dashboard .dash-floating-symbol{position:absolute;right:max(5%,calc((100vw - 1100px)/2));top:20%;font:normal clamp(11rem,25vw,26rem)/1 Georgia,serif;color:#ffffff08;pointer-events:none;transform:rotate(-12deg)}
+body.kitora-dashboard .dash-main{position:relative;margin-top:-48px}
+body.kitora-dashboard .dash-main .wrap{position:relative}
+body.kitora-dashboard .dash-overview{padding:34px;border-radius:27px;background:#fff;border:1px solid #dfe8ee;box-shadow:0 30px 75px #0e2b4720}
+body.kitora-dashboard .dash-section-heading{display:flex;align-items:end;justify-content:space-between;gap:15px;flex-wrap:wrap;margin:0 0 23px}
+body.kitora-dashboard .dash-section-heading h2{font-size:clamp(1.5rem,3vw,2.2rem);margin:0;letter-spacing:-.055em}
+body.kitora-dashboard .dash-section-heading p{margin:4px 0 0;color:#62778b}
+body.kitora-dashboard .workspace-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+body.kitora-dashboard .workspace-stat{min-height:115px;border:1px solid #e0e9f1;background:linear-gradient(160deg,#fff,#f6f9fc);border-radius:19px;padding:25px;transition:transform .3s,box-shadow .3s}
+body.kitora-dashboard .workspace-stat:hover{transform:translateY(-5px);box-shadow:0 18px 40px #17344c14}
+body.kitora-dashboard .workspace-stat strong{font:750 clamp(2rem,3vw,2.8rem)/1.15 system-ui,sans-serif;letter-spacing:-.055em}
+body.kitora-dashboard .workspace-stat span{display:block;margin-top:8px;color:#567089}
+body.kitora-dashboard .dash-workspace{padding-top:60px}
+body.kitora-dashboard .workspace-nav{gap:9px;margin:0 0 34px}
+body.kitora-dashboard .workspace-nav a{border-radius:12px;padding:11px 18px;transition:background .2s,transform .2s,box-shadow .2s}
+body.kitora-dashboard .workspace-nav a:hover{background:#e8f0f8;transform:translateY(-2px)}
+body.kitora-dashboard .workspace-nav a[aria-current="page"]{background:#0e304d;color:white;border-color:#0e304d}
+body.kitora-dashboard .workspace-grid{gap:20px;margin:0}
+body.kitora-dashboard .workspace-panel{border:1px solid #dfe8f0;border-radius:24px;padding:30px;box-shadow:0 18px 50px #1233520a;transition:transform .3s,box-shadow .3s}
+body.kitora-dashboard .workspace-panel:hover{transform:translateY(-5px);box-shadow:0 24px 55px #12335218}
+body.kitora-dashboard .workspace-panel h2{font-size:clamp(1.5rem,2.5vw,2rem);letter-spacing:-.05em}
+body.kitora-dashboard .workspace-panel .kicker{color:#a67841;letter-spacing:.15em}
+body.kitora-dashboard .workspace-actions{gap:10px}
+body.kitora-dashboard .workspace-actions a,body.kitora-dashboard .workspace-panel>.btn{border-radius:12px}
+body.kitora-dashboard .dash-plan-indicator{display:inline-flex;margin-top:18px;gap:8px;align-items:center;padding:9px 13px;border:1px solid #f0d2a2;border-radius:999px;color:#fde5bc;background:#ffffff10;font-size:.78rem;font-weight:800}
+body.kitora-dashboard .dash-plan-indicator:before{content:"✦";color:#f5dba5}
+body.kitora-dashboard .dash-shortcuts{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+body.kitora-dashboard .dash-shortcuts a{display:inline-flex;align-items:center;gap:9px;border-radius:12px;border:1px solid #dce8f0;padding:12px 18px;background:#fff;color:#163a56;font-weight:750;transition:transform .3s,background .3s}
+body.kitora-dashboard .dash-shortcuts a:hover{transform:translateY(-3px);background:#eaf3fb}
+body.kitora-dashboard .dash-footnote{padding:25px 0;color:#60758c;line-height:1.8}
+body.kitora-dashboard [data-dash-reveal]{animation:dash-fade-in .72s both}
+@keyframes dash-fade-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:760px){body.kitora-dashboard .dash-hero{padding:73px 0 90px}body.kitora-dashboard .dash-hero h1{font-size:clamp(3rem,11.5vw,4.5rem)}body.kitora-dashboard .dash-overview{padding:23px;border-radius:22px}body.kitora-dashboard .workspace-stats{grid-template-columns:repeat(2,minmax(0,1fr))}body.kitora-dashboard .workspace-panel{padding:23px}body.kitora-dashboard .dash-main{margin-top:-33px}}
+@media(max-width:380px){body.kitora-dashboard .workspace-stats{grid-template-columns:minmax(0,1fr)}body.kitora-dashboard .dash-shortcuts a{width:100%}}
+@media(prefers-reduced-motion:reduce){body.kitora-dashboard [data-dash-reveal]{animation:none!important}body.kitora-dashboard .workspace-stat,body.kitora-dashboard .workspace-panel,body.kitora-dashboard .dash-hero-actions a{transition:none!important;transform:none!important}}
