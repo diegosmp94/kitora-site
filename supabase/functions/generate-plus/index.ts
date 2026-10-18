@@ -20,8 +20,8 @@ Deno.serve(async(req:Request)=>{
  const {data:item,error:readError}=await admin.from("subscriber_requests").select("id,user_id,title,details,category,ai_result,ai_generated_at").eq("id",body.request_id).eq("user_id",user.id).maybeSingle();
  if(readError||!item)return reply({error:"Demande introuvable"},404);
  if(item.ai_result){const t=String(item.title||"").toLowerCase(),m=String(item.ai_result.summary||"").toLowerCase();if(t.includes("espagnol")&&m.includes("bases du français"))return reply({ready:false,message:"La réponse enregistrée ne correspond pas à la langue demandée. Crée une nouvelle demande."});return reply({ready:true,result:item.ai_result})}
- // Priority queue can be enabled only after a protected cron worker has been configured.
- if(Deno.env.get("KITORA_AI_QUEUE_ENABLED")==="true"){
+ // Supabase Cron is configured; queue remains inactive while KITORA_GROQ_ENABLED is not true. Optional kill switch: KITORA_AI_QUEUE_ENABLED=false.
+ if(Deno.env.get("KITORA_AI_QUEUE_ENABLED")!=="false"){
   if(Deno.env.get("KITORA_GROQ_ENABLED")!=="true")return reply({ready:false,configured:false,message:"Moteur IA désactivé. Aucune tâche ajoutée."});
   const {data:existingJob,error:jobError}=await admin.from("kitora_ai_jobs").select("status,priority,attempts,created_at,error_code").eq("request_id",item.id).eq("user_id",user.id).maybeSingle();
   if(jobError)return reply({error:"File d'attente indisponible"},503);
