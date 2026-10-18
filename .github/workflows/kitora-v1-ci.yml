@@ -1,0 +1,29 @@
+name: Kitora V1 automated checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    name: Site, plans, IA and payment guardrails
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run offline checks (no Stripe charge, no AI API calls)
+        run: |
+          set -eu
+          node tests/site-smoke.mjs
+          node tests/free-tools-access.mjs
+          node tests/test-three-tiers.mjs
+          node tests/v1-phase2-readiness.mjs
+          node tests/ai-queue-readiness.mjs
+          node tests/plus-generation-smoke.mjs
+          node tests/payment-security.mjs
