@@ -1,0 +1,17 @@
+/* Kitora — accessible billing period selector, premium visual language */
+.billing-control{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin:32px 0 10px;padding:24px 28px;border-radius:22px;background:linear-gradient(125deg,#0a1d31,#163a59);color:#fff;box-shadow:0 18px 46px #0e294632}
+.billing-control strong{font-size:1.2rem;letter-spacing:-.03em}.billing-control p{margin:5px 0 0;color:#ccdae7;font-size:.9rem;max-width:550px}
+.billing-segment{display:inline-flex;gap:5px;padding:5px;border-radius:999px;border:1px solid #ffffff31;background:#ffffff17}
+.billing-segment button{border:0;border-radius:999px;padding:12px 23px;background:transparent;color:#e0e8f2;font:750 .92rem system-ui,sans-serif;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.billing-segment button[aria-pressed="true"]{background:#eed0a1;color:#112d47;box-shadow:0 8px 23px #0003}
+.billing-segment button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.billing-feedback{color:#4c6177;margin:0 0 14px;font-size:.91rem;min-height:1.3rem}
+.offer-card[data-offer-plan]{position:relative;transition:transform .25s,box-shadow .25s,border-color .25s}
+.offer-card[data-offer-plan]:hover{transform:translateY(-3px);box-shadow:0 24px 55px #173b5819;border-color:#c5d4e2}
+.offer-price{font-family:system-ui,-apple-system,sans-serif!important;letter-spacing:-.06em;font-weight:760!important}
+.billing-card-detail{font-size:.82rem;line-height:1.6;color:#667e90;min-height:42px;margin:-5px 0 15px}
+.billing-card-detail[data-savings]{color:#1d6951;font-weight:760}
+.offer-card[data-billing-unavailable="true"] .offer-price{font-size:1.65rem!important;letter-spacing:-.04em;color:#708298!important}
+.offer-card [data-billing-checkout][aria-disabled="true"]{opacity:.65;cursor:not-allowed;background:#e9eef3!important;color:#536a7f!important;border-color:#e9eef3!important}
+@media(max-width:660px){.billing-control{padding:20px;gap:20px;justify-content:center;text-align:center}.billing-segment{width:100%}.billing-segment button{flex:1}.billing-card-detail{min-height:0}}
+@media(prefers-reduced-motion:reduce){.offer-card[data-offer-plan],.billing-segment button{transition:none!important;transform:none!important}}

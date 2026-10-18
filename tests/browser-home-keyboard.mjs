@@ -27,6 +27,7 @@ try{
  assert.equal(await page.evaluate(()=>document.activeElement?.id),"contenu-principal","Skip link should focus main");
  await page.locator("#authOpenBtn").click();
  await page.locator("#authModal:not([hidden])").waitFor();
+ await page.waitForFunction(()=>document.activeElement?.id==="authEmail",{timeout:10000});
  assert.equal(await page.evaluate(()=>document.activeElement?.id),"authEmail","Login dialog should focus email field");
  await page.keyboard.press("Escape");
  assert.ok(await page.locator("#authModal").isHidden(),"Escape should close modal");
