@@ -58,6 +58,7 @@ Deno.serve(async (request: Request) => {
     if (error) throw error;
     const users = data.users || [];
     const ids = users.map((u) => u.id).filter((id) => uuid.test(id));
+    if (!ids.length) return respond({ page, items: [], next_page: null });
     const [profiles, subs, admins] = await Promise.all([
       server.from("profiles").select("id,display_name,created_at").in("id", ids),
       server.from("subscriptions").select("user_id,plan,status,current_period_end").in("user_id", ids),
@@ -77,9 +78,10 @@ Deno.serve(async (request: Request) => {
       is_admin: adminIds.has(u.id),
     }));
     // Do not log emails or raw personal details in audit records.
-    await server.from("kitora_admin_audit").insert({
+    const auditResult = await server.from("kitora_admin_audit").insert({
       actor_id: user.id, action: "users.list", outcome: "success", details: { page, count: items.length },
     });
+    if (auditResult.error) return respond({ error: "Journalisation indisponible" }, 503);
     return respond({ page, items, next_page: data.nextPage || null });
   } catch (error) {
     console.error("Admin users request failed", error instanceof Error ? error.name : "unknown");
