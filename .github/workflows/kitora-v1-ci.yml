@@ -29,6 +29,7 @@ jobs:
           node tests/ai-queue-readiness.mjs
           node tests/plus-generation-smoke.mjs
           node tests/payment-security.mjs
+          node tests/production-launch-guardrails.mjs
           node tests/stripe-reconciliation-readiness.mjs
           node tests/cloud-conflict-safety.mjs
       - name: Verify deployed API rejects unauthenticated requests
