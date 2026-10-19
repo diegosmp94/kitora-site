@@ -1,11 +1,12 @@
 import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import {getKitoraSubscription} from "./billing-entitlements.js";
 const db=createClient("https://yxjxizxzjubhjaxskksh.supabase.co","sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW");
 const modules=[["projects","kitora_projects_v1"],["agenda","kitora_agenda_v1"],["learn","kitora_learn_cards_v1"],["notes","kitora_notes_v1"],["challenge","kitora_challenge_7_v1"],["focus","kitora_focus_completed_v1"]];
 const control="kitora_auto_cloud_enabled_v1";
 let user=null,enabled=false,busy=false;
 async function canUse(){
  const {data:{user:current},error}=await db.auth.getUser();if(error||!current)return false;
- const {data:sub,error:err}=await db.from("subscriptions").select("plan,status").eq("user_id",current.id).maybeSingle();
+ const {subscription:sub,error:err}=await getKitoraSubscription(db,current.id);
  if(err||sub?.status!=="active"||!["workspace","ultimate"].includes(sub.plan))return false;
  user=current;return true;
 }
