@@ -103,7 +103,7 @@ async function updateGeneration(){
   generation.textContent="Actualisation impossible : "+(e instanceof Error?e.message:"Erreur inattendue")+". Le dossier reste accessible depuis Mon espace.";
  }finally{
   requestInFlight=false;
-  if(currentRequestId===id&&authorizedUser)refreshButton.disabled=false;
+  if(currentRequestId===id&&authorizedUser&&generation.textContent.indexOf("généré et enregistré")<0)refreshButton.disabled=false;
  }
 }
 refreshButton.addEventListener("click",()=>void updateGeneration());
