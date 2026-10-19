@@ -1,4 +1,5 @@
 import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import {getKitoraSubscription} from "./billing-entitlements.js";
 const db=createClient("https://yxjxizxzjubhjaxskksh.supabase.co","sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW");
 const maps={
  "projects.html":{key:"kitora_projects_v1",title:"Projets",fields:["name","goal","due","tasks"]},
@@ -16,7 +17,7 @@ async function init(){
  if(!config)return;
  try{
   const {data:{user},error}=await db.auth.getUser();if(error||!user)return;
-  const {data:subscription,error:subError}=await db.from("subscriptions").select("plan,status").eq("user_id",user.id).maybeSingle();
+  const {subscription,error:subError}=await getKitoraSubscription(db,user.id);
   if(subError||subscription?.status!=="active"||!["solo","workspace","plus_monthly","plus_yearly","ultimate"].includes(subscription.plan))return;
   const panel=document.createElement("section");panel.className="section";panel.innerHTML='<div class="wrap"><div class="panel"><span class="kicker">KITORA / EXPORTS AVANCÉS</span><h2>Exporter mes données</h2><p>Disponible avec Solo, Workspace, Plus ou Ultimate. Les fichiers sont créés localement dans ton navigateur.</p><div class="actions"><button class="btn" type="button" data-export="csv">Exporter CSV</button><button class="btn secondary" type="button" data-export="md">Exporter Markdown</button></div><p role="status" class="fine"></p></div></div>';
   const status=panel.querySelector('[role="status"]');
