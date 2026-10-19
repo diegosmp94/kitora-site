@@ -218,7 +218,7 @@ function verifyDraft(data){
  return {fields,lines};
 }
 function restoreDraft(draft){
- const {fields,lines}=verifyDraft(draft);
+ const {fields,lines}=draft;
  for(const [id,value]of Object.entries(fields))$(id).value=value;
  rows.replaceChildren();lineSequence=0;
  for(const line of lines){
