@@ -45,7 +45,8 @@ export function initInvoiceCloudDrafts({db,user,getInvoice,setInvoice,getProfile
    row.append(sum);
    const actions=document.createElement("div");actions.className="cloud-row-actions";
    actions.append(btn("Ouvrir",()=>run(async()=>{
-    if(changed()&&!confirm("Des modifications locales ne sont pas enregistrées dans le cloud. Remplacer le brouillon ouvert ?"))return;
+    if(current?.id!==item.id&&!confirm("Ouvrir ce brouillon et remplacer le contenu local affiché ? Exporte ou enregistre d'abord les modifications importantes."))return;
+    if(changed()&&current?.id===item.id&&!confirm("Des modifications locales ne sont pas enregistrées dans le cloud. Les abandonner ?"))return;
     const {data,error}=await db.from("kitora_invoice_drafts").select(columns).eq("id",item.id).eq("user_id",user.id).maybeSingle();
     if(error)throw error;check(data);current=data;setInvoice(data.document);
     setStatus("Brouillon "+item.id.slice(0,8).toUpperCase()+" ouvert. Il n'est pas émis. Tu peux le modifier ou télécharger son PDF.");render();
@@ -67,7 +68,7 @@ export function initInvoiceCloudDrafts({db,user,getInvoice,setInvoice,getProfile
      if(current?.id!==item.id){
       const {data,error}=await db.from("kitora_invoice_drafts").select(columns).eq("id",item.id).eq("user_id",user.id).maybeSingle();
       if(error)throw error;check(data);
-      if(changed()&&!confirm("Remplacer tes modifications locales pour vérifier ce brouillon ?"))return;
+      if(!confirm("Ouvrir ce brouillon pour le vérifier ? Le document local affiché sera remplacé."))return;
       current=data;setInvoice(data.document);
      }
      validateInvoice();
@@ -113,6 +114,7 @@ export function initInvoiceCloudDrafts({db,user,getInvoice,setInvoice,getProfile
   const document=snapshot(),{ht,vat}=totalsOf(document);
   const payload={user_id:user.id,client_name:(document.clientName||"Client à renseigner").trim().slice(0,180)||"Client à renseigner",document,total_ht_cents:ht,total_vat_cents:vat};
   if(current){
+   if(changed())payload.status="draft";
    const {data,error}=await db.from("kitora_invoice_drafts").update(payload).eq("id",current.id).eq("user_id",user.id).eq("revision",current.revision).select(columns).maybeSingle();
    if(error)throw error;if(!data)throw Error("Ce brouillon a changé ailleurs. Actualise la liste et vérifie les informations avant de réessayer.");
    check(data);current=data;
@@ -124,7 +126,7 @@ export function initInvoiceCloudDrafts({db,user,getInvoice,setInvoice,getProfile
  }));
  refreshButton.addEventListener("click",()=>run(async()=>{await refresh();setStatus("Historique actualisé. Les données affichées sont privées à ton compte.")}));
  newButton.addEventListener("click",()=>run(async()=>{
-  if(changed()&&!confirm("Tes modifications locales ne sont pas enregistrées dans le cloud. Ouvrir un nouveau brouillon ?"))return;
+  if(!confirm("Créer un nouveau brouillon et remplacer le contenu local affiché ? Assure-toi d’avoir sauvegardé ou exporté tes modifications."))return;
   current=null;setInvoice(null);render();setStatus("Nouveau brouillon local prêt. Rien n'a été enregistré dans le cloud.");$("facture").scrollIntoView({block:"start"});
  }));
  $("invoiceForm").addEventListener("input",()=>{if(current&&changed())setStatus("Modifications locales : utilise « Enregistrer le brouillon dans le cloud » pour les synchroniser.")});
