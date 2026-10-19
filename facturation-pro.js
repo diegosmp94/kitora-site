@@ -163,6 +163,7 @@ $("resetInvoice").addEventListener("click",()=>{
  replaceLocalInvoice(null);
 });
 async function start(){
+ purgeLegacyDraftStorage();
  set("authStatus","Vérification de la session...");
  try{
   if(window.__KITORA_INVOICE_TEST_CLIENT__)db=window.__KITORA_INVOICE_TEST_CLIENT__;
@@ -179,7 +180,7 @@ async function start(){
   }
   user=connected;$("saveOrg").disabled=false;
   set("authStatus","Compte connecté. Ton dossier organisation reste privé et lié uniquement à ton identifiant Kitora.");
-  purgeLegacyDraftStorage();invoice=emptyInvoice();fillInvoice();await loadOrg();
+  invoice=emptyInvoice();fillInvoice();await loadOrg();
   await initInvoiceCloudDrafts({
    db,user,
    getInvoice:()=>invoice,
