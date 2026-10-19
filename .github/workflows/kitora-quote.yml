@@ -1,0 +1,20 @@
+name: Kitora Pro quote readiness
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  quotes:
+    name: Pro quote editor and arithmetic
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/check-pro-quote.mjs
+      - run: node tests/site-smoke.mjs
