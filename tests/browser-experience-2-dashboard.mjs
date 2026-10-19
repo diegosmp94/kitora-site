@@ -19,7 +19,7 @@ const mock='export function createClient(){return {auth:{getUser:async()=>({data
 try{
  for(const width of [320,375,768,1440]){
   const page=await browser.newPage({viewport:{width,height:900}});
-  await page.route(/https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@2\/\+esm/,route=>route.fulfill({status:200,contentType:"text/javascript",body:mock}));
+  await page.route(/https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@2(?:\.57\.0)?\/\+esm/,route=>route.fulfill({status:200,contentType:"text/javascript",body:mock}));
   await page.addInitScript(()=>{
    localStorage.setItem("kitora_projects_v1",JSON.stringify([{name:"Projet de démonstration",tasks:[{done:true},{done:false}]}]));
    localStorage.setItem("kitora_notes_v1",JSON.stringify([{title:"Une note"}]));
@@ -38,7 +38,7 @@ try{
   await page.close();
  }
  const reduced=await browser.newPage({reducedMotion:"reduce"});
- await reduced.route(/https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@2\/\+esm/,route=>route.fulfill({status:200,contentType:"text/javascript",body:mock}));
+ await reduced.route(/https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@2(?:\.57\.0)?\/\+esm/,route=>route.fulfill({status:200,contentType:"text/javascript",body:mock}));
  await reduced.goto(base+"/dashboard.html",{waitUntil:"domcontentloaded"});
  await reduced.locator(".dash-hero").waitFor();
  assert.equal(await reduced.evaluate(()=>getComputedStyle(document.querySelector("[data-dash-reveal]")).animationName),"none");
