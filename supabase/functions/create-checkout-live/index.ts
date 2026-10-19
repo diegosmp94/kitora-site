@@ -13,12 +13,33 @@ async function verifiedPublishedLegal(){
   return docs[0].includes("M. Sampaio")&&docs[1].includes("Kitora");
  }catch{return false;}
 }
+async function merchantComplianceApproved(){
+ try{
+  const page=await fetch("https://diegosmp94.github.io/kitora-site/kitora-commercial-readiness.json",{cache:"no-store",signal:AbortSignal.timeout(4500)});
+  if(!page.ok)return false;
+  const data=await page.json();
+  const m=data?.merchant,checks=data?.validation||{};
+  const required=["legal_identity_verified","representative_authority_verified","merchant_registration_reviewed","business_contact_verified","tax_disclosure_validated","terms_and_total_price_reviewed","consumer_mediator_contracted","online_withdrawal_submission_and_durable_ack_tested","subscription_cancellation_live_tested","real_payment_entitlement_refund_tested","privacy_notices_reviewed"];
+  return data?.schema_version===1 && data?.sales_live_authorized===true &&
+    typeof m?.legal_form==="string" && m.legal_form.trim().length>1 &&
+    typeof m?.legal_name==="string" && m.legal_name.trim().length>2 &&
+    typeof m?.registration_siren==="string" && /^[0-9]{9}$/.test(m.registration_siren) &&
+    typeof m?.registered_office==="string" && m.registered_office.trim().length>8 &&
+    typeof m?.business_email==="string" && m.business_email.includes("@") &&
+    typeof m?.business_phone==="string" && m.business_phone.trim().length>5 &&
+    typeof m?.vat_regime==="string" && m.vat_regime.trim().length>2 &&
+    typeof m?.publication_director==="string" && m.publication_director.trim().length>2 &&
+    required.every(key=>checks[key]===true);
+ }catch{return false}
+}
+
 Deno.serve(async req=>{
  if(req.method==="OPTIONS")return new Response(null,{status:204,headers:cors});
  if(req.method!=="POST")return out({error:"Méthode interdite"},405);
  // SEC-04: independent fail-closed feature flag; changing Stripe prices alone cannot enable LIVE checkout.
  if(Deno.env.get("KITORA_LIVE_CHECKOUT_ENABLED")!=="true"||Deno.env.get("KITORA_LIVE_SOLO_ENABLED")!=="true"||Deno.env.get("KITORA_LEGAL_READY")!=="true")return out({error:"Paiements LIVE indisponibles"},503);
  if(!(await verifiedPublishedLegal()))return out({error:"Informations légales de vente à finaliser"},503);
+ if(!(await merchantComplianceApproved()))return out({error:"Vérification de l’identité du vendeur et des formalités à finaliser"},503);
  const key=Deno.env.get("STRIPE_LIVE_SECRET_KEY"),url=Deno.env.get("SUPABASE_URL"),anon=Deno.env.get("SUPABASE_ANON_KEY"),service=Deno.env.get("KITORA_SERVICE_ROLE_KEY")||Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
  if(!key||!url||!anon||!service)return out({error:"Configuration LIVE indisponible"},503);
  const token=req.headers.get("authorization");if(!token?.startsWith("Bearer "))return out({error:"Connexion requise"},401);
