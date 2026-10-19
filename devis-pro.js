@@ -4,6 +4,7 @@ const PUBLISHABLE_KEY="sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW";
 const $=id=>document.getElementById(id);
 const status=$("quoteStatus"),organizationStatus=$("orgStatus"),preview=$("quotePreview");
 const form=$("quoteForm"),printButton=$("quotePrint"),rows=$("quoteRows");
+let lineSequence=0;
 const dateValue=offset=>{const d=new Date();d.setDate(d.getDate()+offset);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-")};
 const trim=(text,max)=>String(text??"").trim().slice(0,max);
 function el(tag,text,cls){
@@ -19,14 +20,14 @@ function labelledInput(labelText,type,value,id,attributes={}){
 }
 function addLine(description="",qty=1,unitCents=0){
  if(rows.children.length>=40){status.textContent="Le devis est limité à 40 prestations.";return}
- const number=rows.children.length+1,group=el("fieldset",null,"quote-line");
- const legend=el("legend","Prestation "+number),grid=el("div",null,"quote-line-fields");
+ const number=++lineSequence,displayNumber=rows.children.length+1,group=el("fieldset",null,"quote-line");
+ const legend=el("legend","Prestation "+displayNumber),grid=el("div",null,"quote-line-fields");
  const name=labelledInput("Désignation","text",description,"quote-line-name-"+number,{maxlength:210,required:""});
  const amount=labelledInput("Quantité","number",qty,"quote-line-qty-"+number,{min:1,max:10000,step:1,required:""});
  const price=labelledInput("Prix unitaire HT (€)","number",(unitCents/100).toFixed(2),"quote-line-price-"+number,{min:0,max:10000000,step:".01",required:""});
  name.input.dataset.quoteField="description";amount.input.dataset.quoteField="qty";price.input.dataset.quoteField="price";
  const remove=el("button","Retirer","btn outline");remove.type="button";
- remove.setAttribute("aria-label","Supprimer la prestation "+number);
+ remove.setAttribute("aria-label","Supprimer la prestation "+displayNumber);
  remove.addEventListener("click",()=>{
   if(rows.children.length===1){status.textContent="Conserve au moins une prestation.";return}
   group.remove();reindex();invalidate();
@@ -122,7 +123,7 @@ function renderPaper(totals){
 }
 function resetForm(){
  form.reset();$("quoteDate").value=dateValue(0);$("quoteExpires").value=dateValue(30);
- rows.replaceChildren();addLine();preview.replaceChildren(el("div","Ton devis prendra forme ici après validation du formulaire.","quote-placeholder"));
+ rows.replaceChildren();lineSequence=0;addLine();preview.replaceChildren(el("div","Ton devis prendra forme ici après validation du formulaire.","quote-placeholder"));
  updateVatMode();status.textContent="Tous les champs ont été réinitialisés.";
 }
 function updateVatMode(){
