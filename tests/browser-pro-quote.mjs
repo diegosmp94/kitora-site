@@ -47,6 +47,7 @@ try{
  await page.locator("#quoteReset").click();
  assert.equal(await page.locator("#issuerName").inputValue(),"","reset clears draft");
  await page.locator("#quoteImportInput").setInputFiles({name:"draft.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(downloaded))});
+ await page.waitForFunction(()=>document.getElementById("issuerName").value==="Entreprise Test",{timeout:7000});
  assert.equal(await page.locator("#issuerName").inputValue(),"Entreprise Test","can import draft");
  assert.equal(await page.locator("#quotePrint").isDisabled(),true,"restored draft must be revalidated");
  await page.locator("#quoteImportInput").setInputFiles({name:"bad.json",mimeType:"application/json",buffer:Buffer.from('{"format":"bad"}')});
