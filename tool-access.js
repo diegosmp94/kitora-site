@@ -16,7 +16,14 @@ async function load(){
    if(subError||sub?.status!=="active"||!plans[row.chosen_plan]?.includes(sub.plan)){location.replace(chooser);return;}
   }
   for(const old of document.querySelectorAll("script[data-kitora-protected-src]")){
-   const source=old.dataset.kitoraProtectedSrc;
+   const source=old.dataset.kitoraProtectedSrc||"";
+   const resolved=new URL(source,location.href);
+   const root=new URL(".",location.href).pathname;
+   const relative=resolved.pathname.startsWith(root)?resolved.pathname.slice(root.length):"";
+   // This is only UI orchestration, never an authorization boundary.
+   // Do not permit an injected data attribute to load a foreign script.
+   if(resolved.origin!==location.origin||! /^[a-z0-9][a-z0-9._-]*\\.js$/i.test(relative))
+     throw Error("Chargement de script hors origine ou chemin non autorisé");
    const el=document.createElement("script");
    if(old.dataset.kitoraProtectedType==="module")el.type="module";
    el.src=source;
