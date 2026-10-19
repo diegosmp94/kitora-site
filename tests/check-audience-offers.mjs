@@ -15,7 +15,7 @@ assert.doesNotMatch(html,/(activer mon abonnement entreprise|payer pour une asso
 assert.match(js,/URL\.createObjectURL/);
 assert.match(js,/text\/plain/);
 assert.match(js,/document\.querySelectorAll/);
-assert.match(js,/Aucune? demande/i); // no server-side request and no false CTA
+assert.match(js,/Rien n\x27a été transmis/); // no server-side request and no false CTA
 assert.doesNotMatch(js,/\bfetch\s*\(/,"the B2B form must never send user data");
 assert.match(offer,/solutions\.html\?public=association/);
 assert.match(offer,/solutions\.html\?public=entreprise/);
