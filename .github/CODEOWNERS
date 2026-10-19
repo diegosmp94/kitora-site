@@ -1,0 +1,13 @@
+# Kitora — owners for core code and security-sensitive changes.
+# CODEOWNERS suggests reviewers. Enforcement requires a GitHub branch ruleset.
+# On a one-person repository, do not require code-owner approvals until another
+# trusted maintainer with write access is available (authors cannot self-approve).
+* @diegosmp94
+
+/.github/ @diegosmp94
+/security/ @diegosmp94
+/supabase/ @diegosmp94
+/tests/ @diegosmp94
+/admin* @diegosmp94
+/facturation* @diegosmp94
+/facture-pdf.js @diegosmp94
