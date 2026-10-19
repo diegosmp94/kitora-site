@@ -38,7 +38,7 @@ try{
    await protectedPanel.evaluate(el=>el.hidden=false); // exercise pure UI without privileged requests
    const sidebar=page.locator(".ka-sidebar");
    assert.ok(await sidebar.isVisible());
-   assert.equal(await sidebar.locator('a[href$=".html"]').count(),7,"all seven admin destinations");
+   assert.equal(await sidebar.locator('a[href^="admin"][href$=".html"]').count(),7,"all seven admin destinations");
    assert.equal(await sidebar.locator('a[aria-current="page"]').count(),1,"active section");
    await page.locator(".ka-nav-filter").fill("commandes");
    assert.ok(await sidebar.locator('a[href="admin-orders.html"]').isVisible(),"filter keeps matching section");
