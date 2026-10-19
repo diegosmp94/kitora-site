@@ -1,0 +1,16 @@
+// Release gate: Kitora's public cart must stay on Stripe TEST until verified cutover.
+import {readFileSync} from "node:fs";
+import assert from "node:assert/strict";
+const cart=readFileSync("cart.js","utf8");
+const page=readFileSync("panier.html","utf8");
+const account=readFileSync("compte.html","utf8");
+const request=readFileSync("subscriber-requests.js","utf8");
+assert.match(cart,/functions\/v1\/create-checkout"/, "Client must route to TEST checkout");
+assert.doesNotMatch(cart,/functions\/v1\/create-checkout-live/, "No LIVE checkout route in the public client");
+assert.doesNotMatch(cart,/\b(?:isLive\s*=\s*true|sk_live_|rk_live_|whsec_)\b/, "LIVE activation/secrets forbidden");
+assert.match(cart,/Stripe|démonstration/, "TEST checkout disclosure must exist");
+assert.match(page,/Stripe TEST/, "TEST disclosure required on cart page");
+assert.match(page,/aucun prélèvement réel|aucun débit réel/i, "Explicit non-billing notice required");
+assert.match(account,/resetPasswordForEmail\(/, "Account recovery must remain available");
+assert.match(request,/kitora_live_subscriptions/, "Subscription checks must keep distinct billing modes");
+console.log("Kitora release safety: checkout TEST only, no LIVE routing, disclosures and account guardrails PASS.");

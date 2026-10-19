@@ -52,10 +52,8 @@ body.kitora-home #k-orientation #k-recommend-link{background:#f4d39b;color:#1028
 body.kitora-home #k-orientation #k-recommend-link:hover{background:#ffe4b6;color:#10283f}
 body.kitora-home #k-orientation #k-recommend-link:focus-visible{outline:3px solid #fff;outline-offset:4px}
 
-/* WCAG reliability: avoid transient low-contrast text while orientation content reveals. */
-body.kitora-home.k-motion-ready #k-orientation [data-k-reveal]{opacity:1!important;transform:none!important;transition:none!important}
-
-/* Stable WCAG contrast during scrolling and headless accessibility audits. */
-body.kitora-home.k-motion-ready #k-orientation [data-k-reveal]{opacity:1!important;transform:none!important;transition:none!important}
+/* WCAG AA: the animation state is on <html>, not <body>.
+   Keep orientation text and controls at full opacity during reveal transitions. */
+html.k-motion-ready body.kitora-home #k-orientation [data-k-reveal]{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
 body.kitora-home #k-orientation .sectionhead .eyebrow{color:#102b45!important;background-color:#f7e8cd!important;text-shadow:none!important;opacity:1!important}
 body.kitora-home #k-orientation #k-recommend-link{background:#f9d8a4!important;color:#10283f!important;border:1px solid #f9d8a4!important;text-shadow:none!important;opacity:1!important}
