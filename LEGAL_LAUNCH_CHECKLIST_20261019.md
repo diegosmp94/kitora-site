@@ -46,3 +46,15 @@ Les pages ont été rédigées sur la base des fonctionnalités observables, mai
 - CNIL : cookies et traceurs — https://www.cnil.fr/fr/cookies-et-autres-traceurs/que-dit-la-loi
 
 **Important :** modèle préparatoire, non substitut à une revue personnalisée par un professionnel compétent. Les pages ne doivent jamais donner à croire qu'un formulaire de rétractation fonctionne si sa soumission/confirmation n'a pas été mise en place et testée.
+
+## E. Extensions B2B / Associations (bloquant pour les futurs abonnements collectifs)
+- [ ] Déterminer l'entité juridique autorisée à vendre et contracter pour Kitora.
+- [ ] Classer correctement particuliers, entreprises et associations : le seul statut d'association ne suffit pas à écarter les droits des consommateurs et certaines petites structures professionnelles peuvent bénéficier de protections légales particulières.
+- [ ] Vérifier la rédaction des CGV professionnelles (`cgv-professionnels.html`), la formation du contrat, les limites d'usage et l'exactitude du périmètre vendu.
+- [ ] Implémenter un vrai modèle d'organisations : administrateurs, membres, rôles, invitations, isolation des données RLS, départ d'un membre et révocation.
+- [ ] Ajouter les contrats, factures, devis et le traitement applicable à la TVA ; vérifier les obligations de facturation électronique B2B en France (réception depuis 09/2026, émission progressivement, et e-reporting B2C).
+- [ ] Vérifier prestations, sauvegardes, quotas, tarifs collectifs, support et engagements avant de les mettre en vente.
+- [ ] Finaliser le point de contact professionnel : l'export TXT de `solutions.html` est strictement local, ne transmet rien et ne constitue pas un devis.
+- [ ] Faire la recette et la séparation TEST/LIVE des abonnements collectifs avant toute offre commerciale.
+
+Références : https://entreprendre.service-public.gouv.fr/vosdroits/F33527 et https://entreprendre.service-public.gouv.fr/vosdroits/F39785.
