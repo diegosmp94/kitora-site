@@ -1,0 +1,23 @@
+name: Kitora B2B B2C solutions
+on:
+  push:
+    branches:
+      - feature/kitora-b2b-b2c-20261019
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  solutions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/check-audience-offers.mjs
+      - run: npm install --no-save playwright@1.58.2
+      - run: npx playwright install --with-deps chromium
+      - run: node tests/browser-audience-offers.mjs
