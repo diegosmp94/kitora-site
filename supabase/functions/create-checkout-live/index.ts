@@ -9,7 +9,7 @@ async function verifiedPublishedLegal(){
   const results=await Promise.all(["mentions-legales.html","cgv.html"].map(name=>fetch(base+name,{cache:"no-store",signal:AbortSignal.timeout(4500)})));
   if(results.some(r=>!r.ok))return false;
   const docs=await Promise.all(results.map(r=>r.text()));
-  if(docs.some(s=>/\\[À compléter avant|Version provisoire|Version de travail — à valider|Aucun paiement LIVE n'est ouvert au public/i.test(s)))return false;
+  if(docs.some(s=>/\[À compléter avant|Version provisoire|Version de travail — à valider|Aucun paiement LIVE n'est ouvert au public/i.test(s)))return false;
   return docs[0].includes("M. Sampaio")&&docs[1].includes("Kitora");
  }catch{return false;}
 }
