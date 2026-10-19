@@ -23,6 +23,9 @@ assert.match(page,/object-src 'none'/);
 assert.match(page,/uniquement en mémoire/);
 assert.match(page,/sauvegardes? volontairement|enregistres volontairement/i);
 assert.match(read("tool-access.js"),/resolved\.origin!==location\.origin/);
+assert.ok(read("tool-access.js").includes(String.raw`*\.js`),"same-origin JS loader must accept standard file extensions");
+assert.ok(!read("tool-access.js").includes(String.raw`*\\.js`),"double-escaped loader regex prevents dashboards loading");
+
 assert.match(read("tool-access.js"),/location\.replace\(chooser\)/);
 for(const f of ["admin.js","tool-access.js","kitora3.js","subscriber-requests.js","admin-insights.js","facturation-pro.js"]){
  const src=read(f);
