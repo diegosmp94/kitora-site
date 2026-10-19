@@ -8,7 +8,7 @@ const html=read("facturation-pro.html"),app=read("facturation-pro.js"),cloud=rea
 for(const id of ["cloudDraftList","cloudDraftCount","cloudDraftStatus","saveCloudDraft","refreshCloudDrafts","newCloudDraft","invoiceForm"]){
  assert.ok(html.includes('id="'+id+'"'),id+" missing in invoice UI");
 }
-assert.match(html,/uniquement si tu choisis explicitement|uniquement si tu sélectionnes/);
+assert.match(html,/choisis explicitement|sélectionnes|enregistres volontairement/);
 assert.match(html,/numéro de facture/);
 assert.match(html,/À vérifier/);
 assert.match(app,/initInvoiceCloudDrafts/);
