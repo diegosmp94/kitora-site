@@ -74,8 +74,16 @@ try{
  await page.reload({waitUntil:"load"});
  await page.locator("#authStatus").getByText("Compte connecté.",{exact:false}).waitFor();
  assert.equal(await page.locator("#orgName").inputValue(),"Association Essai Facturation","profile rehydrated");
- assert.equal(await page.locator("#clientName").inputValue(),"Entreprise Cliente","local draft persisted");
- assert.equal(await page.locator("#invoice-line-0-description").inputValue(),"Atelier numérique");
+ assert.equal(await page.locator("#clientName").inputValue(),"","client data must NOT persist on reload");
+ assert.equal(await page.locator("#invoice-line-0-description").inputValue(),"","invoice lines must NOT persist on reload");
+ assert.equal(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith("kitora_pro_invoice_draft_v1_")).length),0,"legacy local drafts purged");
+ await page.locator("#clientName").fill("Entreprise Cliente");
+ await page.locator("#clientAddress").fill("20 boulevard Test");
+ await page.locator("#clientPost").fill("69001");
+ await page.locator("#clientCity").fill("Lyon");
+ await page.locator("#invoice-line-0-description").fill("Atelier numérique");
+ await page.locator("#invoice-line-0-qty").fill("2");
+ await page.locator("#invoice-line-0-unitCents").fill("120.50");
  await page.locator("#orgVatMode").selectOption("franchise_293b");
  await page.locator("#saveOrg").click();
  await page.locator("#orgMessage").getByText("Dossier enregistré dans ton compte Kitora.",{exact:false}).waitFor();
