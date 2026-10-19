@@ -23,6 +23,7 @@ jobs:
       - run: node tests/check-invoice-pro.mjs
       - run: node tests/check-invoice-cloud.mjs
       - run: node tests/check-security-hardening.mjs
+      - run: node tests/check-mfa-readiness.mjs
       - run: node tests/check-admin-workspace.mjs
       - run: npm install --no-save playwright@1.58.2
       - run: npx playwright install --with-deps chromium
@@ -31,4 +32,5 @@ jobs:
       - run: node tests/browser-pro-tools.mjs
       - run: node tests/browser-invoice-pro.mjs
       - run: node tests/browser-invoice-cloud.mjs
+      - run: node tests/browser-mfa-readiness.mjs
       - run: node tests/browser-admin-workspace.mjs

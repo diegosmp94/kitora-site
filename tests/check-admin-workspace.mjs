@@ -24,6 +24,8 @@ assert.match(first,/mode TEST|démonstration/i);
 for(const p of pages){
  const content=read(p);
  assert.ok(content.includes('<body class="ka-app">'),p+": scoped styling");
+ assert.equal((content.match(/<body(?:\s|>)/g)||[]).length,1,p+": unique body tag");
+ assert.ok(content.includes('href="securite-compte.html"'),p+": MFA settings link");
  assert.ok(content.includes("admin-workspace.css?v="),p+": shared CSS");
  assert.ok(content.includes("admin-workspace.js?v="),p+": shared JS");
  assert.ok(content.includes('aria-label="'),p+": accessible markup");

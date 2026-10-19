@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 const base="https://yxjxizxzjubhjaxskksh.supabase.co/rest/v1/";
 const apiKey="sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW";
-const sensitive=["subscriptions","orders","profiles","subscriber_requests","kitora_ai_usage","kitora_workspace_backup","kitora_ai_jobs","kitora_ai_reservations","kitora_stripe_webhook_events","kitora_admin_audit"];
+const sensitive=["subscriptions","orders","profiles","subscriber_requests","kitora_ai_usage","kitora_workspace_backup","kitora_ai_jobs","kitora_ai_reservations","kitora_stripe_webhook_events","kitora_admin_audit","kitora_admins","kitora_org_profiles","kitora_invoice_drafts","kitora_live_subscriptions","kitora_user_documents"];
 for(const table of sensitive){
  const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),12000);
  try{
