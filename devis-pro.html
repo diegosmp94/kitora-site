@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://yxjxizxzjubhjaxskksh.supabase.co https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="robots" content="noindex,nofollow"><title>Kitora Pro — Devis Studio</title>
+<meta name="description" content="Prépare un devis de prestations dans Kitora Pro, avec préremplissage facultatif de ton organisation et impression PDF locale.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="header.css?v=20261019-unified">
+<link rel="stylesheet" href="facturation-pro.css?v=20261019-sec1"><link rel="stylesheet" href="devis-pro.css?v=20261019-v1">
+<script type="module" src="devis-pro.js?v=20261019-v1"></script></head><body>
+<a class="skip" href="#main">Passer au contenu</a>
+<header class="kitora-header"><nav class="kitora-header-nav" aria-label="Navigation principale"><a class="brand" href="index.html">kit<span>ora</span>.</a><div class="kitora-header-links"><a href="index.html">Accueil</a><a href="solutions.html">Solutions</a><a href="offres-pro.html">Offres Pro</a><a href="outils-pro.html">Outils Pro</a><a href="facturation-pro.html">Facturation</a><a href="compte.html">Mon espace</a></div><details class="kitora-mobile"><summary>☰ Menu</summary><div class="kitora-mobile-links"><a href="index.html">Accueil</a><a href="solutions.html">Solutions</a><a href="outils-pro.html">Outils Pro</a><a href="facturation-pro.html">Facturation</a><a href="compte.html">Mon espace</a></div></details></nav></header>
+<main id="main">
+<section class="hero quote-hero"><div class="wrap"><span class="kicker">KITORA / PRO QUOTE STUDIO</span><h1>Des propositions<br><em>à ton image.</em></h1>
+<p>Prépare un devis clair, calcule les totaux HT et TTC et imprime un document en PDF depuis ton navigateur. Avec un compte Kitora, ton profil entreprise ou association peut préremplir l'émetteur.</p><p class="hero-help"><strong>Aperçu fonctionnel :</strong> aucun abonnement Pro commercialisé, aucun envoi, aucune signature ni numérotation officielle par Kitora.</p></div></section>
+<div class="wrap quote-main">
+<section class="quote-intro"><span class="kicker dark">UN DOCUMENT, SANS COMPLEXITÉ</span><h2>Le devis, en toute clarté.</h2><p>Renseigne les informations ci-dessous puis actualise l'aperçu. Les données du devis restent uniquement en mémoire dans cet onglet et ne sont pas sauvegardées. Évite les données sensibles sur un appareil partagé.</p>
+<p id="orgStatus" class="notice" role="status" aria-live="polite">Chargement facultatif du dossier entreprise…</p></section>
+<form id="quoteForm" class="quote-editor" autocomplete="off">
+<section class="work-card"><div class="heading"><span class="step">01</span><div><span class="kicker dark">ÉMETTEUR</span><h2>Ton organisation.</h2><p>Prérempli depuis ton dossier Kitora Pro lorsque tu es connecté. Modifiable pour ce devis uniquement.</p></div></div>
+<div class="field-grid">
+<div class="field"><label for="issuerName">Raison sociale / association <span>*</span></label><input id="issuerName" maxlength="180" required placeholder="Nom de ton organisation"></div>
+<div class="field"><label for="issuerEmail">E-mail de contact</label><input id="issuerEmail" type="email" maxlength="200" placeholder="contact@exemple.fr"></div>
+<div class="field"><label for="issuerSiren">SIREN (si applicable)</label><input id="issuerSiren" inputmode="numeric" maxlength="9" pattern="[0-9]{9}" placeholder="9 chiffres"></div>
+<div class="field"><label for="issuerVat">TVA intracommunautaire (si applicable)</label><input id="issuerVat" maxlength="28"></div>
+<div class="field quote-wide"><label for="issuerAddress">Adresse de l'émetteur <span>*</span></label><textarea id="issuerAddress" maxlength="400" rows="2" required placeholder="Rue, code postal, ville, pays"></textarea></div></div></section>
+<section class="work-card"><div class="heading"><span class="step">02</span><div><span class="kicker dark">CLIENT &amp; VALIDITÉ</span><h2>Le cadre de la proposition.</h2><p>Un repère de dossier libre, une durée de validité et les coordonnées du destinataire.</p></div></div><div class="field-grid">
+<div class="field"><label for="clientName">Client / destinataire <span>*</span></label><input id="clientName" maxlength="180" required placeholder="Nom ou entreprise"></div>
+<div class="field"><label for="quoteReference">Référence de suivi (libre)</label><input id="quoteReference" maxlength="65" placeholder="DEV-2026-001"></div>
+<div class="field quote-wide"><label for="clientAddress">Adresse du client <span>*</span></label><textarea id="clientAddress" maxlength="400" rows="2" required placeholder="Rue, code postal, ville, pays"></textarea></div>
+<div class="field"><label for="quoteDate">Date du devis <span>*</span></label><input id="quoteDate" type="date" required></div>
+<div class="field"><label for="quoteExpires">Valable jusqu'au <span>*</span></label><input id="quoteExpires" type="date" required></div></div></section>
+<section class="work-card"><div class="heading"><span class="step">03</span><div><span class="kicker dark">PRESTATIONS &amp; CONDITIONS</span><h2>Détaille ton offre.</h2><p>Jusqu'à 40 lignes, avec calcul en centimes pour limiter les erreurs d'arrondi.</p></div></div>
+<div class="field-grid"><div class="field"><label for="quoteVatMode">Régime TVA <span>*</span></label><select id="quoteVatMode"><option value="standard">Régime standard</option><option value="franchise_293b">Franchise en base (art. 293 B)</option><option value="autre_exoneration">Autre exonération (à vérifier)</option></select></div>
+<div class="field"><label for="quoteVatRate">Taux de TVA</label><select id="quoteVatRate"><option value="20">20 %</option><option value="10">10 %</option><option value="5.5">5,5 %</option><option value="0">0 %</option></select></div></div>
+<div id="quoteRows" class="quote-lines" aria-label="Prestations du devis"></div>
+<div class="actions"><button class="btn outline" id="quoteAdd" type="button">+ Ajouter une ligne</button></div><p id="quoteTotal" class="totals" aria-live="polite">Complète une prestation pour calculer le total.</p>
+<div class="field"><label for="quoteNotes">Notes, délais et conditions proposées</label><textarea id="quoteNotes" maxlength="3000" rows="3" placeholder="Ex. Prestations réalisées après validation du devis. Délais indicatifs…"></textarea></div>
+<div class="notice warning"><strong>À vérifier avant utilisation commerciale :</strong> mentions légales et fiscales adaptées à ta structure, nature des prestations, conditions, TVA et signature du client. Ce module ne signe pas le devis et n'enregistre aucune acceptation.</div></section>
+<div class="quote-cta"><p id="quoteStatus" role="status" aria-live="polite">Remplis les champs obligatoires, puis actualise l'aperçu.</p>
+<div class="actions"><button class="btn" id="quoteRefresh" type="submit">Actualiser l'aperçu ↗</button><button class="btn" id="quotePrint" type="button" disabled>Imprimer / enregistrer PDF</button><button class="btn outline" id="quoteReset" type="button">Tout effacer</button></div></div>
+</form>
+<section class="work-card quote-preview-area" aria-labelledby="quotePreviewTitle"><div class="heading"><span class="step">04</span><div><span class="kicker dark">DOCUMENT PRÉPARATOIRE</span><h2 id="quotePreviewTitle">Ton aperçu.</h2><p>Le bouton « Imprimer / enregistrer PDF » ouvre le dialogue d'impression de ton navigateur. Sélectionne « Enregistrer au format PDF » si disponible.</p></div></div>
+<article id="quotePreview" class="quote-paper" aria-label="Aperçu du devis"><div class="quote-placeholder">Ton devis prendra forme ici après validation du formulaire.</div></article>
+</section>
+<nav class="quote-next" aria-label="Autres outils professionnels"><a href="facturation-pro.html">Facturation brouillon →</a><a href="outils-pro.html">Les cinq outils de Kitora Pro →</a><a href="offres-pro.html">Découvrir les offres futures →</a></nav>
+</div></main><footer class="footer"><div class="wrap"><a class="footer-brand" href="index.html">kitora<span>.</span></a><nav aria-label="Navigation complémentaire"><a href="solutions.html">Solutions</a><a href="facturation-pro.html">Facturation</a><a href="cgv-professionnels.html">CGV Pro</a><a href="confidentialite.html">Confidentialité</a></nav><p>Kitora Pro · Devis préparatoire non signé · Paiements LIVE désactivés.</p></div></footer></body></html>
