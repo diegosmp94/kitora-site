@@ -20,7 +20,7 @@ const mock='export function createClient(){return {auth:{getUser:async()=>({data
 try{
  for(const width of [375,768,1440]){
   const page=await browser.newPage({viewport:{width,height:900}});
-  await page.route(/https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@2\/\+esm/,route=>route.fulfill({status:200,contentType:"text/javascript",body:mock}));
+  await page.route(/https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@2(?:\.57\.0)?\/\+esm/,route=>route.fulfill({status:200,contentType:"text/javascript",body:mock}));
   for(const route of ["projects.html","learn.html","agenda.html","notes.html","offres.html","compte.html"]){
    await page.goto(base+"/"+route,{waitUntil:"domcontentloaded"});
    await page.locator(".kp-context").waitFor({state:"attached"});
@@ -38,7 +38,7 @@ try{
   await page.close();
  }
  const home=await browser.newPage({viewport:{width:390,height:844},reducedMotion:"reduce"});
- await home.route(/https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@2\/\+esm/,route=>route.fulfill({status:200,contentType:"text/javascript",body:mock}));
+ await home.route(/https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@2(?:\.57\.0)?\/\+esm/,route=>route.fulfill({status:200,contentType:"text/javascript",body:mock}));
  await home.goto(base+"/index.html",{waitUntil:"load"});
  await home.locator("#notre-exigence").waitFor({state:"attached"});
  assert.ok(await home.locator("#notre-exigence h2").isVisible());

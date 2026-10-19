@@ -1,0 +1,21 @@
+name: Kitora 3 workspace checks
+on:
+  push:
+    branches:
+      - feature/kitora-3-workspace-20261019
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  workspace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/check-kitora3.mjs
+      - run: node tests/check-release-readiness.mjs

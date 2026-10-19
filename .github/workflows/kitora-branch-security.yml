@@ -1,0 +1,21 @@
+name: Kitora branch security
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  branch-security-gate:
+    name: branch-security-gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify branch governance, checks and credential hygiene
+        run: node tests/check-branch-governance.mjs

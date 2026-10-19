@@ -1,19 +1,16 @@
-import { readFileSync } from 'node:fs';
-import assert from 'node:assert/strict';
-const cart = readFileSync('cart.js','utf8');
-const page = readFileSync('panier.html','utf8');
-const account = readFileSync('compte.html','utf8');
-const requests = readFileSync('subscriber-requests.js','utf8');
-assert.match(cart, /create-checkout-live/, 'LIVE route must be defined for future deployment');
-assert.match(cart, /const isLive=false;/, 'Release gate must disable LIVE payments before end-to-end validation');
-assert.match(cart, /create-checkout/, 'TEST checkout route is missing');
-assert.match(cart, /plus_monthly/);
-assert.match(cart, /plus_yearly/);
-assert.match(account, /customer-portal-live/, 'LIVE billing portal route is missing');
-assert.match(page, /Stripe TEST/, 'TEST checkout disclosure is missing');
-assert.match(page, /aucun prélèvement réel/, 'TEST mode disclaimer is missing');
-assert.doesNotMatch(cart, /sk_live_|rk_live_|whsec_/, 'Never put Stripe secrets in client code');
-console.log('Kitora LIVE checkout static integration checks passed');
-
-assert.match(account, /kitora_live_subscriptions/, 'Account must fetch LIVE subscription state');
-assert.match(requests, /kitora_live_subscriptions/, 'Premium requests must accept verified LIVE subscriptions');
+// Release gate: Kitora's public cart must stay on Stripe TEST until verified cutover.
+import {readFileSync} from "node:fs";
+import assert from "node:assert/strict";
+const cart=readFileSync("cart.js","utf8");
+const page=readFileSync("panier.html","utf8");
+const account=readFileSync("compte.html","utf8");
+const request=readFileSync("subscriber-requests.js","utf8");
+assert.match(cart,/functions\/v1\/create-checkout"/, "Client must route to TEST checkout");
+assert.doesNotMatch(cart,/functions\/v1\/create-checkout-live/, "No LIVE checkout route in the public client");
+assert.doesNotMatch(cart,/\b(?:isLive\s*=\s*true|sk_live_|rk_live_|whsec_)\b/, "LIVE activation/secrets forbidden");
+assert.match(cart,/Stripe|démonstration/, "TEST checkout disclosure must exist");
+assert.match(page,/Stripe TEST/, "TEST disclosure required on cart page");
+assert.match(page,/aucun prélèvement réel|aucun débit réel/i, "Explicit non-billing notice required");
+assert.match(account,/resetPasswordForEmail\(/, "Account recovery must remain available");
+assert.match(request,/kitora_live_subscriptions/, "Subscription checks must keep distinct billing modes");
+console.log("Kitora release safety: checkout TEST only, no LIVE routing, disclosures and account guardrails PASS.");

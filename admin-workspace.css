@@ -1,0 +1,96 @@
+/* KITORA / COMMAND CENTER — 2026-10. Non-destructive UI layer for existing protected admin pages */
+:root{--ka-night:#092139;--ka-navy:#102f50;--ka-blue:#174c80;--ka-blue2:#236494;--ka-gold:#e6ba78;--ka-ink:#173851;--ka-muted:#5a7187;--ka-line:#dce7f1;--ka-bg:#f2f6fb}
+html{scroll-behavior:smooth}
+body.ka-app{background:var(--ka-bg);color:var(--ka-ink)}
+body.ka-app main{overflow:clip}
+body.ka-app .hero{background:radial-gradient(ellipse at 80% 15%,#2a6490,#103657 52%,#0a253f 100%);color:#f7fbff;min-height:220px;padding:clamp(45px,6vw,75px) 0;position:relative;isolation:isolate}
+body.ka-app .hero:after{content:"";position:absolute;right:max(4%,calc((100% - 1190px)/2));top:18%;height:155px;width:155px;border-radius:50%;border:1px solid #e9bc795e;box-shadow:0 0 0 36px #e6ba780a,0 0 0 78px #e6ba7806;z-index:-1}
+body.ka-app .hero h1{font-size:clamp(2.45rem,5.2vw,4.2rem);font-weight:800;letter-spacing:-.063em;line-height:1.09;margin:13px 0}
+body.ka-app .hero .kicker{color:var(--ka-gold);font-size:.79rem;letter-spacing:.15em;font-weight:800}
+body.ka-app .hero p{color:#dceaf7;max-width:760px;font-size:1rem}
+body.ka-app main>.section{padding:clamp(34px,5vw,55px) 0 85px;background:var(--ka-bg)}
+body.ka-app main>.section>.wrap{max-width:1250px;width:92%;margin:0 auto}
+body.ka-app #adminStatus,body.ka-app #healthStatus{display:block;padding:12px 17px;border:1px solid #c8dcea;border-radius:12px;background:#e9f2f9;color:#214866;font-size:.9rem;margin:0 0 22px;max-width:none;overflow-wrap:anywhere}
+body.ka-app #adminStatus:empty,body.ka-app #healthStatus:empty{display:none}
+body.ka-app .ka-layout[hidden],body.ka-app #adminProtected[hidden],body.ka-app #healthProtected[hidden],body.ka-app #adminPages[hidden],body.ka-app #adminStats[hidden]{display:none!important}
+body.ka-app #adminProtected,body.ka-app #healthProtected{display:grid;grid-template-columns:minmax(205px,238px) minmax(0,1fr);align-items:start;gap:clamp(16px,2.4vw,30px)}
+body.ka-app #adminProtected>*:not(.kitora-admin-tabs),body.ka-app #healthProtected>*:not(.kitora-admin-tabs){min-width:0}
+body.ka-app .kitora-admin-tabs.ka-sidebar{display:flex;flex-direction:column;gap:4px;position:sticky;top:20px;align-self:start;margin:0;border:1px solid #d9e5ef;background:#fff;border-radius:21px;padding:17px 12px 15px;box-shadow:0 15px 42px #0d2f4b0c;min-width:0}
+body.ka-app .ka-sidebar-brand{display:flex;align-items:center;gap:10px;padding:6px 12px 16px;margin:0 0 7px;border-bottom:1px solid #dce7f0;font-size:1.02rem;font-weight:850;color:#102f4c;letter-spacing:-.025em}
+body.ka-app .ka-brand-symbol{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#143d65;color:#e6bd84;font:700 1.4rem Georgia,serif}
+body.ka-app .ka-side-group{margin:16px 11px 5px;color:#657b8d;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;font-weight:850}
+body.ka-app .kitora-admin-tabs.ka-sidebar>a{display:flex;align-items:center;gap:10px;white-space:normal;padding:11px 12px!important;min-height:45px;text-align:left;border:1px solid transparent;border-radius:11px;background:transparent!important;color:#385a76!important;box-shadow:none;font-size:.86rem;font-weight:730;line-height:1.25;text-decoration:none}
+body.ka-app .kitora-admin-tabs.ka-sidebar>a:hover{background:#edf5fb!important;color:#134776!important}
+body.ka-app .kitora-admin-tabs.ka-sidebar>a[aria-current="page"]{background:#143f67!important;color:#fff!important;border-color:#143f67!important;box-shadow:0 8px 18px #143f6724}
+body.ka-app .ka-side-icon{width:22px;height:22px;display:inline-grid;place-items:center;flex:0 0 auto;font-size:1.12rem;color:#a97a3e}
+body.ka-app .ka-sidebar>a[aria-current="page"] .ka-side-icon{color:#edc78d}
+body.ka-app .ka-sidebar-foot{border-top:1px solid #dce7f0;padding:14px 12px 3px;margin-top:15px;color:#6b7d8d;font-size:.75rem;line-height:1.5}
+body.ka-app .ka-sidebar .ka-nav-filter{margin:12px 7px 4px;border:1px solid #c7d8e7;border-radius:10px;background:#f8fbfd;color:#143c5a;padding:10px 12px;font-size:.8rem;max-width:calc(100% - 14px)}
+body.ka-app .ka-sidebar .ka-nav-filter::placeholder{color:#697f91}
+body.ka-app .ka-sidebar .ka-hidden-nav-item{display:none!important}
+body.ka-app .ka-sidebar-empty{font-size:.79rem;color:#698297;margin:10px 12px}
+body.ka-app .kitora-admin-section{margin:0;display:grid;gap:19px;min-width:0}
+body.ka-app .kitora-admin-section .panel,body.ka-app #healthProtected>.panel{border:1px solid #dae6f0;background:#fff;border-radius:19px;box-shadow:0 16px 44px #112f4d0a;padding:clamp(19px,2.8vw,32px);margin:0;min-width:0}
+body.ka-app .kitora-admin-section .panel h2,body.ka-app #healthProtected>.panel h2{font-size:clamp(1.45rem,2.5vw,2rem);letter-spacing:-.045em;line-height:1.2;color:#153d61;margin:0 0 12px}
+body.ka-app .kitora-admin-section .panel>p,body.ka-app #healthProtected>.panel>p{color:#60788b}
+body.ka-app .kitora-admin-section .kicker,body.ka-app #adminStats .kicker{color:#8d652d;letter-spacing:.12em;font-size:.73rem;font-weight:850}
+body.ka-app .admin-workbar{display:flex;gap:10px 12px;flex-wrap:wrap;align-items:center;padding:17px;background:#f3f8fc;border:1px solid #e0eaf2;border-radius:13px;margin:17px 0}
+body.ka-app .admin-workbar>label{font-weight:750;font-size:.79rem;color:#37556d}
+body.ka-app .admin-workbar>input,body.ka-app .admin-workbar>select{padding:10px 13px;border:1px solid #bacfdf;border-radius:10px;max-width:100%;background:#fff;color:#1c405c;font:inherit;font-size:.86rem;min-width:0}
+body.ka-app .admin-workbar>input{flex:1;min-width:170px}
+body.ka-app .btn{font:inherit;font-size:.83rem;font-weight:760;line-height:1.4;border-radius:10px;padding:10px 15px;transition:background .15s ease,border-color .15s ease,box-shadow .15s ease,transform .15s ease}
+body.ka-app .btn:not(.secondary){background:#174c80;border:1px solid #174c80;color:#fff}
+body.ka-app .btn.secondary{background:#fff;color:#204f76;border:1px solid #b9cbda}
+body.ka-app .btn:not(:disabled):hover{box-shadow:0 7px 18px #173f6320;transform:translateY(-1px)}
+body.ka-app button:disabled{opacity:.55;cursor:not-allowed}
+body.ka-app .kitora-admin-form label{color:#254969;font-size:.84rem}
+body.ka-app .kitora-admin-form input,body.ka-app .kitora-admin-form select,body.ka-app .kitora-admin-form textarea{border:1px solid #b5cadd;background:#fbfdff;border-radius:10px;font-size:.91rem}
+body.ka-app .kitora-admin-table-wrap{overflow:auto;border:1px solid #dce7ef;border-radius:13px;background:#fff}
+body.ka-app .kitora-admin-table{border-collapse:separate;border-spacing:0;min-width:630px;width:100%;font-size:.86rem}
+body.ka-app .kitora-admin-table th{position:sticky;top:0;text-align:left;color:#4b6b83;background:#f0f6fb;border-bottom:1px solid #d7e5f0;white-space:nowrap;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase}
+body.ka-app .kitora-admin-table th,body.ka-app .kitora-admin-table td{padding:14px 14px;border-bottom:1px solid #e3ebf2;overflow-wrap:anywhere;vertical-align:middle}
+body.ka-app .kitora-admin-table tbody tr:nth-child(even){background:#fcfdff}
+body.ka-app .kitora-admin-table tbody tr:hover{background:#f5f9fc}
+body.ka-app .kitora-admin-table tbody tr:last-child td{border-bottom:0}
+body.ka-app .kitora-admin-actions{display:flex;flex-wrap:wrap;align-items:center;gap:11px;margin:18px 0 0}
+body.ka-app .admin-insight-card{border:1px solid #dce7f0;border-radius:15px;background:#f7fbfe;padding:20px}
+body.ka-app .admin-insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+body.ka-app .admin-insight-card>strong{color:#163b5d;letter-spacing:-.04em;font-size:1.9rem}
+body.ka-app #adminRequestList .kitora-request-admin{background:#fafcfe;border:1px solid #e0e9f2;border-radius:14px;padding:20px;margin:14px 0;overflow-wrap:anywhere}
+body.ka-app #adminRequestList .kitora-request-admin>p{color:#5b7286}
+body.ka-app #adminRequestList textarea,body.ka-app #adminRequestList select{max-width:100%;width:100%;border:1px solid #c4d7e6;padding:11px;border-radius:9px;margin:7px 0;font:inherit;color:#163d60;background:#fff}
+body.ka-app #adminUsers .kitora-admin-table{min-width:860px}
+body.ka-app .ka-overview{display:grid;gap:17px;margin:22px 0}
+body.ka-app .ka-overview-title{display:flex;gap:12px;justify-content:space-between;align-items:center;margin:0 0 4px}
+body.ka-app .ka-overview-title h2{font-size:clamp(1.4rem,3vw,2.15rem);letter-spacing:-.045em;line-height:1.25;margin:0;color:#183c5a}
+body.ka-app .ka-overview-title a{font-weight:750;font-size:.81rem;color:#215a87}
+body.ka-app .ka-lead{color:#5c758a;font-size:.89rem;margin:0}
+body.ka-app #adminStats{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0 0 17px}
+body.ka-app #adminStats .panel{border:1px solid #d8e5f0;border-radius:17px;padding:22px 17px;background:#fff;box-shadow:0 14px 35px #0f345112}
+body.ka-app #adminStats .panel h2{font-size:clamp(1.75rem,3vw,2.5rem);margin:11px 0 0;letter-spacing:-.065em;color:#174c80}
+body.ka-app .ka-shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:12px 0 19px}
+body.ka-app .ka-shortcut{padding:23px 20px;display:flex;flex-direction:column;gap:9px;background:#fff;border:1px solid #d7e4ef;border-radius:17px;box-shadow:0 12px 30px #123d6210;text-decoration:none;min-width:0;color:#163956}
+body.ka-app .ka-shortcut:hover,body.ka-app .ka-shortcut:focus-visible{border-color:#ac8a57;box-shadow:0 17px 35px #123d6220}
+body.ka-app .ka-shortcut>span:first-child{display:grid;place-items:center;width:40px;height:40px;background:#eaf3fa;border-radius:12px;color:#174c80;font-size:1.2rem}
+body.ka-app .ka-shortcut strong{font-size:1.03rem;font-weight:850;line-height:1.3}
+body.ka-app .ka-shortcut small{font-size:.79rem;line-height:1.45;color:#597289}
+body.ka-app .ka-shortcut .ka-shortcut-arrow{color:#936b33;font-size:.8rem;font-weight:780;margin-top:auto}
+body.ka-app .ka-status-guide{display:flex;flex-wrap:wrap;gap:14px;align-items:start;padding:19px 23px;background:linear-gradient(118deg,#173f65,#0b2d4a);border:1px solid #204c72;border-radius:15px;color:#eaf4fc}
+body.ka-app .ka-status-guide strong{color:#f5ce92}
+body.ka-app .ka-status-guide span{color:#d3e6f7;font-size:.83rem}
+body.ka-app .ka-status-guide a{color:#f8dca9}
+body.ka-app .ka-context-label{font-size:.74rem;font-weight:850;color:#957043;letter-spacing:.15em;margin:0 0 8px}
+body.ka-app #healthProtected>.actions{margin:0 0 4px;grid-column:2}
+body.ka-app #healthMetrics>section,body.ka-app #healthMetrics>.panel{background:#f5f9fc;border:1px solid #e0eaf2;padding:20px;margin:12px 0;border-radius:13px;overflow-wrap:anywhere}
+body.ka-app [hidden]{display:none!important}
+body.ka-app :focus-visible{outline:3px solid #e2b56e;outline-offset:3px}
+@media(max-width:1000px){body.ka-app #adminProtected,body.ka-app #healthProtected{grid-template-columns:192px minmax(0,1fr);gap:16px}body.ka-app #adminStats{grid-template-columns:repeat(2,minmax(0,1fr))}body.ka-app .ka-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){body.ka-app .hero{min-height:0;padding:48px 0}body.ka-app .hero:after{height:95px;width:95px;right:12px;top:10px}body.ka-app #adminProtected,body.ka-app #healthProtected{display:flex;flex-direction:column;gap:20px}body.ka-app #adminProtected>*:not(.kitora-admin-tabs),body.ka-app #healthProtected>*:not(.kitora-admin-tabs){width:100%}body.ka-app .kitora-admin-tabs.ka-sidebar{position:relative;top:auto;width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:13px;border-radius:16px}body.ka-app .ka-sidebar-brand,body.ka-app .ka-sidebar-foot,body.ka-app .ka-side-group,body.ka-app .ka-sidebar .ka-nav-filter,body.ka-app .ka-sidebar-empty{grid-column:1/-1}body.ka-app .ka-sidebar .ka-nav-filter{display:none}body.ka-app .kitora-admin-tabs.ka-sidebar>a{padding:10px 9px!important;font-size:.76rem;gap:6px;min-height:42px}body.ka-app .ka-side-icon{width:16px;height:18px;font-size:.87rem}body.ka-app #healthProtected>.actions{order:1;grid-column:auto}body.ka-app #healthProtected>.panel{order:2}}
+@media(max-width:540px){body.ka-app .kitora-admin-tabs.ka-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))}body.ka-app .ka-shortcuts{grid-template-columns:1fr}body.ka-app #adminStats{gap:9px}body.ka-app #adminStats .panel{padding:15px 13px}body.ka-app #adminStats .panel h2{font-size:1.65rem}body.ka-app .admin-workbar{display:grid;grid-template-columns:1fr;gap:6px}body.ka-app .admin-workbar>*{width:100%;min-width:0}body.ka-app .kitora-admin-section .panel{padding:19px 15px}body.ka-app main>.section{padding-bottom:48px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body.ka-app .btn{transition:none}body.ka-app .btn:not(:disabled):hover{transform:none}}
+
+/* Health sidebar occupies its own track; actions and metrics stay aligned. */
+body.ka-app #healthProtected>.panel{grid-column:2}
+body.ka-app .ka-sidebar .ka-sidebar-foot a{color:#295d88;text-decoration:underline;text-underline-offset:2px;font-weight:800}
+body.ka-app .ka-status-guide strong{white-space:normal}
+@media(max-width:760px){body.ka-app #healthProtected>.panel{grid-column:auto}}

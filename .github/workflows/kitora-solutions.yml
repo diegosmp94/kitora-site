@@ -1,0 +1,36 @@
+name: Kitora B2B B2C solutions
+on:
+  push:
+    branches:
+      - feature/kitora-b2b-b2c-20261019
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  solutions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/check-audience-offers.mjs
+      - run: node tests/check-pro-offers.mjs
+      - run: node tests/check-pro-tools.mjs
+      - run: node tests/check-invoice-pro.mjs
+      - run: node tests/check-invoice-cloud.mjs
+      - run: node tests/check-security-hardening.mjs
+      - run: node tests/check-mfa-readiness.mjs
+      - run: node tests/check-admin-workspace.mjs
+      - run: npm install --no-save playwright@1.58.2
+      - run: npx playwright install --with-deps chromium
+      - run: node tests/browser-audience-offers.mjs
+      - run: node tests/browser-pro-offers.mjs
+      - run: node tests/browser-pro-tools.mjs
+      - run: node tests/browser-invoice-pro.mjs
+      - run: node tests/browser-invoice-cloud.mjs
+      - run: node tests/browser-mfa-readiness.mjs
+      - run: node tests/browser-admin-workspace.mjs

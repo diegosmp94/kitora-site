@@ -1,0 +1,23 @@
+{
+  "name": "Kitora - historique branches de travail",
+  "target": "branch",
+  "enforcement": "active",
+  "bypass_actors": [],
+  "conditions": {
+    "ref_name": {
+      "include": [
+        "refs/heads/feature/*",
+        "refs/heads/fix/*",
+        "refs/heads/security/*",
+        "refs/heads/maintenance/*",
+        "refs/heads/tests/*"
+      ],
+      "exclude": []
+    }
+  },
+  "rules": [
+    {
+      "type": "non_fast_forward"
+    }
+  ]
+}
