@@ -4,11 +4,11 @@ const read=p=>readFileSync(p,"utf8");
 const html=read("packs-actifs.html"),css=read("packs-actifs.css"),offers=read("offres.html"),choose=read("choisir-offre.html"),cart=read("cart.js"),b2b=read("offres-pro.html");
 const expected={
  free:["available","none",null],
- solo:["test-active","test","solo"],
- workspace:["test-active","test","workspace"],
- plus_monthly:["beta","test","plus_monthly"],
- plus_yearly:["beta","test","plus_yearly"],
- ultimate:["beta","test","ultimate"],
+ solo:["launch-pending","none",null],
+ workspace:["launch-pending","none",null],
+ plus_monthly:["planned","none",null],
+ plus_yearly:["planned","none",null],
+ ultimate:["planned","none",null],
  impact:["planned","none",null],
  launch:["planned","none",null],
  flow:["planned","none",null],
@@ -23,11 +23,11 @@ for(const [,id,status,mode,body]of cards){
  assert.equal(status,wantStatus,id+" status");
  assert.equal(mode,wantMode,id+" mode");
  assert.match(body,/href="[^"]+">/,"missing pack access "+id);
- if(checkout)assert.ok(body.includes('href="panier.html?plan='+checkout+'"'),id+" must point to test checkout");
- else assert.ok(!/href="panier\.html\?plan=/.test(body),id+" must not imply a paid subscription");
+ assert.ok(!/href="panier\.html\?plan=/.test(body),id+" must not advertise a checkout");
+ if(id!=="free")assert.ok(body.includes("Prochainement disponible")||body.includes("ouverture prochaine"),id+" must show pending status");
 }
 assert.equal(new Set(cards.map(m=>m[1])).size,11,"duplicate pack ID");
-for(const t of ["aucun paiement réel","Stripe TEST","cloud","Restauration manuelle","pas commercialisées","Génération IA","sans débit"])assert.ok(html.toLowerCase().includes(t.toLowerCase()),"missing disclosure "+t);
+for(const t of ["Aucun paiement réel","Stripe TEST","cloud","Restauration manuelle","pas commercialisées","Génération IA"])assert.ok(html.toLowerCase().includes(t.toLowerCase()),"missing disclosure "+t);
 assert.ok(!/create-checkout-live|sk_live_|rk_live_|whsec_|https:\/\/checkout\.stripe\.com/i.test(html),"LIVE forbidden in catalog");
 assert.ok(/create-checkout"/.test(cart)&&!/create-checkout-live/.test(cart),"public cart must stay TEST");
 assert.ok(offers.includes('href="packs-actifs.html"')&&choose.includes('href="packs-actifs.html"'));
@@ -42,4 +42,4 @@ assert.match(css,/@media\(prefers-reduced-motion:reduce\)/,"motion accessibility
 assert.ok(read("sitemap.xml").includes("packs-actifs.html"));
 const prices={solo:199,workspace:399,plus_monthly:599,plus_yearly:5990,ultimate:899};
 for(const [id,amount]of Object.entries(prices))assert.ok(cart.includes(id+':{name:')&&cart.includes('price:'+amount),'price mismatch '+id);
-console.log("Kitora Packs availability: 11 accurate pack variants, TEST-only purchases, no misleading LIVE or B2B, valid routes PASS.");
+console.log("Kitora Packs availability: 11 distinct packs, only Free open, paid packs flagged upcoming, no active sales route PASS.");

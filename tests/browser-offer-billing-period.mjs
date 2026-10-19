@@ -22,11 +22,11 @@ try{
   await page.goto(base+"/offres.html",{waitUntil:"load"});
   const plus=page.locator('[data-offer-plan="plus"]'),solo=page.locator('[data-offer-plan="solo"]');
   assert.ok((await plus.locator(".offer-price").innerText()).includes("5,99"));
-  assert.ok((await plus.locator("[data-billing-checkout]").getAttribute("href")).includes("plus_monthly"));
+  assert.equal(await plus.locator("[data-billing-checkout]").getAttribute("aria-disabled"),"true");
   await page.getByRole("button",{name:"Annuel"}).click();
   assert.ok((await plus.locator(".offer-price").innerText()).includes("59,90"));
   assert.ok((await plus.locator("[data-billing-detail]").innerText()).includes("11,98"));
-  assert.ok((await plus.locator("[data-billing-checkout]").getAttribute("href")).includes("plus_yearly"));
+  assert.equal(await plus.locator("[data-billing-checkout]").getAttribute("aria-disabled"),"true");
   assert.equal(await solo.locator("[data-billing-checkout]").getAttribute("aria-disabled"),"true");
   assert.ok((await solo.locator(".offer-price").innerText()).includes("Indisponible"));
   assert.equal(await page.getByRole("button",{name:"Annuel"}).getAttribute("aria-pressed"),"true");
@@ -37,8 +37,8 @@ try{
   await page.getByRole("button",{name:"Mensuel"}).click();
   assert.ok((await plus.locator(".offer-price").innerText()).includes("5,99"));
   assert.ok((await solo.locator(".offer-price").innerText()).includes("1,99"));
-  assert.equal(await solo.locator("[data-billing-checkout]").getAttribute("aria-disabled"),"false");
+  assert.equal(await solo.locator("[data-billing-checkout]").getAttribute("aria-disabled"),"true");
   await page.close();
  }
- console.log("Kitora billing: annual Plus 59.90, saving 11.98, unavailable plans disabled, correct checkout and mobile responsiveness.");
+ console.log("Kitora billing: indicative monthly/annual prices, all pending checkouts disabled, mobile responsiveness PASS.");
 }finally{await browser.close();await new Promise(resolve=>server.close(resolve))}

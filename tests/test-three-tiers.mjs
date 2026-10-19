@@ -8,7 +8,8 @@ for(const [tier,cents] of Object.entries(tiers)){
  assert.ok(cart.includes('price:'+cents),'Missing test price '+tier);
  assert.ok(selector.includes(tier+':["'+tier+'"]'),'Missing plan check '+tier);
  assert.ok(gate.includes(tier+':["'+tier+'"]'),'Missing access check '+tier);
- assert.ok(offers.includes('panier.html?plan='+tier),'Missing offer link '+tier);
+ assert.ok(offers.includes('data-offer-plan="'+tier+'"'),"Missing announced plan "+tier);
+ assert.ok(!offers.includes('href="panier.html?plan='+tier+'"'),"Unavailable pack must not have public checkout "+tier);
 }
 assert.ok(requests.includes('"ultimate"')&&lab.includes('"ultimate"'));
 assert.ok(offers.includes("sans débit réel"));
