@@ -8,13 +8,15 @@ Les pages ont été rédigées sur la base des fonctionnalités observables, mai
 - **Responsable déclaré : M. Sampaio**, sans justificatif d’identité ou de pouvoir de représentation vérifié dans ce dossier.
 - **Statut juridique : « autre / à préciser »** ; il serait incorrect de présenter Kitora comme une micro-entreprise, une EI ou une société enregistrée sur cette seule base.
 - **SIREN / SIRET : non communiqué** ; cela n’établit ni son inexistence ni la régularité de l’activité.
+- **Contact unique déclaré le 20 octobre 2026 :** studiokitora.contact@gmail.com (support, réclamations, demandes relatives aux données). La réception de messages n’a pas été vérifiée et aucune fonctionnalité d’accusé de réception automatique n’est encore attestée.
+- **Téléphone professionnel, siège et autres mentions obligatoires :** toujours à confirmer ; le choix d'un e-mail unique pour les échanges ne dispense pas des informations légales éventuellement requises.
 - La **commercialisation LIVE reste non autorisée** ; un prix actif dans Stripe ne remplace pas l’identification du vendeur ni les obligations précontractuelles.
 - Le statut déclaratif figure dans `kitora-commercial-readiness.json`, qui conserve des validations `false` jusqu’à vérification documentée. Ne publier aucun identifiant personnel non nécessaire dans GitHub.
 
 ## A. Identité et capacité juridique (bloquant)
 - [ ] Responsable légal déclaré par l’exploitant : **M. Sampaio**. Vérifier l’identité juridique complète, sa capacité à représenter l’entité contractante et son habilitation avant tout encaissement.
 - [ ] Fournir dénomination légale, forme, adresse professionnelle, SIREN / RCS / RNE si applicable, capital social si société, situation TVA.
-- [ ] Fournir une adresse e-mail professionnelle surveillée ET un téléphone de contact ; désigner directeur de la publication.
+- [ ] E-mail professionnel déclaré : **studiokitora.contact@gmail.com**. Tester sa réception et le traitement des messages ; fournir, si requis, un téléphone professionnel ; désigner le directeur de la publication.
 - [ ] Vérifier et renseigner identité officielle, adresse et téléphone de l'hébergeur technique publiquement requis (GitHub Pages et/ou service d'hébergement retenu).
 - [ ] Compléter et publier `mentions-legales.html`.
 
