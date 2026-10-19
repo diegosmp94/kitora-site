@@ -1,4 +1,3 @@
-import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/+esm";
 const base="https://yxjxizxzjubhjaxskksh.supabase.co/functions/v1/";
 const publishable="sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW";
 const checkbox=document.getElementById("soloAcceptTerms"),button=document.getElementById("soloLiveCheckout"),status=document.getElementById("soloLiveStatus");
@@ -21,6 +20,7 @@ button.addEventListener("click",async()=>{
  button.disabled=true;
  status.textContent="Vérification du compte Kitora…";
  try{
+  const {createClient}=await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/+esm");
   const client=createClient("https://yxjxizxzjubhjaxskksh.supabase.co",publishable);
   const {data:{session},error}=await client.auth.getSession();
   if(error||!session?.access_token){status.textContent="Connecte-toi à Kitora avant la souscription.";return;}
