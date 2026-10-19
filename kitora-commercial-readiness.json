@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-19",
+  "sales_live_authorized": false,
+  "note": "Suivi déclaratif précommercial. Ce fichier ne vaut ni immatriculation, ni vérification de capacité légale, ni approbation Stripe.",
+  "merchant": {
+    "trade_name": "Kitora",
+    "declared_responsible": "M. Sampaio",
+    "legal_form": null,
+    "legal_name": null,
+    "registration_siren": null,
+    "registered_office": null,
+    "business_email": null,
+    "business_phone": null,
+    "vat_regime": null,
+    "publication_director": null
+  },
+  "validation": {
+    "legal_identity_verified": false,
+    "representative_authority_verified": false,
+    "merchant_registration_reviewed": false,
+    "business_contact_verified": false,
+    "tax_disclosure_validated": false,
+    "terms_and_total_price_reviewed": false,
+    "consumer_mediator_contracted": false,
+    "online_withdrawal_submission_and_durable_ack_tested": false,
+    "subscription_cancellation_live_tested": false,
+    "real_payment_entitlement_refund_tested": false,
+    "privacy_notices_reviewed": false
+  },
+  "offers": {
+    "solo": {
+      "monthly_eur": "1.99",
+      "technical_stripe_price_active": true,
+      "live_public_checkout": false,
+      "test_checkout_available": true
+    },
+    "other_paid_offers": "coming_soon"
+  }
+}
