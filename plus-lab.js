@@ -31,6 +31,30 @@ $("labCopy").addEventListener("click",async()=>{
  try{await navigator.clipboard.writeText($("labPreview").textContent);message.textContent="Brief copié."}
  catch{message.textContent="Copie indisponible. Sélectionne le texte dans l’aperçu."}
 });
+const exportPdfButton=$("labExportBriefPdf"),exportTxtButton=$("labExportBriefTxt");
+function updateExportAccess(allowed){
+ exportPdfButton.disabled=!allowed;
+ exportTxtButton.disabled=!allowed;
+}
+async function exportBrief(type){
+ const button=type==="pdf"?exportPdfButton:exportTxtButton;
+ if(!authorizedUser)return;
+ button.disabled=true;
+ message.textContent=type==="pdf"?"Préparation du PDF à partir de ton brief…":"Préparation du texte de ton brief…";
+ try{
+  await ensureAuthorizedSession();
+  const item=compose();
+  if($("labTopic").value.trim().length<5)throw Error("Renseigne un sujet d’au moins cinq caractères.");
+  const {generatePlusBriefPdf,downloadPlusBriefTxt}=await import("./plus-pdf.js?v=20261020-plusbrief1");
+  if(type==="pdf")await generatePlusBriefPdf(item);
+  else downloadPlusBriefTxt(item);
+  message.textContent="Brief préparatoire exporté sans IA, sans quota consommé et sans frais.";
+ }catch(e){message.textContent="Export impossible : "+(e instanceof Error?e.message:"Erreur inattendue")}
+ finally{button.disabled=!authorizedUser}
+}
+exportPdfButton.addEventListener("click",()=>void exportBrief("pdf"));
+exportTxtButton.addEventListener("click",()=>void exportBrief("txt"));
+
 function showGeneration(result){
  progress.hidden=false;
  const queued=result?.job_status==="queued",processing=result?.job_status==="processing";
@@ -68,7 +92,7 @@ async function generateFor(requestId){
 }
 async function check(){
  const attempt=++checking;authorizedUser=null;currentRequestId=null;
- form.hidden=true;progress.hidden=true;refreshButton.disabled=true;quota.textContent="";
+ form.hidden=true;progress.hidden=true;refreshButton.disabled=true;updateExportAccess(false);quota.textContent="";
  status.textContent="Vérification de l’abonnement…";
  try{
   const {data:{user},error}=await client.auth.getUser();
@@ -85,7 +109,7 @@ async function check(){
   authorizedUser=user.id;
   status.textContent="Accès confirmé : "+(sub.plan==="ultimate"?"Kitora Ultimate":"Kitora Plus")+".";
   quota.textContent="Générations IA soumises à disponibilité : "+(sub.plan==="ultimate"?"30":"10")+" documents par mois maximum. Les appels fournisseur restent désactivables côté serveur.";
-  form.hidden=false;preview();
+  form.hidden=false;updateExportAccess(true);preview();
  }catch(e){if(attempt===checking)status.textContent="Impossible de confirmer l'accès : "+e.message}
 }
 async function updateGeneration(){
@@ -127,5 +151,5 @@ form.addEventListener("submit",async event=>{
  }catch(e){message.textContent="Envoi impossible : "+(e instanceof Error?e.message:"Erreur inattendue")}
  finally{btn.disabled=false}
 });
-client.auth.onAuthStateChange(()=>{authorizedUser=null;form.hidden=true;setTimeout(()=>void check(),0)});
+client.auth.onAuthStateChange(()=>{authorizedUser=null;form.hidden=true;updateExportAccess(false);setTimeout(()=>void check(),0)});
 void check();
