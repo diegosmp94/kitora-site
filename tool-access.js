@@ -1,4 +1,5 @@
 import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/+esm";
+import {getKitoraSubscription,isKitoraPlanActive} from "./billing-entitlements.js";
 const supabase=createClient("https://yxjxizxzjubhjaxskksh.supabase.co","sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW");
 const allowed=new Set(["dashboard.html","projects.html","learn.html","agenda.html","notes.html","templates.html","comparateur.html","atelier.html","focus.html","defi-7-jours.html","etude-clients.html","test-audience.html","synchronisation.html"]);
 const current=location.pathname.split("/").pop();
@@ -11,9 +12,9 @@ async function load(){
   const {data:row,error:choiceError}=await supabase.from("kitora_tool_access").select("chosen_plan").eq("user_id",user.id).maybeSingle();
   if(choiceError||!row||!["free","solo","workspace","plus","ultimate"].includes(row.chosen_plan)){location.replace(chooser);return;}
   if(row.chosen_plan!=="free"){
-   const {data:sub,error:subError}=await supabase.from("subscriptions").select("status,plan").eq("user_id",user.id).maybeSingle();
+   const {subscription:sub,error:subError}=await getKitoraSubscription(supabase,user.id);
    const plans={solo:["solo"],workspace:["workspace"],plus:["plus_monthly","plus_yearly"],ultimate:["ultimate"]};
-   if(subError||sub?.status!=="active"||!plans[row.chosen_plan]?.includes(sub.plan)){location.replace(chooser);return;}
+   if(subError||!isKitoraPlanActive(sub,row.chosen_plan)){location.replace(chooser);return;}
   }
   for(const old of document.querySelectorAll("script[data-kitora-protected-src]")){
    const source=old.dataset.kitoraProtectedSrc||"";
