@@ -4,3 +4,6 @@
 .pro-collection-bridge h2{max-width:730px}
 .pro-collection-bridge p{max-width:830px;color:#526b81}
 .pro-collection-bridge .action{margin-top:10px}
+
+.pro-collection-bridge .action.secondary{background:#fff;color:#174c80;margin-left:8px}
+@media(max-width:600px){.pro-collection-bridge .action.secondary{margin-left:0;margin-top:12px}}
