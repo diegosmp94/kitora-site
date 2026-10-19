@@ -1,0 +1,33 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const read=p=>readFileSync(p,"utf8");
+const html=read("plus-lab.html");
+const js=read("plus-lab.js");
+const sql=read("supabase/migrations/20261020_plus_request_entitlement_consistency.sql");
+const protectedPlans=["plus_monthly","plus_yearly","ultimate"];
+for(const id of ["labEligibility","labForm","labTopic","labSubmit","labPreview","labCopy","labQuota","labGenerationPanel","labGenerationStatus","labRefreshGeneration"]){
+ assert.ok(html.includes('id="'+id+'"'),"Plus Lab missing "+id);
+}
+assert.match(html,/body class="kitora-plus-lab"/,"Premium design scope is missing");
+assert.match(html,/prefers-reduced-motion:reduce/,"Respect reduced motion");
+assert.match(html,/@media\(max-width:800px\)/,"Mobile layout");
+assert.match(js,/getKitoraSubscription/,"Plus access from verified subscriptions");
+for(const plan of protectedPlans)assert.ok(js.includes('"'+plan+'"'),"Missing subscription gate "+plan);
+assert.match(js,/auth\.getUser\(\)/,"Session verification required");
+assert.match(js,/subscriber_requests/,"Dossiers must be stored");
+assert.match(js,/\.insert\(\{user_id:authorizedUser/,"Dossier owner must be authenticated");
+assert.match(js,/generate-plus/,"New dossier must be sent to existing secure server queue");
+assert.match(js,/body:JSON\.stringify\(\{request_id:requestId\}\)/);
+assert.match(js,/requestInFlight/,"Prevent duplicated requests");
+assert.match(js,/result\?\.configured===false/,"Disabled provider must not be misrepresented as generation");
+assert.match(js,/job_status==="queued"/,"Queue feedback missing");
+assert.match(js,/job_status==="processing"/,"Processing feedback missing");
+assert.match(js,/currentRequestId=data\.id/,"New request must be tracked");
+assert.match(js,/await updateGeneration\(\)/,"Automatic queue request missing");
+assert.match(js,/labRefreshGeneration/,"Status refresh must be user-driven");
+assert.match(js,/window\.|message\.textContent/,"Status text must remain text-safe");
+assert.match(sql,/DROP POLICY IF EXISTS subscriber_create_active_only/);
+assert.match(sql,/NOT EXISTS\s*\(\s*SELECT 1 FROM public\.kitora_live_subscriptions/,"LIVE precedence over TEST must be enforced in RLS");
+assert.match(sql,/ai_result IS NULL/,"Prevent fabricated AI result insertion");
+assert.match(sql,/admin_reply IS NULL/);
+console.log("Kitora Plus: premium generation UX, account status, disabled AI feedback and priority-aware RLS PASS.");

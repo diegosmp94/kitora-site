@@ -34,6 +34,7 @@ jobs:
           node tests/v1-phase2-readiness.mjs
           node tests/ai-queue-readiness.mjs
           node tests/plus-generation-smoke.mjs
+          node tests/check-plus-completion.mjs
           node tests/payment-security.mjs
           node tests/production-launch-guardrails.mjs
           node tests/stripe-reconciliation-readiness.mjs
@@ -62,5 +63,7 @@ jobs:
         run: node tests/browser-premium-continuity.mjs
       - name: Test monthly yearly billing selector
         run: node tests/browser-offer-billing-period.mjs
+      - name: Test Plus Lab generation request, auth, job status and mobile
+        run: node tests/browser-plus-lab-completion.mjs
       - name: Test Solo real payment readiness and checkout consent
         run: node tests/browser-solo-live-storefront.mjs
