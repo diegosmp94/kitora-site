@@ -12,5 +12,9 @@ assert.match(cart,/Stripe|démonstration/, "TEST checkout disclosure must exist"
 assert.match(page,/Stripe TEST/, "TEST disclosure required on cart page");
 assert.match(page,/aucun prélèvement réel|aucun débit réel/i, "Explicit non-billing notice required");
 assert.match(account,/resetPasswordForEmail\(/, "Account recovery must remain available");
-assert.match(request,/kitora_live_subscriptions/, "Subscription checks must keep distinct billing modes");
+assert.match(request,/getKitoraSubscription/, "Plus request access must use the trusted entitlement helper");
+const billing=readFileSync("billing-entitlements.js","utf8");
+assert.match(billing,/kitora_live_subscriptions/, "LIVE subscription lookup required");
+assert.match(billing,/db\.from\("subscriptions"\)/, "TEST subscriptions must stay distinct");
+assert.match(billing,/live\.data\?/, "LIVE must take precedence over TEST");
 console.log("Kitora release safety: checkout TEST only, no LIVE routing, disclosures and account guardrails PASS.");
