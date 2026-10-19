@@ -1,0 +1,20 @@
+name: Kitora kits catalogue checks
+on:
+  push:
+    branches:
+      - feature/kits-catalogue-20261019
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  catalogue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/check-kits.mjs
