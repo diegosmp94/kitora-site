@@ -38,7 +38,7 @@ try{
  });
  const errors=[];page.on("pageerror",e=>errors.push(e.message));
  await page.goto(base+"/facturation-pro.html?plan=impact",{waitUntil:"load"});
- await page.getByText("Compte connecté.",{exact:false}).waitFor();
+ await page.locator("#authStatus").getByText("Compte connecté.",{exact:false}).waitFor();
  assert.equal(await page.locator("#orgPlan").inputValue(),"impact");
  await page.locator("#orgKind").selectOption("association");
  await page.locator("#orgName").fill("Association Essai Facturation");
@@ -48,7 +48,7 @@ try{
  await page.locator("#orgCity").fill("Paris");
  await page.locator("#orgEmail").fill("factures@example.fr");
  await page.locator("#organizationForm button[type=submit]").click();
- await page.getByText("Dossier enregistré dans ton compte Kitora.",{exact:false}).waitFor();
+ await page.locator("#orgMessage").getByText("Dossier enregistré dans ton compte Kitora.",{exact:false}).waitFor();
  assert.match(await page.locator("#invoiceProfile").innerText(),/Association Essai Facturation/);
  await page.locator("#clientName").fill("Entreprise Cliente");
  await page.locator("#clientAddress").fill("20 boulevard Test");
@@ -72,13 +72,13 @@ try{
  assert.match(pdf,/NON ATTRIBU/);
  assert.ok(!pdf.includes("FACTURE FINALE"),"cannot issue a numbered final invoice");
  await page.reload({waitUntil:"load"});
- await page.getByText("Compte connecté.",{exact:false}).waitFor();
+ await page.locator("#authStatus").getByText("Compte connecté.",{exact:false}).waitFor();
  assert.equal(await page.locator("#orgName").inputValue(),"Association Essai Facturation","profile rehydrated");
  assert.equal(await page.locator("#clientName").inputValue(),"Entreprise Cliente","local draft persisted");
  assert.equal(await page.locator("#invoice-line-0-description").inputValue(),"Atelier numérique");
  await page.locator("#orgVatMode").selectOption("franchise_293b");
  await page.locator("#saveOrg").click();
- await page.getByText("Dossier enregistré dans ton compte Kitora.",{exact:false}).waitFor();
+ await page.locator("#orgMessage").getByText("Dossier enregistré dans ton compte Kitora.",{exact:false}).waitFor();
  assert.equal(await page.locator("#vatRate").isDisabled(),true);
  assert.match(await page.locator("#invoiceTotals").innerText(),/TVA \(0 %\) : 0,00/);
  const exemptDownload=page.waitForEvent("download");
