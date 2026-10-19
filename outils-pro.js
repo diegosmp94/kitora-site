@@ -175,6 +175,6 @@ for(const button of document.querySelectorAll(".tool-tab")){
 }
 window.addEventListener("hashchange",()=>{const hash=location.hash.slice(1);if(names.includes(hash))selectTool(hash)});
 const initial=location.hash.slice(1);
-if(names.includes(initial)){selectTool(initial);requestAnimationFrame(()=>$("atelier").scrollIntoView({block:"start",behavior:"instant"}))}
+if(names.includes(initial)){selectTool(initial);requestAnimationFrame(()=>$("atelier").scrollIntoView({block:"start",behavior:"auto"}))}
 renderProject();renderBudget();renderCalendar();
 })();
