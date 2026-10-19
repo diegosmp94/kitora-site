@@ -58,3 +58,15 @@ Les pages ont été rédigées sur la base des fonctionnalités observables, mai
 - [ ] Faire la recette et la séparation TEST/LIVE des abonnements collectifs avant toute offre commerciale.
 
 Références : https://entreprendre.service-public.gouv.fr/vosdroits/F33527 et https://entreprendre.service-public.gouv.fr/vosdroits/F39785.
+
+## F. Facturation Kitora Pro : module de brouillons (NO-GO émission officielle)
+- [x] Profil entreprise/association privé dans `kitora_org_profiles`, associé au compte propriétaire et protégé par RLS ; aucun abonnement LIVE créé.
+- [x] Préremplissage de l'émetteur, saisie du destinataire, prestations, quantités et prix HT, total TVA/TTC ; génération locale d'un PDF A4 marqué « BROUILLON NON ÉMIS ».
+- [ ] Vérifier les données d'entreprise (SIREN/SIRET, situation TVA, forme légale, capital, RCS), mentions des factures, pénalités de retard et adresse de facturation du client ; le format seul ne prouve pas l'exactitude.
+- [ ] Mettre en place une séquence de numérotation unique, chronologique et continue côté serveur, sans édition rétroactive de factures définitives, avec archives et piste d'audit.
+- [ ] Ajouter les avoirs, acomptes, remises, factures rectificatives, règlements et éventuellement des taux de TVA par ligne selon les opérations, plus les cas internationaux spécifiques.
+- [ ] Intégrer une plateforme agréée pour les factures B2B nationales concernées par la réforme française et l'export structuré adapté (ex. Factur-X). Un simple PDF issu du navigateur ne remplace pas la facturation électronique réglementaire.
+- [ ] Vérifier les obligations de conservation, de réception e-invoicing, de e-reporting et de gestion RGPD du dossier client selon la structure.
+- [ ] Relier le profil professionnel au futur vrai parcours d'abonnement organisation **quand il sera sécurisé et commercialisé** ; actuellement il s'agit uniquement d'un dossier préparatoire.
+
+Références officielles : https://entreprendre.service-public.gouv.fr/vosdroits/F31808 et https://www.impots.gouv.fr/facturation-electronique-et-plateformes-agreees .
