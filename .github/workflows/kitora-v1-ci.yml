@@ -28,6 +28,7 @@ jobs:
           node tests/check-available-packs.mjs
           node tests/check-live-entitlements.mjs
           node tests/check-solo-live-staging.mjs
+          node tests/check-solo-live-storefront.mjs
           node tests/v1-phase2-readiness.mjs
           node tests/ai-queue-readiness.mjs
           node tests/plus-generation-smoke.mjs
@@ -59,3 +60,5 @@ jobs:
         run: node tests/browser-premium-continuity.mjs
       - name: Test monthly yearly billing selector
         run: node tests/browser-offer-billing-period.mjs
+      - name: Test Solo real payment readiness and checkout consent
+        run: node tests/browser-solo-live-storefront.mjs
