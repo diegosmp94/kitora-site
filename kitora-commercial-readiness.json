@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-19",
+  "updated_at": "2026-10-20",
   "sales_live_authorized": false,
-  "note": "Suivi déclaratif précommercial. Ce fichier ne vaut ni immatriculation, ni vérification de capacité légale, ni approbation Stripe.",
+  "note": "Suivi déclaratif précommercial. Contact e-mail déclaré par l'exploitant, non vérifié par envoi/réception. Ce fichier ne vaut ni immatriculation, ni vérification de capacité légale, ni approbation Stripe. La vente LIVE reste bloquée.",
   "merchant": {
     "trade_name": "Kitora",
     "declared_responsible": "M. Sampaio",
@@ -10,7 +10,7 @@
     "legal_name": null,
     "registration_siren": null,
     "registered_office": null,
-    "business_email": null,
+    "business_email": "studiokitora.contact@gmail.com",
     "business_phone": null,
     "vat_regime": null,
     "publication_director": null
