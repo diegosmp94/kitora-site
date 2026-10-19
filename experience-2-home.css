@@ -45,3 +45,8 @@ body.kitora-home .k-experience-bridge:before{content:"";position:absolute;inset:
  .k-experience-bridge h2{font-size:clamp(3rem,11vw,4.7rem)}
 }
 @media(prefers-reduced-motion:reduce){body.kitora-home *,body.kitora-home *::before,body.kitora-home *::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* WCAG contrast: recommendation controls and orientation labels */
+body.kitora-home #k-orientation .sectionhead .eyebrow{color:#123f69;background:#e5eff8;border-color:#b6d0e4}
+body.kitora-home #k-recommend-link{color:#ffffff;background:#164f81;border:2px solid #ffffff;opacity:1}
+body.kitora-home #k-recommend-link:hover,body.kitora-home #k-recommend-link:focus-visible{color:#ffffff;background:#0b345c}
