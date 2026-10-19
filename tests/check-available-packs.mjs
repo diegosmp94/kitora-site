@@ -27,7 +27,7 @@ for(const [,id,status,mode,body]of cards){
  else assert.ok(!/href="panier\.html\?plan=/.test(body),id+" must not imply a paid subscription");
 }
 assert.equal(new Set(cards.map(m=>m[1])).size,11,"duplicate pack ID");
-for(const t of ["aucun paiement réel","Stripe TEST","cloud","Restauration manuelle","non commercialisés","Génération IA","sans débit"])assert.ok(html.toLowerCase().includes(t.toLowerCase()),"missing disclosure "+t);
+for(const t of ["aucun paiement réel","Stripe TEST","cloud","Restauration manuelle","pas commercialisées","Génération IA","sans débit"])assert.ok(html.toLowerCase().includes(t.toLowerCase()),"missing disclosure "+t);
 assert.ok(!/create-checkout-live|sk_live_|rk_live_|whsec_|https:\/\/checkout\.stripe\.com/i.test(html),"LIVE forbidden in catalog");
 assert.ok(/create-checkout"/.test(cart)&&!/create-checkout-live/.test(cart),"public cart must stay TEST");
 assert.ok(offers.includes('href="packs-actifs.html"')&&choose.includes('href="packs-actifs.html"'));
