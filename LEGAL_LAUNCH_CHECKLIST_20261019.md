@@ -4,7 +4,7 @@
 Les pages ont été rédigées sur la base des fonctionnalités observables, mais le statut juridique de l'exploitant, l'identité officielle, la configuration des sous-traitants et les engagements opérationnels ne sont pas documentés. Le dépôt public ne doit pas être présenté comme juridiquement prêt à vendre.
 
 ## A. Identité et capacité juridique (bloquant)
-- [ ] Désigner l'entité ou la personne légalement autorisée à exploiter et facturer Kitora ; vérifier capacité juridique et représentant légal le cas échéant.
+- [ ] Responsable légal déclaré par l’exploitant : **M. Sampaio**. Vérifier l’identité juridique complète, sa capacité à représenter l’entité contractante et son habilitation avant tout encaissement.
 - [ ] Fournir dénomination légale, forme, adresse professionnelle, SIREN / RCS / RNE si applicable, capital social si société, situation TVA.
 - [ ] Fournir une adresse e-mail professionnelle surveillée ET un téléphone de contact ; désigner directeur de la publication.
 - [ ] Vérifier et renseigner identité officielle, adresse et téléphone de l'hébergeur technique publiquement requis (GitHub Pages et/ou service d'hébergement retenu).
