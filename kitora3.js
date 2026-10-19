@@ -12,6 +12,48 @@ function open(doc){if(dirty&&!confirm("Tu as des modifications non sauvegardées
 async function refresh(){const{data,error}=await db.from("kitora_user_documents").select("id,user_id,title,content,is_favorite,created_at,updated_at").eq("user_id",user.id).order("updated_at",{ascending:false}).limit(200);if(error)throw error;docs=data||[];selected=selected?docs.find(d=>d.id===selected.id)||null:null;render()}
 async function action(run){if(busy)return;busy=true;try{await run()}catch(e){message("Erreur : "+(e.message||"opération impossible"))}finally{busy=false}}
 async function start(){const{data:{user:u},error}=await db.auth.getUser();if(error||!u){status("Connecte-toi depuis l'accueil pour accéder à ton atelier. ");const a=document.createElement("a");a.href="index.html#connexion";a.textContent="Se connecter →";$("status").append(a);return}user=u;$("app").hidden=false;status("Connecté : "+(u.email||"ton compte"));try{await refresh();message("Sélectionne un document ou crée ton premier document.")}catch(e){status("La bibliothèque est indisponible : "+e.message)}}
+
+function formatSavedAi(result){
+ const lines=[];if(!result||typeof result!=="object")return "";
+ if(typeof result.summary==="string")lines.push(result.summary);
+ for(const section of Array.isArray(result.sections)?result.sections:[]){
+  if(section.heading)lines.push("\n## "+section.heading);
+  if(section.analysis)lines.push(String(section.analysis));
+  for(const task of Array.isArray(section.actions)?section.actions:[])lines.push("• "+task);
+ }
+ for(const week of Array.isArray(result.weekly_plan)?result.weekly_plan:[]){
+  lines.push("\nÉtape "+week.week+" : "+(week.objective||""));
+  for(const task of Array.isArray(week.tasks)?week.tasks:[])lines.push("• "+task);
+ }
+ if(Array.isArray(result.questions)&&result.questions.length)lines.push("\nQuestions :\n"+result.questions.join("\n"));
+ if(Array.isArray(result.success_metrics)&&result.success_metrics.length)lines.push("\nIndicateurs :\n"+result.success_metrics.join("\n"));
+ return lines.join("\n").trim().slice(0,100000);
+}
+$("closeImport").addEventListener("click",()=>$("importDialog").close());
+$("importAI").addEventListener("click",async()=>{
+ if(!user){message("Connecte-toi pour accéder à tes résultats IA.");return}
+ const dlg=$("importDialog"),list=$("importList");list.textContent="Recherche de tes créations IA enregistrées…";dlg.showModal();
+ try{
+  const {data,error}=await db.from("subscriber_requests").select("id,title,ai_result,created_at").eq("user_id",user.id).not("ai_result","is",null).order("created_at",{ascending:false}).limit(40);
+  if(error)throw error;list.replaceChildren();
+  if(!data?.length){list.textContent="Aucune création IA enregistrée sur ton compte pour le moment.";return}
+  for(const request of data){
+   const resultText=formatSavedAi(request.ai_result);if(!resultText)continue;
+   const b=document.createElement("button");b.type="button";b.className="doc";
+   const title=document.createElement("strong"),meta=document.createElement("small");
+   title.textContent=request.title;meta.textContent=new Date(request.created_at).toLocaleDateString("fr-FR")+" · Importer une copie éditable";
+   b.append(title,meta);
+   b.addEventListener("click",()=>action(async()=>{
+    if(dirty&&!confirm("Abandonner tes modifications non sauvegardées ?"))return;
+    const {data:doc,error:saveError}=await db.from("kitora_user_documents").insert({user_id:user.id,title:("IA · "+request.title).slice(0,180),content:resultText,source_request_id:request.id}).select("id,user_id,title,content,is_favorite,created_at,updated_at").single();
+    if(saveError)throw saveError;docs.unshift(doc);dirty=false;open(doc);dlg.close();message("Création IA importée et sauvegardée : tu peux maintenant la modifier.");
+   }));
+   list.append(b);
+  }
+  if(!list.childElementCount)list.textContent="Aucune création IA exploitable.";
+ }catch(err){list.textContent="Chargement indisponible : "+(err.message||"réessaie plus tard")}
+});
+
 $("new").addEventListener("click",()=>action(async()=>{if(dirty&&!confirm("Abandonner tes modifications non sauvegardées ?"))return;const{data,error}=await db.from("kitora_user_documents").insert({user_id:user.id,title:"Sans titre",content:""}).select("id,user_id,title,content,is_favorite,created_at,updated_at").single();if(error)throw error;docs.unshift(data);dirty=false;open(data);message("Document créé. Tu peux commencer à écrire.")}));
 $("form").addEventListener("submit",e=>{e.preventDefault();action(async()=>{if(!selected)return;const title=$("title").value.trim();if(!title)throw Error("Ajoute un titre.");const{data,error}=await db.from("kitora_user_documents").update({title,content:$("content").value,updated_at:new Date().toISOString()}).eq("id",selected.id).eq("user_id",user.id).select("id,user_id,title,content,is_favorite,created_at,updated_at").single();if(error)throw error;selected=data;dirty=false;await refresh();message("Document sauvegardé dans ton compte.");render()})});
 for(const id of ["title","content"])$(id).addEventListener("input",()=>{dirty=true;words();message("Modifications non sauvegardées.")});
