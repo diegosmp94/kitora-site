@@ -28,6 +28,10 @@ for(const p of essential){
 assert.match(read("panier.html"),/id="kitora-contract-notice"/,"checkout must display precontractual links");
 assert.match(read("cgv.html"),/14 jours/);
 assert.match(read("cgv.html"),/médiateur/);
+assert.match(read("mentions-legales.html"),/Responsable légal déclaré de Kitora : <strong>M\. Sampaio<\/strong>/,"Declared representative must appear in legal notices");
+assert.match(read("cgv.html"),/Responsable légal déclaré : <strong>M\. Sampaio<\/strong>/,"Declared representative must appear in sales terms");
+assert.match(read("LEGAL_LAUNCH_CHECKLIST_20261019.md"),/M\. Sampaio/,"Keep legal representative in launch checklist");
+assert.match(read("mentions-legales.html"),/\[À compléter avant commercialisation\]/,"Incomplete mandatory merchant information must not be hidden");
 assert.match(read("retractation.html"),/19 juin 2026/);
 assert.match(read("retractation.html"),/Aucune demande n'a été envoyée/,"never claim submission from copy action");
 assert.match(read("confidentialite.html"),/Groq/);
