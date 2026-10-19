@@ -2,3 +2,5 @@
 /* Functional demo tools tied to future tiers; distinct from paid checkout */
 .pro-card .tool-preview-link{display:block;font-size:.8rem;font-weight:800;margin-bottom:12px;color:#174c80;text-decoration:underline;text-underline-offset:4px}
 .pro-card .tool-preview-link:focus-visible{outline:3px solid #d9a457;outline-offset:3px}
+
+.pro-card .org-dossier-link{display:block;margin:10px 26px 8px;color:#174c80;font-size:.77rem;font-weight:790;text-decoration:underline;text-underline-offset:3px}
