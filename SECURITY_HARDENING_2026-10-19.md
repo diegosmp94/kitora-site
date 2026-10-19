@@ -31,3 +31,11 @@
 - Si la CI échoue, ne pas fusionner ni déployer les fonctions sensibles.
 - Ne jamais interpréter des tests simulés comme la preuve d'une sécurité « 100 % ».
 - Après fusion, vérifier GitHub Pages en navigateur réel et les journaux Supabase.
+
+## SEC-09 — GitHub : protection des branches de code
+
+- **Constat vérifié le 19/10/2026 :** l'API GitHub rapporte `main.protected = false` et zéro ruleset installé. Le connecteur GitHub utilisé ici peut lire ces paramètres mais ne peut ni importer ni activer les protections d'administration (403 pour la protection classique).
+- **Correctif préparé :** `security/github-rulesets/main.json`, `release.json`, `working.json`, `.github/CODEOWNERS`, workflow `Kitora branch security` et test `tests/check-branch-governance.mjs`.
+- **État :** EN ATTENTE D'ACTIVATION PAR LE PROPRIÉTAIRE dans GitHub Settings → Rulesets (la présence des JSON dans le dépôt ne protège **aucune** branche).
+- **Mode opératoire :** [security/BRANCH_PROTECTION_SETUP.md](security/BRANCH_PROTECTION_SETUP.md).
+- **Vérification exigée après activation :** champ `protected:true` pour `main`, trois rulesets actifs, six checks requis sur une PR.
