@@ -45,7 +45,7 @@ try{
    assert.ok(await sidebar.locator('a[href="admin-products.html"]').isHidden(),"filter hides unrelated sections");
    await page.locator(".ka-nav-filter").fill("");
    assert.ok(await sidebar.locator('a[href="admin-products.html"]').isVisible(),"clearing restores menu");
-   await page.locator(".ka-nav-filter").blur();
+   await page.locator(".ka-nav-filter").evaluate(el=>el.blur());
    await page.keyboard.press("/");
    assert.equal(await page.evaluate(()=>document.activeElement?.id),"adminNavSearch","keyboard slash focuses search");
   }
