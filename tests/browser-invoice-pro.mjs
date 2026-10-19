@@ -71,6 +71,7 @@ try{
  assert.match(pdf,/BROUILLON/);
  assert.match(pdf,/NON ATTRIBU/);
  assert.ok(!pdf.includes("FACTURE FINALE"),"cannot issue a numbered final invoice");
+ await page.evaluate(()=>localStorage.setItem("kitora_pro_invoice_draft_v1_old_account",JSON.stringify({clientName:"Legacy client must be purged"})));
  await page.reload({waitUntil:"load"});
  await page.locator("#authStatus").getByText("Compte connecté.",{exact:false}).waitFor();
  assert.equal(await page.locator("#orgName").inputValue(),"Association Essai Facturation","profile rehydrated");
