@@ -7,7 +7,9 @@ const checked=[
 ];
 for(const[html,script]of checked)assert.ok(read(html).includes(script),html+" is missing "+script);
 for(const f of ["advanced-exports.js","auto-cloud.js","workspace-insights.js","admin-health-page.js"])assert.ok(read(f).includes("auth.getUser()")||read(f).includes("auth.getSession()"),f+" missing authentication");
-assert.match(read("advanced-exports.js"),/subscriptions/);
+assert.match(read("advanced-exports.js"),/getKitoraSubscription/);
+assert.match(read("billing-entitlements.js"),/kitora_live_subscriptions/);
+assert.match(read("billing-entitlements.js"),/db\.from\("subscriptions"\)/);
 assert.match(read("advanced-exports.js"),/\.status!=="active"/);
 assert.match(read("workspace-insights.js"),/\["workspace","ultimate"\]/);
 assert.match(read("auto-cloud.js"),/baseline/);
