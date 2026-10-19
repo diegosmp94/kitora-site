@@ -2,3 +2,5 @@
 /* Kitora 3.0 — secure import picker */
 .import-dialog{width:min(660px,92vw);max-height:80vh;overflow:auto;border:1px solid #c7dbea;border-radius:20px;padding:clamp(18px,3vw,30px);box-shadow:0 30px 90px #081d3480;color:#17314c;background:#fff}
 .import-dialog::backdrop{background:#081e36a8;backdrop-filter:blur(4px)}.import-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.import-top h2{margin:0}.import-dialog #importList{display:grid;gap:10px;margin-top:18px}.import-dialog .doc{width:100%}
+
+footer .kf-legal-links{display:flex;flex-wrap:wrap;gap:10px 18px;justify-content:center;margin-top:14px}footer .kf-legal-links a{color:#174c80;font-size:.83rem}

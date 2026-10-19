@@ -5,3 +5,9 @@
 /* Audit accessibility: visible focus for keyboard users across footer links. */
 .kitora-footer a:focus-visible,.kitora-footer button:focus-visible{outline:3px solid #ffd58e;outline-offset:4px;border-radius:4px;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
 @media(prefers-reduced-motion:reduce){.kitora-footer a{transition:none}}
+
+/* Legal center: stable links across the existing unified footer. */
+.kitora-footer .kf-legal-links{width:min(1180px,92%);margin:0 auto 22px;padding:18px 0 0;border-top:1px solid #ffffff2d;display:flex;flex-wrap:wrap;gap:8px 19px;align-items:center}
+.kitora-footer .kf-legal-links a{color:#f2dfc3!important;text-decoration:underline;text-underline-offset:4px;font-size:13px}
+.kitora-footer .kf-legal-links a:hover{color:#fff!important}
+.kitora-footer .kf-legal-links a:focus-visible{outline:3px solid #ffd58e;outline-offset:3px}
