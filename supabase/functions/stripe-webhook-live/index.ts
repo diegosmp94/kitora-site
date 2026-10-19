@@ -2,6 +2,7 @@
 import Stripe from "npm:stripe@22.0.0";
 import {createClient} from "npm:@supabase/supabase-js@2.57.0";
 const plans:{[name:string]:string}={
+  solo:"price_1USLrS0xrx52eQIkfvGoRzqK",
   plus_monthly:"price_1US0oF0xrx52eQIkdmRbsUqu",
   plus_yearly:"price_1US0oI0xrx52eQIkipQfK3Pm"
 };
