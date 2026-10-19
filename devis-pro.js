@@ -122,13 +122,15 @@ function renderPaper(totals){
  preview.replaceChildren(paper);
 }
 function resetForm(){
+ delete $("quoteVatRate").dataset.previousRate;
  form.reset();$("quoteDate").value=dateValue(0);$("quoteExpires").value=dateValue(30);
  rows.replaceChildren();lineSequence=0;addLine();preview.replaceChildren(el("div","Ton devis prendra forme ici après validation du formulaire.","quote-placeholder"));
  updateVatMode();status.textContent="Tous les champs ont été réinitialisés.";
 }
 function updateVatMode(){
  const select=$("quoteVatRate"),standard=$("quoteVatMode").value==="standard";
- select.disabled=!standard;if(!standard)select.value="0";else if(select.value==="0")select.value="20";
+ if(!standard){if(!select.disabled)select.dataset.previousRate=select.value;select.value="0";select.disabled=true;}
+ else{select.disabled=false;if(select.dataset.previousRate){select.value=select.dataset.previousRate;delete select.dataset.previousRate;}}
  invalidate();
 }
 $("quoteAdd").addEventListener("click",()=>addLine());
@@ -173,4 +175,76 @@ async function loadOrganization(){
   organizationStatus.textContent="Dossier indisponible : l'éditeur fonctionne en saisie manuelle, sans enregistrement.";
  }
 }
+// Explicit draft transfer. Never autosave client details or use browser storage.
+const DRAFT_FIELDS={
+ issuerName:180,issuerEmail:200,issuerSiren:9,issuerVat:28,issuerAddress:400,
+ clientName:180,clientAddress:400,quoteReference:65,quoteDate:10,quoteExpires:10,
+ quoteVatMode:20,quoteVatRate:5,quoteNotes:3000
+};
+const DRAFT_FORMAT="kitora.quote.draft.v1";
+function exportDraft(){
+ const fields={};
+ for(const id of Object.keys(DRAFT_FIELDS))fields[id]=$(id).value;
+ const lines=[...rows.querySelectorAll(".quote-line")].map(group=>({
+  description:group.querySelector('[data-quote-field="description"]').value,
+  qty:group.querySelector('[data-quote-field="qty"]').value,
+  price:group.querySelector('[data-quote-field="price"]').value
+ }));
+ const draft={format:DRAFT_FORMAT,exported_at:new Date().toISOString(),fields,lines};
+ const url=URL.createObjectURL(new Blob([JSON.stringify(draft,null,2)],{type:"application/json"}));
+ const link=document.createElement("a");link.href=url;link.download="kitora-devis-brouillon.json";
+ document.body.append(link);link.click();link.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+ status.textContent="Brouillon exporté sur ton appareil. Il contient des coordonnées : protège ce fichier.";
+}
+function verifyDraft(data){
+ if(!data||Array.isArray(data)||data.format!==DRAFT_FORMAT||typeof data.fields!=="object"||!data.fields||Array.isArray(data.fields))throw Error("Format de brouillon Kitora non reconnu.");
+ if(!Array.isArray(data.lines)||data.lines.length<1||data.lines.length>40)throw Error("Le brouillon doit contenir entre 1 et 40 lignes.");
+ const fields={};
+ for(const [key,max]of Object.entries(DRAFT_FIELDS)){
+  const value=data.fields[key];
+  if(typeof value!=="string"||value.length>max)throw Error("Champ invalide dans le brouillon : "+key);
+  fields[key]=value;
+ }
+ if(!["standard","franchise_293b","autre_exoneration"].includes(fields.quoteVatMode)||!["0","5.5","10","20"].includes(fields.quoteVatRate))throw Error("Régime fiscal non reconnu.");
+ for(const id of ["quoteDate","quoteExpires"])if(fields[id]&&!/^\d{4}-\d{2}-\d{2}$/.test(fields[id]))throw Error("Date invalide dans le brouillon.");
+ if(fields.quoteExpires&&fields.quoteDate&&fields.quoteExpires<fields.quoteDate)throw Error("La fin de validité précède la date du devis.");
+ const lines=data.lines.map(line=>{
+  if(!line||typeof line!=="object"||Array.isArray(line))throw Error("Ligne de devis invalide.");
+  const {description,qty,price}=line;
+  if(typeof description!=="string"||description.length>210||typeof qty!=="string"||!/^(?:|[1-9]\d{0,4})$/.test(qty)||Number(qty)>10000||typeof price!=="string"||!/^(?:|(?:0|[1-9]\d{0,7})(?:\.\d{1,2})?)$/.test(price)||Number(price)>10000000)throw Error("Quantité, prix ou prestation incorrect dans le brouillon.");
+  return {description,qty,price};
+ });
+ return {fields,lines};
+}
+function restoreDraft(draft){
+ const {fields,lines}=verifyDraft(draft);
+ for(const [id,value]of Object.entries(fields))$(id).value=value;
+ rows.replaceChildren();lineSequence=0;
+ for(const line of lines){
+  addLine(line.description,Number(line.qty)||1,Math.round((Number(line.price)||0)*100));
+  const group=rows.lastElementChild;
+  group.querySelector('[data-quote-field="qty"]').value=line.qty;
+  group.querySelector('[data-quote-field="price"]').value=line.price;
+ }
+ delete $("quoteVatRate").dataset.previousRate;
+ updateVatMode();
+ preview.replaceChildren(el("div","Brouillon chargé. Actualise l'aperçu après vérification.","quote-placeholder"));
+ invalidate();
+ status.textContent="Brouillon importé localement. Vérifie les informations et actualise l'aperçu avant impression.";
+}
+$("quoteExport").addEventListener("click",exportDraft);
+$("quoteImport").addEventListener("click",()=>$("quoteImportInput").click());
+$("quoteImportInput").addEventListener("change",async event=>{
+ const file=event.target.files?.[0];if(!file)return;
+ try{
+  if(file.size>32768)throw Error("Fichier trop volumineux (32 Ko maximum).");
+  const draft=JSON.parse(await file.text());
+  const verified=verifyDraft(draft);
+  if(!confirm("Remplacer le brouillon actuellement saisi ? Cette action ne peut pas être annulée."))return;
+  restoreDraft(verified);
+ }catch(error){status.textContent=error instanceof Error?error.message:"Fichier non reconnu.";}
+ finally{event.target.value="";}
+});
+
 resetForm();loadOrganization();

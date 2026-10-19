@@ -7,6 +7,7 @@ const html=readFileSync("devis-pro.html","utf8"),js=readFileSync("devis-pro.js",
 for(const id of ["quoteForm","issuerName","issuerAddress","clientName","clientAddress","quoteReference","quoteDate","quoteExpires","quoteVatMode","quoteVatRate","quoteRows","quotePreview","quoteTotal","quotePrint","quoteRefresh","quoteReset","quoteStatus","orgStatus"])
  assert.ok(html.includes('id="'+id+'"'),"Champ manquant : "+id);
 assert.match(html,/Content-Security-Policy/);
+for(const id of ["quoteExport","quoteImport","quoteImportInput"])assert.ok(html.includes('id="'+id+'"'),"Brouillon : "+id);
 assert.match(html,/BROUILLON.*NON SIGNÉ|BROUILLON NON SIGNÉ/i);
 assert.match(html,/imprimer.*PDF/i);
 assert.match(js,/getUser\(/);
@@ -15,6 +16,10 @@ assert.match(js,/\.eq\("user_id",user\.id\)/);
 assert.ok(!/localStorage|sessionStorage|document\.cookie|\.innerHTML\s*=|service_role|sk_live_/.test(js),"Données client non stockées et affichage sans HTML dynamique");
 assert.ok(!/stripe|checkout\.stripe\.com|panier\.html/i.test(html),"Aucun paiement activé");
 assert.match(css,/@media print/);
+assert.match(js,/DRAFT_FORMAT="kitora\.quote\.draft\.v1"/);
+assert.match(js,/file\.size>32768/);
+assert.match(js,/verifyDraft\(draft\)/);
+assert.match(js,/URL\.revokeObjectURL/);
 for(const p of ["facturation-pro.html","outils-pro.html"]){
  const body=readFileSync(p,"utf8");assert.ok(body.includes('href="devis-pro.html"'),p+" sans lien Devis Studio");
 }
