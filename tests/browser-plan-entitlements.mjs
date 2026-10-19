@@ -22,13 +22,15 @@ const fixtures=[
  {name:"signed in but no chosen plan",user:true,selection:null,plan:null,expected:"choisir-offre.html"},
  {name:"fake Ultimate selection without subscription",user:true,selection:"ultimate",plan:null,expected:"choisir-offre.html"},
  {name:"active Ultimate subscriber",user:true,selection:"ultimate",plan:"ultimate",expected:"loaded"},
+ {name:"active LIVE Workspace subscriber",user:true,selection:"workspace",plan:null,livePlan:"workspace",expected:"loaded"},
+ {name:"canceled LIVE must override TEST",user:true,selection:"solo",plan:"solo",livePlan:"solo",liveStatus:"canceled",expected:"choisir-offre.html"},
  {name:"Free subscriber",user:true,selection:"free",plan:null,expected:"loaded"}
 ];
 try{
  for(const scenario of fixtures){
   const ctx=await browser.newContext();
   const page=await ctx.newPage();
-  const mocked=`export function createClient(){const user=${JSON.stringify(scenario.user?{id:"test-user"}:null)}; const selected=${JSON.stringify(scenario.selection)}; const plan=${JSON.stringify(scenario.plan)};return {auth:{getUser:async()=>({data:{user},error:null}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})},from(table){return{select(){return this},eq(){return this},maybeSingle:async()=>({data:table==="kitora_tool_access"?(selected?{chosen_plan:selected}:null):table==="subscriptions"?(plan?{status:"active",plan}:null):null,error:null})}}}}`;
+  const mocked=`export function createClient(){const user=${JSON.stringify(scenario.user?{id:"test-user"}:null)}; const selected=${JSON.stringify(scenario.selection)}; const plan=${JSON.stringify(scenario.plan)};const livePlan=${JSON.stringify(scenario.livePlan||null)};const liveStatus=${JSON.stringify(scenario.liveStatus||"active")};return {auth:{getUser:async()=>({data:{user},error:null}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})},from(table){return{select(){return this},eq(){return this},maybeSingle:async()=>({data:table==="kitora_tool_access"?(selected?{chosen_plan:selected}:null):table==="kitora_live_subscriptions"?(livePlan?{status:liveStatus,plan:livePlan}:null):table==="subscriptions"?(plan?{status:"active",plan}:null):null,error:null})}}}}`;
   await page.route(/https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@2(?:\.57\.0)?\/\+esm/,route=>route.fulfill({status:200,contentType:"application/javascript",body:mocked}));
   await page.goto(base+"/projects.html",{waitUntil:"domcontentloaded"});
   if(scenario.expected==="loaded"){
