@@ -21,7 +21,6 @@ const inMonth=()=>{const d=new Date();d.setDate(d.getDate()+30);return d.toISOSt
 const emptyInvoice=()=>({clientName:"",clientSiren:"",clientAddress:"",clientPost:"",clientCity:"",clientCountry:"France",clientVat:"",orderNumber:"",date:today(),serviceDate:today(),dueDate:inMonth(),vatRate:"20",paymentNote:"",notes:"",lines:[{description:"",qty:1,unitCents:0}]});
 const euro=n=>new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"}).format(n/100);
 const safe=(value,max=300)=>String(value??"").trim().slice(0,max);
-const storage=()=>user?"kitora_pro_invoice_draft_v1_"+user.id:null;
 const set=(id,value)=>$(id).textContent=value;
 function showProfile(){
  if(!profile){set("invoiceProfile","Aucune structure enregistrée. Complète d’abord ton dossier professionnel.");return}
@@ -68,29 +67,24 @@ $("organizationForm").addEventListener("submit",async event=>{
  finally{button.disabled=false}
 });
 $("reloadOrg").addEventListener("click",async()=>{try{await loadOrg()}catch(e){set("orgMessage","Rechargement impossible : "+e.message)}});
-function readDraft(){
- invoice=emptyInvoice();
- if(!user)return;
+// SEC-02: private invoice content is memory-only until explicit Supabase cloud save.
+// Remove copies written by older versions, including copies left by another account
+// on the same shared browser. Never parse old client data into the current session.
+function purgeLegacyDraftStorage(){
  try{
-  const item=JSON.parse(localStorage.getItem(storage())||"null");
-  if(!item||typeof item!=="object"||Array.isArray(item))return;
-  for(const field of Object.values(invoiceFields))if(field in item&&typeof item[field]==="string")invoice[field]=safe(item[field],1000);
-  if(Array.isArray(item.lines))invoice.lines=item.lines.slice(0,40).filter(x=>x&&typeof x==="object").map(x=>({
-    description:safe(x.description,210),
-    qty:Number.isInteger(Number(x.qty))?Math.min(10000,Math.max(1,Number(x.qty))):1,
-    unitCents:Number.isInteger(Number(x.unitCents))?Math.min(1e11,Math.max(0,Number(x.unitCents))):0
-  }));
-  if(!invoice.lines.length)invoice.lines=emptyInvoice().lines;
- }catch{set("invoiceMessage","Ancien brouillon illisible. Un nouveau brouillon a été créé.")}
-}
-function persist(){
- if(!storage())return;
- try{localStorage.setItem(storage(),JSON.stringify(invoice))}catch{set("invoiceMessage","Enregistrement local indisponible. Télécharge le PDF avant de quitter.")}
+  const prefix="kitora_pro_invoice_draft_v1_";
+  for(let i=localStorage.length-1;i>=0;i--){
+   const name=localStorage.key(i);
+   if(name&&name.startsWith(prefix))localStorage.removeItem(name);
+  }
+ }catch{
+  set("invoiceMessage","Impossible de nettoyer l'ancien stockage local : vérifie les données du navigateur.");
+ }
 }
 function fillInvoice(){for(const [id,col]of Object.entries(invoiceFields))$(id).value=invoice[col]??"";drawRows();renderTotal()}
 for(const [id,col]of Object.entries(invoiceFields))$(id).addEventListener("input",()=>{
  if(!invoice)return;
- invoice[col]=$(id).value;persist();if(id==="vatRate")renderTotal();
+ invoice[col]=$(id).value;if(id==="vatRate")renderTotal();
 });
 function inputField(label,type,value,opt={}){
  const wrapper=document.createElement("div");wrapper.className="field";
@@ -112,7 +106,7 @@ function drawRows(){
     if(field==="description")line.description=safe(obj.input.value,210);
     else if(field==="qty")line.qty=Number(obj.input.value);
     else{let number=Number(obj.input.value);line.unitCents=Number.isFinite(number)?Math.round(number*100):-1}
-    persist();renderTotal();
+    renderTotal();
    });
    row.append(obj.wrapper);
   }
@@ -120,14 +114,14 @@ function drawRows(){
   button.textContent="Retirer";button.setAttribute("aria-label","Retirer la ligne "+(i+1));
   button.addEventListener("click",()=>{
    if(invoice.lines.length<=1){set("invoiceMessage","Conserve au moins une ligne pour ton brouillon.");return}
-   invoice.lines.splice(i,1);persist();drawRows();renderTotal()
+   invoice.lines.splice(i,1);drawRows();renderTotal()
   });row.append(button);container.append(row);
  });
 }
 $("addLine").addEventListener("click",()=>{
  if(!invoice)return;
  if(invoice.lines.length>=40){set("invoiceMessage","Maximum 40 lignes dans un brouillon.");return}
- invoice.lines.push({description:"",qty:1,unitCents:0});persist();drawRows();renderTotal();
+ invoice.lines.push({description:"",qty:1,unitCents:0});drawRows();renderTotal();
 });
 function renderTotal(){
  if(!invoice)return;
@@ -159,7 +153,7 @@ $("invoiceForm").addEventListener("submit",event=>{
 });
 function replaceLocalInvoice(document){
  invoice=document?JSON.parse(JSON.stringify(document)):emptyInvoice();
- persist();fillInvoice();showProfile();
+ fillInvoice();showProfile();
  set("invoiceMessage",document?"Brouillon privé chargé : tu peux continuer ou télécharger le PDF.":"Nouveau brouillon local prêt.");
 }
 $("resetInvoice").addEventListener("click",()=>{
@@ -173,7 +167,7 @@ async function start(){
  try{
   if(window.__KITORA_INVOICE_TEST_CLIENT__)db=window.__KITORA_INVOICE_TEST_CLIENT__;
   else{
-   const {createClient}=await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm");
+   const {createClient}=await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/+esm");
    db=createClient(PROJECT,KEY);
   }
   const {data:{user:connected},error}=await db.auth.getUser();
@@ -185,7 +179,7 @@ async function start(){
   }
   user=connected;$("saveOrg").disabled=false;
   set("authStatus","Compte connecté. Ton dossier organisation reste privé et lié uniquement à ton identifiant Kitora.");
-  readDraft();fillInvoice();await loadOrg();
+  purgeLegacyDraftStorage();invoice=emptyInvoice();fillInvoice();await loadOrg();
   await initInvoiceCloudDrafts({
    db,user,
    getInvoice:()=>invoice,
