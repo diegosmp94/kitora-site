@@ -79,3 +79,71 @@ export function downloadAiPlusTxt(item,result){
  save(new Blob(["\uFEFF",value],{type:"text/plain;charset=utf-8"}),"kitora-plus-ia-"+String(item.id||"document").slice(0,8)+".txt");
 }
 export function downloadPlusTxt(item){const p=plans[item.category]||plans.autre;const txt=["KITORA PLUS - "+item.title,"","DEMANDE",item.details,"","PLAN D'ACTION",...p.steps.map((s,i)=>(i+1)+". "+s),"","PROGRAMME SUR 4 SEMAINES","S1 : cadrage","S2 : mise en pratique","S3 : ajustements","S4 : bilan","",...p.sections.map(s=>s+" : ____________________")].join("\n");save(new Blob([txt],{type:"text/plain;charset=utf-8"}),"kitora-plus-"+(item.id||"personnalise").slice(0,8)+".txt")}
+
+
+// Personalized brief exports never call an AI provider. They are explicitly preparatory,
+// distinct from generated IA reports, and work from what the user actually entered.
+export function buildPlusBriefText(item){
+ const title=String(item?.title||"Dossier préparatoire").trim();
+ const details=String(item?.details||"").trim();
+ const category=String(item?.category||"autre").trim();
+ const format=String(item?.format||"pdf").trim();
+ return [
+  "KITORA PLUS - BRIEF PRÉPARATOIRE",
+  "Document construit uniquement avec les informations que tu as saisies.",
+  "Aucune génération IA et aucune analyse factuelle externe.",
+  "",
+  "SUJET",title,
+  "",
+  "CATÉGORIE",category,
+  "",
+  "OBJECTIFS ET CONTRAINTES",details||"Non précisés.",
+  "",
+  "FORMAT DEMANDÉ",format.toUpperCase(),
+  "",
+  "PROCHAINE ÉTAPE",
+  "Tu peux conserver ce brief, le modifier ou l'envoyer dans Kitora Plus.",
+  "Une génération IA, si disponible, fera l'objet d'un résultat séparé."
+ ].join("\n");
+}
+export function downloadPlusBriefTxt(item){
+ const blob=new Blob(["\uFEFF",buildPlusBriefText(item)],{type:"text/plain;charset=utf-8"});
+ save(blob,"kitora-plus-brief-"+String(item?.id||"preparatoire").slice(0,8)+".txt");
+ return blob.size;
+}
+export async function generatePlusBriefPdf(item){
+ const {jsPDF}=await pdfLib();
+ const doc=new jsPDF({unit:"mm",format:"a4",compress:true});
+ const value=buildPlusBriefText(item);
+ const left=17,right=193,maxY=270;let page=0,y=46;
+ const clean=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+  .replace(/[\u2018\u2019\u02BC]/g,"'").replace(/[\u2013\u2014\u2212]/g,"-")
+  .replace(/\u0153/g,"oe").replace(/\u00A0|\u202F/g," ")
+  .replace(/[^\x20-\x7e\n]/g,"?");
+ function newPage(){
+  if(page)doc.addPage();page++;
+  doc.setFillColor(12,37,63);doc.rect(0,0,210,32,"F");
+  doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(17);
+  doc.text("kitora. PLUS",17,20);
+  doc.setTextColor(63,78,96);doc.setFont("helvetica","normal");doc.setFontSize(8);
+  doc.text("BRIEF PREPARATOIRE - PAGE "+page,17,286);
+  y=47;
+ }
+ newPage();
+ for(const paragraph of clean(value).split("\n")){
+  const isHeading=/^(SUJET|CATEGORIE|OBJECTIFS ET CONTRAINTES|FORMAT DEMANDE|PROCHAINE ETAPE)$/.test(paragraph);
+  const size=isHeading?12:10;
+  const lines=doc.splitTextToSize(paragraph||" ",right-left);
+  for(const line of lines){
+   const h=isHeading?7.5:6;
+   if(y+h>maxY)newPage();
+   doc.setFont("helvetica",isHeading?"bold":"normal");doc.setFontSize(size);
+   doc.setTextColor(isHeading?20:56,isHeading?49:72,isHeading?76:90);
+   doc.text(line,left,y);y+=h;
+  }
+  if(!paragraph)y+=2;
+ }
+ const blob=doc.output("blob");
+ save(blob,"kitora-plus-brief-"+String(item?.id||"preparatoire").slice(0,8)+".pdf");
+ return blob.size;
+}
