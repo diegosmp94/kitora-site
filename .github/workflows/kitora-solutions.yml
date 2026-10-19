@@ -19,7 +19,9 @@ jobs:
           node-version: '22'
       - run: node tests/check-audience-offers.mjs
       - run: node tests/check-pro-offers.mjs
+      - run: node tests/check-pro-tools.mjs
       - run: npm install --no-save playwright@1.58.2
       - run: npx playwright install --with-deps chromium
       - run: node tests/browser-audience-offers.mjs
       - run: node tests/browser-pro-offers.mjs
+      - run: node tests/browser-pro-tools.mjs
