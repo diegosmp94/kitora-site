@@ -27,7 +27,7 @@ const scenarios=[
 ];
 try{
  for(const fixture of scenarios){
-  const context=await browser.newContext({viewport:{width:390,height:844}});
+  const context=await browser.newContext({viewport:{width:390,height:844},acceptDownloads:true});
   const page=await context.newPage();
   let called=0;
   const mock=`export function createClient(){
@@ -57,12 +57,22 @@ try{
   if(fixture.allowed){
    await page.locator("#labTopic").fill("Apprendre l'espagnol niveau débutant");
    await page.locator("#labFormat").selectOption("pdf");
+   assert.equal(await page.locator("#labExportBriefTxt").isEnabled(),true);
+   assert.equal(await page.locator("#labExportBriefPdf").isEnabled(),true);
+   const fileDownload=page.waitForEvent("download");
+   await page.locator("#labExportBriefTxt").click();
+   const file=await fileDownload;
+   assert.match(file.suggestedFilename(),/kitora-plus-brief.*\.txt$/);
    await page.locator("#labSubmit").click();
    await page.waitForFunction(()=>document.querySelector("#labGenerationStatus")?.textContent.includes("Moteur IA non activé"));
    assert.equal(called,1,fixture.name+": generation endpoint should be reached exactly once");
    assert.equal(await page.locator("#labGenerationPanel").isVisible(),true);
    assert.equal(await page.locator("#labRefreshGeneration").isEnabled(),true);
-  }else assert.equal(called,0,fixture.name+": no AI endpoint for non subscriber");
+  }else {
+   assert.equal(called,0,fixture.name+": no AI endpoint for non subscriber");
+   assert.equal(await page.locator("#labExportBriefPdf").isDisabled(),true);
+   assert.equal(await page.locator("#labExportBriefTxt").isDisabled(),true);
+  }
   const size=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:innerWidth}));
   assert.ok(size.scroll<=size.width+2,fixture.name+": mobile horizontal overflow "+JSON.stringify(size));
   await context.close();
