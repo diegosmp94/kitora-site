@@ -1,0 +1,63 @@
+/* Kitora Pro Quote Studio — blue-night + champagne gold, responsive and print-safe. */
+.quote-hero{position:relative;overflow:hidden;background:radial-gradient(circle at 82% 20%,#2b618e 0,#112f50 37%,#071c32 90%);border-bottom:4px solid #d3ab70}
+.quote-hero:after{content:"";position:absolute;width:38vw;aspect-ratio:1;max-width:550px;border:1px solid #d7b17950;border-radius:50%;right:-9vw;top:-11vw;box-shadow:0 0 0 40px #d7b1790a,0 0 0 85px #d7b17909;pointer-events:none}
+.quote-main{padding:60px 0 84px}
+.quote-intro{max-width:900px}
+.quote-intro h2{font-size:clamp(2rem,4.4vw,3.5rem);line-height:1.1;letter-spacing:-.055em;margin:16px 0}
+.quote-intro>p:not(.notice){color:#58718a}
+.quote-intro .notice{max-width:900px}
+.quote-editor .work-card{transition:box-shadow .22s ease,border-color .22s ease}
+.quote-editor .work-card:focus-within{border-color:#caa467;box-shadow:0 18px 60px #0c294719}
+.quote-wide{grid-column:1/-1}
+.quote-lines{margin-top:26px;display:grid;gap:12px}
+.quote-line{margin:0;border:1px solid #d9e5ee;border-radius:15px;padding:18px;background:linear-gradient(130deg,#fafdff,#f5f9fc)}
+.quote-line legend{font-weight:850;color:#184d77;padding:0 8px}
+.quote-line-fields{display:grid;grid-template-columns:minmax(150px,2.4fr) minmax(86px,.65fr) minmax(126px,.9fr) auto;align-items:end;gap:12px}
+.quote-line-fields .btn{align-self:end}
+.quote-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;border-radius:22px;padding:25px 30px;background:#0d2b49;color:white;margin:25px 0 48px;box-shadow:0 21px 55px #071e3230}
+.quote-cta .actions{margin:0}
+.quote-cta #quoteStatus{max-width:410px;margin:0;font-size:.87rem;color:#e5edf6}
+.quote-cta .btn{border-color:#e3bf87;color:#0e2c49;background:#e3bf87}
+.quote-cta .btn.outline{background:transparent;color:#fff;border-color:#b3cadf}
+.quote-preview-area{scroll-margin-top:24px}
+.quote-paper{background:white;border:1px solid #d3dee8;min-height:400px;max-width:790px;margin:auto;box-shadow:0 20px 60px #102b4314}
+.quote-placeholder{min-height:380px;display:grid;place-items:center;padding:25px;text-align:center;color:#667e91}
+.quote-paper-content{padding:clamp(20px,5vw,54px);font-size:.86rem;line-height:1.55;color:#21394b;overflow-wrap:anywhere}
+.quote-paper-top{display:flex;justify-content:space-between;align-items:flex-start;gap:22px;padding-bottom:25px;border-bottom:3px solid #cda971}
+.quote-paper-top>div{display:grid;gap:5px}
+.quote-paper-brand{font-size:2.1rem;letter-spacing:-.09em;color:#12395c}
+.quote-paper-top span{font-size:.71rem;letter-spacing:.11em;color:#6d8192;font-weight:700}
+.quote-paper-meta{text-align:right}
+.quote-paper-meta strong{color:#123d64;font-size:.84rem}
+.quote-paper-parties{display:grid;grid-template-columns:1fr 1fr;gap:27px;margin:28px 0}
+.quote-paper-parties section{padding:20px;background:#f4f8fb;border-radius:12px;min-width:0}
+.quote-paper-content h3{font-size:.88rem;text-transform:uppercase;letter-spacing:.09em;color:#1c507b;margin:0 0 12px}
+.quote-paper-content p{margin:7px 0;white-space:pre-line}
+.quote-paper-dates{display:flex;gap:12px 28px;flex-wrap:wrap;border-top:1px solid #dce5ec;padding:12px 0}
+.quote-document-table{width:100%;border-collapse:collapse;margin:24px 0}
+.quote-document-table caption{text-align:left;font-weight:800;padding:0 0 8px}
+.quote-document-table th{background:#133b5d;color:white;text-align:left;padding:11px 10px;font-size:.76rem}
+.quote-document-table td{border-bottom:1px solid #e1eaf1;padding:12px 10px;vertical-align:top}
+.quote-document-table td:not(:first-child),.quote-document-table th:not(:first-child){text-align:right;white-space:nowrap}
+.quote-paper-totals{margin-left:auto;width:min(100%,330px);background:#edf4f9;padding:15px 18px;border-radius:11px}
+.quote-paper-totals>div{display:flex;justify-content:space-between;gap:20px;padding:7px 0}
+.quote-paper-totals>div:last-child{font-size:1.14rem;color:#153d5e;border-top:1px solid #b6cadc;font-weight:850;margin-top:6px;padding-top:12px}
+.quote-paper-terms{border-top:1px solid #dce5ed;padding-top:18px;margin-top:25px}
+.quote-paper-foot{font-size:.65rem;letter-spacing:.12em;text-align:center;color:#8a704c;margin-top:36px}
+.quote-next{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:35px 0}
+.quote-next a{color:#174c80;font-size:.86rem;font-weight:750}
+@media(max-width:820px){.quote-cta{align-items:stretch;flex-direction:column}.quote-line-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.quote-line-fields .field:first-child{grid-column:1/-1}}
+@media(max-width:560px){.quote-main{padding:34px 0}.quote-paper-parties{grid-template-columns:1fr;gap:12px}.quote-paper-top{flex-wrap:wrap}.quote-paper-meta{text-align:left}.quote-paper-content{padding:20px}.quote-document-table th,.quote-document-table td{padding:8px 5px;font-size:.7rem}.quote-line-fields{grid-template-columns:1fr}.quote-line-fields .field:first-child{grid-column:auto}.quote-cta{padding:23px 18px}.quote-cta .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+@page{size:A4;margin:15mm}
+@media print{
+ html,body{margin:0!important;padding:0!important;background:white!important;color:#132d46!important}
+ .skip,.kitora-header,.quote-hero,.quote-intro,.quote-editor,.quote-next,.footer,.quote-preview-area>.heading{display:none!important}
+ .quote-main,.wrap,main{width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+ .quote-preview-area,.work-card,.quote-paper{display:block!important;width:100%!important;max-width:none!important;min-height:0!important;margin:0!important;padding:0!important;background:#fff!important;border:0!important;box-shadow:none!important}
+ .quote-paper-content{padding:0!important}
+ .quote-document-table thead{display:table-header-group}
+ .quote-document-table tr,.quote-paper-parties section,.quote-paper-totals{break-inside:avoid}
+ .quote-paper-top,.quote-document-table th,.quote-paper-totals{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .quote-paper-foot{margin-top:24px}
+}
