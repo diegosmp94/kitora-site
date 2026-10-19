@@ -1,4 +1,5 @@
 import{createInvoicePdf,computeInvoice}from"./facture-pdf.js";
+import{initInvoiceCloudDrafts}from"./facturation-cloud.js";
 const PROJECT="https://yxjxizxzjubhjaxskksh.supabase.co";
 const KEY="sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW";
 const $=id=>document.getElementById(id);
@@ -156,9 +157,16 @@ $("invoiceForm").addEventListener("submit",event=>{
   set("invoiceMessage","PDF brouillon téléchargé. Il ne s’agit pas d’une facture émise, numérotée ou télétransmise.");
  }catch(e){set("invoiceMessage",e.message||"Impossible de créer le PDF.")}
 });
+function replaceLocalInvoice(document){
+ invoice=document?JSON.parse(JSON.stringify(document)):emptyInvoice();
+ persist();fillInvoice();showProfile();
+ set("invoiceMessage",document?"Brouillon privé chargé : tu peux continuer ou télécharger le PDF.":"Nouveau brouillon local prêt.");
+}
 $("resetInvoice").addEventListener("click",()=>{
+ const button=$("newCloudDraft");
+ if(button&&!button.disabled){button.click();return}
  if(!confirm("Effacer le brouillon local du compte connecté ? Cette action ne peut pas être annulée."))return;
- invoice=emptyInvoice();persist();fillInvoice();showProfile();set("invoiceMessage","Nouveau brouillon prêt.");
+ replaceLocalInvoice(null);
 });
 async function start(){
  set("authStatus","Vérification de la session...");
@@ -178,6 +186,13 @@ async function start(){
   user=connected;$("saveOrg").disabled=false;
   set("authStatus","Compte connecté. Ton dossier organisation reste privé et lié uniquement à ton identifiant Kitora.");
   readDraft();fillInvoice();await loadOrg();
+  await initInvoiceCloudDrafts({
+   db,user,
+   getInvoice:()=>invoice,
+   setInvoice:replaceLocalInvoice,
+   getProfile:()=>profile,
+   validateInvoice
+  });
  }catch(e){
   set("authStatus","Connexion Supabase ou chargement indisponible : "+(e.message||"réessaie plus tard"));
   $("saveOrg").disabled=true;$("downloadPdf").disabled=true;

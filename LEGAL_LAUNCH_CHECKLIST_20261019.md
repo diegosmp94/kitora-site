@@ -70,3 +70,14 @@ Références : https://entreprendre.service-public.gouv.fr/vosdroits/F33527 et h
 - [ ] Relier le profil professionnel au futur vrai parcours d'abonnement organisation **quand il sera sécurisé et commercialisé** ; actuellement il s'agit uniquement d'un dossier préparatoire.
 
 Références officielles : https://entreprendre.service-public.gouv.fr/vosdroits/F31808 et https://www.impots.gouv.fr/facturation-electronique-et-plateformes-agreees .
+
+## G. Bibliothèque cloud de brouillons, confidentialité et préparation de l'émission
+- [x] Brouillons stockés dans `kitora_invoice_drafts` exclusivement après un clic explicite, avec accès RLS réservé à leur auteur et historisation de la date et de la version.
+- [x] Reprise, duplication, suppression et deux états **internes non émis** (Brouillon / À vérifier).
+- [x] Vérification de révision à chaque modification et suppression pour limiter les écrasements entre appareils.
+- [ ] Valider juridiquement le rôle du responsable du traitement et la relation de sous-traitance, la base juridique, l'information des clients dont les coordonnées sont sauvegardées, les durées réelles de conservation et la purge des sauvegardes.
+- [ ] Réaliser une recette multi-utilisateur authentifiée en environnement de préproduction en complément des tests simulés et des politiques RLS.
+- [ ] Ajouter un véritable parcours de finalisation uniquement après identification du vendeur, numérotation atomique côté serveur, verrouillage des factures émises, immutabilité des versions et piste d'audit.
+- [ ] Traiter les cas de TVA multiples, réductions, autoliquidation, acomptes, avoirs, paiements, devis et mentions particulières selon la nature des opérations.
+- [ ] Interfacer une plateforme agréée et un format électronique structuré pour les opérations entrant dans le champ de la réforme ; vérifier les obligations de réception depuis septembre 2026 et d'émission selon la taille de l'entreprise.
+- [ ] Ajouter une politique d'archivage réglementaire et des exports comptables conformes. Une bibliothèque de brouillons privés **n'est pas** un archivage fiscal.
