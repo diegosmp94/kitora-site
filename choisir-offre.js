@@ -1,4 +1,5 @@
 import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import {getKitoraSubscription,isKitoraPlanActive} from "./billing-entitlements.js";
 const db=createClient("https://yxjxizxzjubhjaxskksh.supabase.co","sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW");
 const $=id=>document.getElementById(id);
 const allowed=new Set(["dashboard.html","projects.html","learn.html","agenda.html","notes.html","templates.html","comparateur.html","atelier.html","focus.html","defi-7-jours.html","etude-clients.html","test-audience.html","synchronisation.html"]);
@@ -17,9 +18,9 @@ async function choose(plan){
  $("toolChoiceStatus").textContent="Vérification de ta formule…";
  try{
   if(plan!=="free"){
-   const {data:sub,error}=await db.from("subscriptions").select("status,plan").eq("user_id",user.id).maybeSingle();
+   const {subscription:sub,error}=await getKitoraSubscription(db,user.id);
    const plans={solo:["solo"],workspace:["workspace"],plus:["plus_monthly","plus_yearly"],ultimate:["ultimate"]};
-   if(error||sub?.status!=="active"||!plans[plan]?.includes(sub.plan))throw Error("Aucun abonnement "+plan+" actif. Pour tester une formule, passe par le panier Stripe TEST puis reviens choisir cette offre.");
+   if(error||!isKitoraPlanActive(sub,plan))throw Error("Aucun abonnement "+plan+" actif. Pour tester une formule, passe par le panier Stripe TEST puis reviens choisir cette offre.");
   }
   const {error}=await db.from("kitora_tool_access").upsert({user_id:user.id,chosen_plan:plan,updated_at:new Date().toISOString()},{onConflict:"user_id"});
   if(error)throw error;

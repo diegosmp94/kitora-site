@@ -1,11 +1,12 @@
 import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import {getKitoraSubscription} from "./billing-entitlements.js";
 const db=createClient("https://yxjxizxzjubhjaxskksh.supabase.co","sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW");
 function read(key){try{const data=JSON.parse(localStorage.getItem(key)||"[]");return Array.isArray(data)?data:[]}catch{return []}}
 function metric(label,value){const item=document.createElement("div");item.className="workspace-stat";const strong=document.createElement("strong");strong.textContent=String(value);const span=document.createElement("span");span.textContent=label;item.append(strong,span);return item}
 async function init(){
  try{
  const {data:{user},error}=await db.auth.getUser();if(error||!user)return;
- const {data:sub,error:err}=await db.from("subscriptions").select("plan,status").eq("user_id",user.id).maybeSingle();
+ const {subscription:sub,error:err}=await getKitoraSubscription(db,user.id);
  if(err||sub?.status!=="active"||!["workspace","ultimate"].includes(sub.plan))return;
  const section=document.createElement("section");section.className="section";const wrap=document.createElement("div");wrap.className="wrap";
  const title=document.createElement("h2");title.textContent="Pilotage avancé Workspace";

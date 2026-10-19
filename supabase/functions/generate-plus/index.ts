@@ -13,7 +13,13 @@ Deno.serve(async(req:Request)=>{
  const {data:{user},error:authError}=await userClient.auth.getUser();
  if(authError||!user)return reply({error:"Session invalide"},401);
  const admin=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}});
- const {data:sub}=await admin.from("subscriptions").select("status,plan").eq("user_id",user.id).maybeSingle();
+ // LIVE subscriptions take precedence; TEST remains available for demonstration only.
+ const [liveRow,testRow]=await Promise.all([
+  admin.from("kitora_live_subscriptions").select("status,plan").eq("user_id",user.id).maybeSingle(),
+  admin.from("subscriptions").select("status,plan").eq("user_id",user.id).maybeSingle()
+ ]);
+ if(liveRow.error||testRow.error)return reply({error:"Vérification des abonnements indisponible"},503);
+ const sub=liveRow.data||testRow.data;
  if(sub?.status!=="active"||!["plus_monthly","plus_yearly","ultimate"].includes(sub.plan))return reply({error:"Kitora Plus actif requis"},403);
  let body;try{body=await req.json()}catch{return reply({error:"Requête invalide"},400)}
  if(typeof body.request_id!=="string"||! /^[0-9a-f-]{36}$/i.test(body.request_id))return reply({error:"Identifiant invalide"},400);

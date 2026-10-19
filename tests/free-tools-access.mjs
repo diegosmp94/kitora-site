@@ -6,7 +6,11 @@ assert.match(guard,/auth\.getUser\(\)/);
 assert.match(guard,/kitora_tool_access/);
 assert.match(choice,/chosen_plan:plan/);
 assert.match(choice,/choose\("free"\)/);
-assert.match(choice,/subscriptions/);
+assert.match(choice,/getKitoraSubscription/);
+const billing=readFileSync("billing-entitlements.js","utf8");
+assert.match(billing,/kitora_live_subscriptions/);
+assert.match(billing,/db\.from\("subscriptions"\)/);
+assert.match(guard,/isKitoraPlanActive/);
 for(const name of tools){
  const html=readFileSync(name+".html","utf8");
  assert.match(html,/kitora-protected-pending/);

@@ -26,6 +26,7 @@ jobs:
           node tests/free-tools-access.mjs
           node tests/test-three-tiers.mjs
           node tests/check-available-packs.mjs
+          node tests/check-live-entitlements.mjs
           node tests/v1-phase2-readiness.mjs
           node tests/ai-queue-readiness.mjs
           node tests/plus-generation-smoke.mjs

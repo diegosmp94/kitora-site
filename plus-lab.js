@@ -1,4 +1,5 @@
 import{createClient}from"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import {getKitoraSubscription} from "./billing-entitlements.js";
 const client=createClient("https://yxjxizxzjubhjaxskksh.supabase.co","sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW");
 const $=id=>document.getElementById(id),form=$("labForm"),status=$("labEligibility"),message=$("labMessage");
 const choices={cours:{category:"etudes",header:"Cours personnalisé, exemples, exercices et corrigés",details:"Inclure des explications progressives, des exemples commentés, des exercices et les réponses détaillées. Respecter la langue cible du sujet."},revision:{category:"etudes",header:"Programme de révisions personnalisé",details:"Créer des séances adaptées, des questions d'autoévaluation, les corrections et des checkpoints réalistes."},projet:{category:"projet",header:"Dossier de projet opérationnel",details:"Présenter le besoin, les livrables, les étapes concrètes, les risques, les indicateurs et les hypothèses à confirmer."},organisation:{category:"organisation",header:"Planning personnalisé et priorités",details:"Décomposer les objectifs en actions réalistes, respecter les contraintes de temps et proposer une méthode de suivi."},creation:{category:"projet",header:"Plan de création de contenu",details:"Définir l'objectif, le public, des idées originales, les étapes de production et les indicateurs de progression."}};
@@ -19,7 +20,7 @@ async function check(){
   const{data:{user},error}=await client.auth.getUser();
   if(attempt!==checking)return;
   if(error||!user){status.textContent="Connecte-toi pour accéder à l'espace exclusif Kitora Plus.";return}
-  const{data:sub,error:subError}=await client.from("subscriptions").select("plan,status").eq("user_id",user.id).maybeSingle();
+  const{subscription:sub,error:subError}=await getKitoraSubscription(client,user.id);
   if(subError)throw Error("Vérification de l'abonnement indisponible.");
   if(sub?.status!=="active"||!["plus_monthly","plus_yearly","ultimate"].includes(sub.plan)){status.textContent="Cet atelier est réservé aux abonnements Kitora Plus actifs.";return}
   authorizedUser=user.id;status.textContent="Kitora Plus actif — tu peux préparer une demande.";form.hidden=false;preview();

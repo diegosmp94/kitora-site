@@ -9,7 +9,8 @@ const account=load("compte.html"),requests=load("subscriber-requests.js"),studio
 assert.match(account,/kitora_live_subscriptions/,"account should load LIVE subscriptions");
 assert.match(account,/customer-portal-live/,"LIVE customers must use LIVE portal");
 assert.match(account,/dataset\.billingMode/,"portal mode must match selected subscription");
-assert.match(requests,/kitora_live_subscriptions/,"Plus access must recognize LIVE subscriptions");
+assert.match(requests,/getKitoraSubscription/,"Plus access must use verified entitlement checks");
+assert.match(load("billing-entitlements.js"),/kitora_live_subscriptions/,"Shared entitlement lookup must verify LIVE subscriptions");
 assert.match(requests,/if\(eligible\|\|item\.ai_result\)/,"saved results must remain accessible");
 assert.match(requests,/item\.ai_result\?\{ready:true,result:item\.ai_result\}/,"saved download must not require a new generation");
 assert.match(studio,/subscriber_requests/,"studio should import existing saved AI results");

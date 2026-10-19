@@ -21,8 +21,12 @@ Deno.serve(async req=>{
  try{
   const {data:item,error:itemError}=await db.from("subscriber_requests").select("id,user_id,category,title,details,ai_result,ai_generated_at").eq("id",job.request_id).eq("user_id",job.user_id).maybeSingle();
   if(itemError||!item)throw Error("request_missing");
-  const {data:sub,error:subError}=await db.from("subscriptions").select("status,plan").eq("user_id",job.user_id).maybeSingle();
-  if(subError||sub?.status!=="active"||!["plus_monthly","plus_yearly","ultimate"].includes(sub.plan)||sub.plan!==job.plan)throw Error("subscription_inactive");
+  const [liveRow,testRow]=await Promise.all([
+   db.from("kitora_live_subscriptions").select("status,plan").eq("user_id",job.user_id).maybeSingle(),
+   db.from("subscriptions").select("status,plan").eq("user_id",job.user_id).maybeSingle()
+  ]);
+  const sub=liveRow.data||testRow.data;
+  if(liveRow.error||testRow.error||sub?.status!=="active"||!["plus_monthly","plus_yearly","ultimate"].includes(sub.plan)||sub.plan!==job.plan)throw Error("subscription_inactive");
   if(item.ai_result){result=item.ai_result;}
   else{
    const ctrl=new AbortController();const timer=setTimeout(()=>ctrl.abort(),25000);
