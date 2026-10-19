@@ -50,6 +50,8 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Test three guest trials and signup in Chromium
         run: node tests/browser-guest-onboarding.mjs
+      - name: Test account signup and login directly in Mon espace
+        run: node tests/browser-account-auth.mjs
       - name: Test plan access for guest, Free and paid subscribers
         run: node tests/browser-plan-entitlements.mjs
       - name: Test hybrid immersive homepage responsive, accessibility and performance
