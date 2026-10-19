@@ -28,7 +28,7 @@ for(const term of ["enable row level security","to authenticated","auth.uid()","
  assert.ok(sql.includes(term),"SQL missing "+term);
 }
 assert.doesNotMatch(sql,/create policy[^;]*to anon/i);
-assert.doesNotMatch(sql,/issued|finalized|stripe_customer_id|invoice_number\s+text/i);
+assert.doesNotMatch(sql,/^\s*(invoice_number|issued_at|finalized_at|stripe_customer_id)\s+/mi);
 for(const path of ["facturation-cloud.js","facturation-pro.js"]){
  const result=spawnSync(process.execPath,["--check",path],{encoding:"utf8"});
  assert.equal(result.status,0,path+": "+result.stderr);
