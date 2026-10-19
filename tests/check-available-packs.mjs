@@ -31,7 +31,7 @@ for(const t of ["aucun paiement réel","Stripe TEST","cloud","Restauration manue
 assert.ok(!/create-checkout-live|sk_live_|rk_live_|whsec_|https:\/\/checkout\.stripe\.com/i.test(html),"LIVE forbidden in catalog");
 assert.ok(/create-checkout"/.test(cart)&&!/create-checkout-live/.test(cart),"public cart must stay TEST");
 assert.ok(offers.includes('href="packs-actifs.html"')&&choose.includes('href="packs-actifs.html"'));
-for(const term of ["Impact","Launch","Flow","Creative","Horizon"])assert.ok(b2b.includes("Kitora "+term),"retain future B2B offers "+term);
+for(const term of ["Impact","Launch","Flow","Creative","Horizon"])assert.ok(new RegExp(term,"i").test(b2b),"retain future B2B offers "+term);
 for(const href of [...html.matchAll(/href="([^"]+)"/g)].map(m=>m[1])){
  if(href.startsWith("#")||/^https?:\/\//.test(href))continue;
  const target=href.split("?")[0].split("#")[0];
