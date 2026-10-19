@@ -23,7 +23,8 @@ for(const [,id,status,mode,body]of cards){
  assert.equal(status,wantStatus,id+" status");
  assert.equal(mode,wantMode,id+" mode");
  assert.match(body,/href="[^"]+">/,"missing pack access "+id);
- assert.ok(!/href="panier\.html\?plan=/.test(body),id+" must not advertise a checkout");
+ if(id==="solo"){assert.ok(body.includes('href="panier.html?plan=solo"')&&body.includes("Stripe TEST, aucun débit"),"Solo tester link must clearly disclose TEST without debit");}
+ else assert.ok(!/href="panier\.html\?plan=/.test(body),id+" must not advertise a checkout");
  if(id!=="free")assert.ok(body.includes("Prochainement disponible")||body.includes("ouverture prochaine"),id+" must show pending status");
 }
 assert.equal(new Set(cards.map(m=>m[1])).size,11,"duplicate pack ID");
