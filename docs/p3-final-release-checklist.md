@@ -21,7 +21,7 @@ Date de lancement : 2026-10-20. Branche : `feature/p2-foundations-20261020`. Une
 - [x] Studio invité et authentifié avec Supabase simulé ; facture et simulateur testés sous Chromium.
 - [ ] Test de bout en bout sur un environnement de préproduction isolé avec Supabase réel et comptes de test dédiés.
 - [ ] Test Stripe TEST : choix mensuel/annuel, checkout, webhook signé, activation et révocation des droits, renouvellement, annulation, erreurs.
-- [ ] Test du catalogue/marketplace : produit visible, disponibilité, panier et livraison numérique uniquement si implémentés.
+- [x] Test Chromium des routes marketplace et des catégories, des tarifs mensuel/annuel et du blocage des checkouts non disponibles (UI uniquement).\n- [ ] Test du catalogue/marketplace : disponibilité réelle, panier, paiement TEST et livraison numérique uniquement si implémentés.
 - [ ] Test des rôles administrateur avec comptes dédiés et vérification RLS côté serveur.
 - [ ] Contrôle accessibilité, mobile, navigation, performances, mentions légales et politiques de données.
 - [ ] Revue de la PR #68 et fusion unique après tous les contrôles au vert.
