@@ -1,0 +1,33 @@
+/* Kitora Experience 5.0 — mobile-first design system, final cascade layer. */
+body.kitora-home{--k5-ink:#071827;--k5-surface:#102b43;--k5-surface2:#183951;--k5-gold:#eec68a;--k5-text:#f8fafc;--k5-muted:#dbe5f1;--k5-radius:22px;--k5-gap:16px}
+@media(max-width:767px){
+/* Rhythm: sections should not behave like presentation slides. */
+body.kitora-home main :is(.k-hero-stage,.k-p3-audience-section,.k-cinema,.k-experience-bridge,.kp-manifesto,.kp4-showcase,.kp6-constellation,.kp6-gallery,.kp7-studio,.kp7-journey,.kp8-subscription-stage,.kp8-offer-stage,.kp8-command-center,.kp8-lab,.kp9-trial,.kp9-advisor,.kp9-collection,.kp9-finale){padding-top:clamp(34px,8vw,56px)!important;padding-bottom:clamp(34px,8vw,56px)!important;min-height:0!important;scroll-margin-top:85px}
+body.kitora-home main :is(.kp9-collection,.kp9-trial,.kp8-offer-stage,.kp9-advisor) .sectionhead{margin-top:0!important;margin-bottom:0!important;padding:clamp(22px,5vw,30px)!important}
+body.kitora-home main :is(.kp9-collection,.kp9-trial,.kp8-offer-stage,.kp9-advisor) .sectionhead h2{font-size:clamp(2rem,8.5vw,3rem)!important;line-height:1.12!important;letter-spacing:-.035em!important}
+body.kitora-home main :is(.kp9-collection,.kp9-trial,.kp8-offer-stage,.kp9-advisor) .sectionhead p{font-size:clamp(.98rem,3.8vw,1.1rem)!important;line-height:1.58!important;margin-block:14px 20px!important}
+body.kitora-home main .sectionhead{max-width:100%!important}
+body.kitora-home main .sectionhead :is(h2,p){overflow-wrap:break-word;text-wrap:pretty}
+body.kitora-home main :is(.card,.k-choice,.step){max-width:100%;box-sizing:border-box}
+body.kitora-home main :is(.kp8-command-center,.kp8-lab,.kp6-gallery,.kp7-journey) :is(.card,.step){padding:clamp(20px,5vw,28px)!important;border-radius:var(--k5-radius)!important;min-height:0!important}
+body.kitora-home main :is(.kp8-command-center,.kp8-lab,.kp6-gallery) .grid{gap:var(--k5-gap)!important}
+body.kitora-home main :is(.kp8-command-center,.kp8-lab,.kp6-gallery) .card :is(h3,p){margin-block:10px!important}
+body.kitora-home main :is(.kp8-command-center,.kp8-lab,.kp6-gallery) .card p{line-height:1.5!important}
+body.kitora-home main :is(.kp8-command-center,.kp8-lab,.kp6-gallery) .card .pill{margin-top:14px!important}
+/* Keep the film's narrative animation, but cut its scroll footprint by >50%. */
+body.kitora-home .kp3-film{height:125svh!important;padding:0!important}
+body.kitora-home .kp3-film-reel{height:100svh!important;min-height:0!important}
+body.kitora-home .kp3-film-ui{padding:clamp(20px,5vh,36px) 0!important}
+body.kitora-home .kp3-film-frames{min-height:220px!important}
+body.kitora-home .kp3-film-frame h2{font-size:clamp(2.2rem,10vw,3.7rem)!important}
+/* Closing sequence: one visual beat, not a separate empty slide. */
+body.kitora-home .kp10-journey{height:64px!important;min-height:0!important;max-height:64px!important}
+body.kitora-home .kp10-finale{padding:36px 0 52px!important}
+/* Accessibility: keep the dark palette, with readable type. */
+body.kitora-home main :is(.kp6-constellation,.kp6-gallery,.kp7-journey,.kp8-offer-stage,.kp8-command-center,.kp8-lab,.kp9-collection,.kp9-trial,.kp9-advisor) .sectionhead h2{color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
+body.kitora-home main :is(.kp6-constellation,.kp6-gallery,.kp7-journey,.kp8-offer-stage,.kp8-command-center,.kp8-lab,.kp9-collection,.kp9-trial,.kp9-advisor) .sectionhead p{color:var(--k5-muted)!important;-webkit-text-fill-color:var(--k5-muted)!important;opacity:1!important}
+body.kitora-home main :is(.kp6-constellation,.kp6-gallery,.kp7-journey,.kp8-offer-stage,.kp8-command-center,.kp8-lab,.kp9-collection,.kp9-trial,.kp9-advisor){background-color:var(--k5-ink)!important}
+body.kitora-home main .pill{min-height:44px;max-width:100%;white-space:normal;text-align:center}
+body.kitora-home main :is(a,button,input,select,textarea):focus-visible{outline:3px solid var(--k5-gold)!important;outline-offset:3px!important}
+}
+@media(prefers-reduced-motion:reduce){body.kitora-home .kp3-film{height:auto!important}body.kitora-home .kp3-film-reel{position:relative!important;height:auto!important;min-height:360px!important}body.kitora-home .kp10-journey{height:32px!important}body.kitora-home [data-k5-animate]{animation:none!important;transition:none!important}}
