@@ -27,7 +27,7 @@ try{
    await page.waitForFunction(()=>document.querySelector("#save").disabled===false);
    assert.equal(await page.evaluate(()=>window.__orgCalls.insert),1);
    assert.equal(await page.evaluate(()=>window.__orgCalls.last.owner_id),"owner-1");
-   assert.match(await page.locator("#status").innerText(),scenario==="owner"?/enregistrée/:/RLS denied/);
+   assert.match(await page.locator("#status").innerText(),scenario==="owner"?/enregistrée/:/Enregistrement impossible\./);
   }
   assert.deepEqual(errors,[],scenario+" browser errors");
   await page.close();
