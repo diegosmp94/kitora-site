@@ -11,3 +11,21 @@
 @media(prefers-reduced-motion:reduce){.k-p3-audiences a{transition:none}.k-p3-audiences a:hover{transform:none}}
 
 .k-p3-audience-section{background:#071a2d;padding:14px 0 36px}.k-p3-audience-section .k-p3-audiences{margin:0 auto;max-width:1000px}
+
+/* Experience 3.0: cinematic hero layers, scroll-led depth and atmospheric motion */
+.k-hero-stage{position:relative;isolation:isolate;overflow:hidden;min-height:clamp(620px,90vh,1020px)}
+.k-hero-stage::before{content:"";position:absolute;inset:-30%;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 78% 35%,rgba(214,168,92,.21),transparent 34%),radial-gradient(ellipse at 16% 80%,rgba(32,119,185,.25),transparent 42%);animation:kp3Atmosphere 17s ease-in-out infinite alternate}
+.k-hero-stage::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.26;background:repeating-linear-gradient(115deg,transparent 0 125px,rgba(228,192,135,.13) 126px,transparent 127px);mask-image:linear-gradient(90deg,transparent,#000 35%,#000 80%,transparent);animation:kp3LightDrift 24s linear infinite}
+.k-hero-stage .hero{position:relative;z-index:1}
+.k-hero-stage .preview{transform-style:preserve-3d;animation:kp3Float 8s ease-in-out infinite;filter:drop-shadow(0 30px 55px rgba(0,0,0,.24))}
+.k-hero-stage .k-orbit{animation:kp3Float 6s ease-in-out infinite alternate}
+.k-hero-stage .k-orbit.two{animation-delay:-3s}
+.k-p3-audiences a{position:relative;overflow:hidden;backdrop-filter:blur(14px);box-shadow:0 14px 35px rgba(0,0,0,.12)}
+.k-p3-audiences a::after{content:"";position:absolute;inset:-100% auto -100% -85%;width:40%;transform:rotate(24deg);background:linear-gradient(90deg,transparent,rgba(255,226,177,.2),transparent);transition:left .8s ease}
+.k-p3-audiences a:hover::after{left:140%}
+.k-cinema-stage{box-shadow:0 35px 100px rgba(0,0,0,.22)}
+@keyframes kp3Atmosphere{from{transform:translate3d(-2%,0,0) rotate(-5deg) scale(1)}to{transform:translate3d(3%,-3%,0) rotate(7deg) scale(1.1)}}
+@keyframes kp3LightDrift{to{transform:translateX(170px)}}
+@keyframes kp3Float{0%,100%{translate:0 0}50%{translate:0 -12px}}
+@media(max-width:680px){.k-hero-stage{min-height:0}.k-hero-stage .preview{animation-duration:10s}.k-hero-stage::after{opacity:.12}}
+@media(prefers-reduced-motion:reduce){.k-hero-stage::before,.k-hero-stage::after,.k-hero-stage .preview,.k-hero-stage .k-orbit{animation:none!important}.k-p3-audiences a::after{display:none}}
