@@ -5,7 +5,7 @@ const port=8766,origin="http://127.0.0.1:"+port;
 const server=spawn("python3",["-m","http.server",String(port),"--bind","127.0.0.1"],{stdio:"ignore"});
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const mock=`const user={id:"e2e-user",email:"test@example.invalid"};
-let docs=[],requests=[{id:"ai1",title:"Exemple IA",created_at:new Date().toISOString(),ai_result:{summary:"Résultat IA de test"}}];
+let docs=[],requests=[{id:"ai1",user_id:"e2e-user",title:"Exemple IA",created_at:new Date().toISOString(),ai_result:{summary:"Résultat IA de test"}}];
 const now=()=>new Date().toISOString();const response=(data,error=null)=>({data,error});
 function query(table){let filters=[],operation="select",payload=null;
 const q={select(){return q},eq(k,v){filters.push(d=>d[k]===v);return q},not(k,op,v){filters.push(d=>d[k]!=null);return q},order(){return q},limit(){return q},insert(v){operation="insert";payload=v;return q},update(v){operation="update";payload=v;return q},delete(){operation="delete";return q},single(){return Promise.resolve(run(true))},maybeSingle(){return Promise.resolve(run(true))},then(resolve,reject){return Promise.resolve(run(false)).then(resolve,reject)}};
