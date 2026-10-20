@@ -1,0 +1,13 @@
+/* Keep the 3-act cinematic film pinned until the third scene is reached. */
+@media(max-width:767px) and (prefers-reduced-motion:no-preference){
+ body.kitora-home .kp3-film,body.kitora-home.k6-active .kp3-film{position:relative!important;height:310svh!important;min-height:310svh!important;max-height:none!important;padding:0!important;overflow:visible!important;contain:none!important;transform:none!important}
+ body.kitora-home .kp3-film-reel,body.kitora-home.k6-active .kp3-film-reel{position:sticky!important;top:0!important;height:100svh!important;min-height:0!important;max-height:100svh!important;overflow:hidden!important;display:grid!important;place-items:center!important;z-index:2}
+ body.kitora-home .kp3-film-ui{height:100%!important;min-height:0!important;padding:clamp(22px,4svh,40px) 0!important}
+ body.kitora-home .kp3-film-frames{min-height:200px!important}
+ body.kitora-home .kp3-film-frame{transition:opacity .5s ease,transform .65s ease!important}
+}
+/* No forced pinning for visitors who request reduced motion. */
+@media(max-width:767px) and (prefers-reduced-motion:reduce){
+ body.kitora-home .kp3-film,body.kitora-home.k6-active .kp3-film{height:auto!important;min-height:0!important;padding:24px 0!important}
+ body.kitora-home .kp3-film-reel,body.kitora-home.k6-active .kp3-film-reel{position:relative!important;height:auto!important;min-height:70svh!important}
+}
