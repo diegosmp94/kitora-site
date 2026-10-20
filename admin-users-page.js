@@ -2,7 +2,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const client=createClient("https://yxjxizxzjubhjaxskksh.supabase.co","sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW");
 const ENDPOINT="https://yxjxizxzjubhjaxskksh.supabase.co/functions/v1/admin-users";
 const $=id=>document.getElementById(id);
-let authorized=false,usersPage=1,auditPage=1,users=[],audit=[],busyUsers=false,busyAudit=false;
+let authorized=false,usersPage=1,auditPage=1,users=[],audit=[],busyUsers=false,busyAudit=false,authRevision=0;
 function text(value){return String(value??"—")}
 function readableDate(value){if(!value)return "—";const d=new Date(value);return Number.isNaN(d.getTime())?"—":d.toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"})}
 function cell(tr,value){const td=document.createElement("td");td.textContent=text(value);tr.append(td)}
@@ -35,11 +35,13 @@ function renderAudit(){
  $("usersAuditNext").disabled=busyAudit||audit.length<50;
 }
 async function request(action,page){
+ const revision=authRevision;
  if(!authorized)throw Error("Droits administrateur non vérifiés.");
  const {data:{session},error:sessionError}=await client.auth.getSession();
  if(sessionError||!session?.access_token)throw Error("Session expirée. Reconnecte-toi.");
  const response=await fetch(ENDPOINT,{method:"POST",cache:"no-store",headers:{"Content-Type":"application/json","apikey":"sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW","Authorization":"Bearer "+session.access_token},body:JSON.stringify({action,page})});
  let data;try{data=await response.json()}catch{throw Error("Réponse serveur illisible.");}
+ if(revision!==authRevision||!authorized)throw Error("Session modifiée : données administrateur invalidées.");
  if(!response.ok)throw Error(data.error||"Service administrateur indisponible.");
  if(!Array.isArray(data.items))throw Error("Réponse serveur incomplète.");
  return data.items;
@@ -57,10 +59,12 @@ async function loadAudit(){
  finally{busyAudit=false;$("usersAuditRefresh").disabled=false;renderAudit();}
 }
 async function boot(){
+ const revision=authRevision;
  const status=$("adminStatus");
  try{
   const {data:{user},error}=await client.auth.getUser();if(error||!user)throw Error("Connexion requise pour accéder à cette page.");
   const role=await client.from("kitora_admins").select("user_id").eq("user_id",user.id).maybeSingle();
+  if(revision!==authRevision)return;
   if(role.error||!role.data)throw Error("Accès réservé aux administrateurs autorisés.");
   authorized=true;$("adminProtected").hidden=false;status.textContent="Administration prête · consultation uniquement.";
   $("usersRefresh").addEventListener("click",loadUsers);
@@ -71,6 +75,7 @@ async function boot(){
   $("usersAuditPrevious").addEventListener("click",()=>{if(auditPage>1){auditPage--;loadAudit()}});
   $("usersAuditNext").addEventListener("click",()=>{if(audit.length===50){auditPage++;loadAudit()}});
   await Promise.all([loadUsers(),loadAudit()]);
- }catch(e){authorized=false;$("adminProtected").hidden=true;status.textContent=e.message||"Accès indisponible.";}
+ }catch(e){if(revision!==authRevision)return;authorized=false;$("adminProtected").hidden=true;status.textContent=e.message||"Accès indisponible.";}
 }
+client.auth.onAuthStateChange(()=>{authRevision++;authorized=false;users=[];audit=[];if(document.readyState==="loading")return;$("adminProtected").hidden=true;$("usersRows").replaceChildren();$("usersAuditRows").replaceChildren();$("adminStatus").textContent="Session modifiée. Recharge la page pour vérifier tes droits.";});
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
