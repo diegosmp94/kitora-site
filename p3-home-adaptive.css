@@ -29,3 +29,9 @@
 @keyframes kp3Float{0%,100%{translate:0 0}50%{translate:0 -12px}}
 @media(max-width:680px){.k-hero-stage{min-height:0}.k-hero-stage .preview{animation-duration:10s}.k-hero-stage::after{opacity:.12}}
 @media(prefers-reduced-motion:reduce){.k-hero-stage::before,.k-hero-stage::after,.k-hero-stage .preview,.k-hero-stage .k-orbit{animation:none!important}.k-p3-audiences a::after{display:none}}
+
+/* Keep interactive controls spatially stable while the cinematic backdrop moves. */
+.k-hero-stage .preview{animation:none!important;translate:none!important}
+.k-hero-stage .preview::before{content:"";position:absolute;inset:-12px;z-index:-1;pointer-events:none;border-radius:inherit;background:radial-gradient(ellipse at 70% 20%,rgba(235,189,110,.25),transparent 60%);animation:kp3PreviewGlow 7s ease-in-out infinite alternate}
+@keyframes kp3PreviewGlow{from{opacity:.25;filter:blur(12px)}to{opacity:.85;filter:blur(26px)}}
+@media(prefers-reduced-motion:reduce){.k-hero-stage .preview::before{animation:none!important}}
