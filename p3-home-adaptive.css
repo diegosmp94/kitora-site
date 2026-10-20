@@ -1,0 +1,11 @@
+/* Kitora Experience P3 — progressive responsive enhancement, no paid dependencies */
+.k-p3-audiences{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0 0;max-width:700px}
+.k-p3-audiences a{display:flex;flex-direction:column;gap:6px;padding:17px 19px;border:1px solid rgba(228,193,139,.35);border-radius:16px;background:rgba(9,29,51,.42);color:#fff;text-decoration:none;transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.k-p3-audiences a span{font-size:.69rem;font-weight:700;letter-spacing:.13em;color:#e5c48b}
+.k-p3-audiences a strong{font-size:1rem;line-height:1.35;color:#fff}
+.k-p3-audiences a small{font-size:.82rem;color:#d6e4f1}
+.k-p3-audiences a:hover,.k-p3-audiences a:focus-visible{background:rgba(31,74,110,.72);border-color:#e5c48b;transform:translateY(-2px)}
+.k-p3-audiences a:focus-visible{outline:3px solid #f5d6a4;outline-offset:3px}
+@media(max-width:680px){.k-p3-audiences{grid-template-columns:1fr;gap:10px;margin-top:20px}.k-p3-audiences a{padding:15px 16px}.kitora-home .hero .actions{display:flex;flex-wrap:wrap;gap:10px}.kitora-home .hero .actions .pill{min-height:44px;display:inline-flex;align-items:center;justify-content:center}}
+@media(max-width:380px){.kitora-home .hero .actions .pill{width:100%;box-sizing:border-box}.k-p3-audiences a{overflow-wrap:anywhere}}
+@media(prefers-reduced-motion:reduce){.k-p3-audiences a{transition:none}.k-p3-audiences a:hover{transform:none}}
