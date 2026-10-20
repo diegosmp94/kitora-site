@@ -39,7 +39,6 @@ async function loadStatus(){
  const call=++revision;
  clearStatus();
  message.textContent="Vérification de ton compte et de tes générations…";
- if(loading)return;
  loading=true;
  try{
   const {data:{user},error:authError}=await client.auth.getUser();
@@ -63,9 +62,9 @@ async function loadStatus(){
   if(call===revision)message.textContent="Impossible de charger le suivi Plus : "+(e instanceof Error?e.message:"Erreur inattendue");
  }finally{
   if(call===revision)refreshButton.disabled=!currentUserId;
-  loading=false;
+  if(call===revision)loading=false;
  }
 }
-refreshButton.addEventListener("click",()=>{if(!loading)void loadStatus()});
+refreshButton.addEventListener("click",()=>void loadStatus());
 client.auth.onAuthStateChange(()=>{revision++;currentUserId=null;clearStatus();void Promise.resolve().then(()=>loadStatus())});
 void loadStatus();
