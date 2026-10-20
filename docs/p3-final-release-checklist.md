@@ -16,8 +16,16 @@ Date de lancement : 2026-10-20. Branche : `feature/p2-foundations-20261020`. Une
 - [x] Tableau de bord agrégé réservé aux administrateurs pour les commandes TEST, abonnements actifs et accès bibliothèque existants ; aucune métrique fictive.\n- [ ] Tableau de bord de trafic/conversion après instrumentation réelle et validation de la confidentialité.
 - [ ] Vérifier la confidentialité, les politiques RLS, la rétention et les parcours opt-out si nécessaires.
 
+### Espace organisations B2B
+- [x] Table `kitora_organizations` créée dans Supabase avec RLS propriétaire (SELECT, INSERT, UPDATE, DELETE), sans accès SELECT anonyme.
+- [x] Page `organisation-pro.html` : création et liste des organisations liées au compte, sans abonnement activé.
+- [x] Scénarios Chromium simulés : visiteur non connecté, propriétaire, insertion refusée avec erreur publique générique.
+- [ ] Vérifier les accès croisés entre deux comptes réels distincts et les politiques RLS de bout en bout.
+- [ ] Gestion des membres, invitations, rôles et permissions d'équipe.
+- [ ] Souscriptions B2B, droits serveur et facturation Stripe TEST, puis recette complète.
+
 ### Recette globale lots 1, 2 et 3
-- [x] Neuf workflows GitHub réussis sur le commit `b899a0120c552785e346d0f54b89ae6ea2a85188`.
+- [x] Neuf workflows réussis sur le commit précédent `e57f0a9` ; nouvelle recette sur `3d0c26d` : navigateur validé, autres workflows à confirmer avant clôture.
 - [x] Studio invité et authentifié avec Supabase simulé ; facture et simulateur testés sous Chromium.
 - [ ] Test de bout en bout sur un environnement de préproduction isolé avec Supabase réel et comptes de test dédiés.
 - [ ] Test Stripe TEST : choix mensuel/annuel, checkout, webhook signé, activation et révocation des droits, renouvellement, annulation, erreurs.
