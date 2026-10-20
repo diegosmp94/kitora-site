@@ -1,0 +1,8 @@
+/* M2: brief interaction feedback, never hide content while waiting for JS. */
+@media(prefers-reduced-motion:no-preference){
+body.kitora-home main :is(.card,.k-choice,.step,.sectionhead){transition:transform .38s cubic-bezier(.22,.75,.24,1),box-shadow .38s ease,border-color .38s ease}
+body.kitora-home main :is(.card,.k-choice,.step).k5-in-view{animation:k5-enter .45s cubic-bezier(.22,.75,.24,1) both}
+body.kitora-home main :is(.card,.k-choice,.step):focus-within{box-shadow:0 12px 40px rgba(221,174,106,.16)}
+@keyframes k5-enter{from{transform:translateY(12px)}to{transform:translateY(0)}}
+}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){body.kitora-home main :is(.card,.k-choice,.step):hover{transform:translateY(-3px)}}
