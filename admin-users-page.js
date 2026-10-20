@@ -77,5 +77,5 @@ async function boot(){
   await Promise.all([loadUsers(),loadAudit()]);
  }catch(e){if(revision!==authRevision)return;authorized=false;$("adminProtected").hidden=true;status.textContent=e.message||"Accès indisponible.";}
 }
-client.auth.onAuthStateChange(()=>{if(!authInitialized){authInitialized=true;return}authRevision++;authorized=false;users=[];audit=[];if(document.readyState==="loading")return;$("adminProtected").hidden=true;$("usersRows").replaceChildren();$("usersAuditRows").replaceChildren();$("adminStatus").textContent="Session modifiée. Recharge la page pour vérifier tes droits.";});
+client.auth.onAuthStateChange((event)=>{if(event!=="SIGNED_OUT")return;authRevision++;authorized=false;users=[];audit=[];if(document.readyState==="loading")return;$("adminProtected").hidden=true;$("usersRows").replaceChildren();$("usersAuditRows").replaceChildren();$("adminStatus").textContent="Session modifiée. Recharge la page pour vérifier tes droits.";});
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
