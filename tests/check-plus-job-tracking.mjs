@@ -1,0 +1,34 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const read=path=>readFileSync(path,"utf8");
+const endpoint=read("supabase/functions/kitora-plus-status/index.ts");
+const page=read("plus-lab.html"),client=read("plus-lab.js");
+assert.match(endpoint,/userDb\.auth\.getUser\(\)/,"Server must verify user JWT");
+assert.match(endpoint,/Authorization:auth/,"Auth context must come from request JWT");
+assert.match(endpoint,/\\.eq\("user_id",user\.id\)/g,"All history/usage queries must be scoped to JWT owner");
+assert.match(endpoint,/\\.limit\(20\)/,"Enforce response boundedness");
+assert.match(endpoint,/Cache-Control":"no-store"/,"Avoid caching private history");
+assert.match(endpoint,/allowedPlans\.has\(plan\.plan\)/,"Quota only for active eligible plan");
+assert.match(endpoint,/const plan=live\.data\|\|test\.data/,"LIVE subscription must override TEST");
+assert.match(endpoint,/month_start/,"Quota period must match reservation accounting");
+assert.match(endpoint,/!auth\.startsWith\("Bearer "\)/,"Unauthorized calls must be rejected");
+assert.doesNotMatch(endpoint,/api\.groq|prices\.create|stripe\.checkout|KITORA_GROQ_ENABLED/,"Status endpoint must not trigger paid calls");
+for(const id of ["labHistoryTitle","labHistoryMessage","labHistoryList","labHistoryRefresh","labUsage"]){
+ assert.ok(page.includes('id="'+id+'"'),"Plus Lab history missing "+id);
+}
+assert.match(page,/kitora-plus-lab \.lab-history/,"History cards must be premium styled");
+assert.match(client,/kitora-plus-status/,"Plus Lab must call secure status API");
+assert.match(client,/historyList\.replaceChildren\(\)/,"Clear user data on auth changes");
+assert.match(client,/heading\.textContent=String\(item\.title/,"Untrusted title should never be interpreted as HTML");
+assert.match(client,/historyUser=user\.id/,"History must be scoped to logged in user");
+assert.match(client,/currentRequestId=item\.id/,"Open an existing request status");
+const start=client.indexOf("async function updateGeneration(){");
+const end=client.indexOf('refreshButton.addEventListener(',start);
+assert.ok(start>0&&end>start,"Read-only refresh handler missing");
+const refresh=client.slice(start,end);
+assert.match(refresh,/fetchPlusStatus\(\)/);
+assert.doesNotMatch(refresh,/generateFor\(/,"Status refresh must not trigger AI work");
+assert.doesNotMatch(refresh,/\\.insert\(/,"Status refresh must not create jobs or new requests");
+assert.match(client,/const response=await generateFor\(currentRequestId\)/,"Explicit new request should attempt AI generation once");
+assert.match(client,/submitInFlight/,"Prevent duplicate submissions while insert is pending");
+console.log("Kitora Plus status: verified identity, scoped history, quota and read-only refresh safeguards PASS");
