@@ -1,0 +1,22 @@
+/* P7: studio initialization and cinematic journey. No movement on form controls. */
+.kp7-studio{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#183753,#071729 55%,#040b17);color:#f8f7f4;padding:clamp(80px,10vw,145px) 0}
+.kp7-studio:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,transparent 49.9%,rgba(233,190,127,.09) 50%,transparent 50.1%),repeating-linear-gradient(0deg,transparent 0 90px,rgba(211,183,135,.035) 91px,transparent 92px);mask-image:radial-gradient(ellipse at 50% 50%,#000,transparent 75%)}
+.kp7-studio .sectionhead h2,.kp7-journey .sectionhead h2{color:#fff}.kp7-studio .sectionhead p{color:#c7d6e4}.kp7-studio .eyebrow,.kp7-journey .eyebrow{color:#f0c78b}
+.kp7-studio #guestTrialStatus{color:#e8c894!important}
+.kp7-studio .builder{position:relative;gap:clamp(20px,3vw,40px)}
+.kp7-studio .panel{position:relative;overflow:hidden;background:linear-gradient(155deg,rgba(22,49,74,.98),rgba(8,22,39,.98));border:1px solid rgba(230,188,126,.36);border-radius:24px;box-shadow:0 25px 75px rgba(0,0,0,.3),inset 0 0 50px rgba(231,185,117,.035);color:#f7f5f1}
+.kp7-studio .panel:before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,#f1c887,transparent);opacity:.6;pointer-events:none}
+.kp7-studio .panel h3,.kp7-studio .panel label,.kp7-studio .result h3{color:#fff}
+.kp7-studio .panel p,.kp7-studio .fineprint,.kp7-studio .result p{color:#c7d6e4}
+.kp7-studio .panel input,.kp7-studio .panel select{background:#f8fbff;color:#152d46;border:1px solid #a5bbd0}
+.kp7-studio .result{background:rgba(7,22,39,.65);color:#f4f5f6;border:1px solid rgba(230,188,126,.25);border-radius:16px}
+.kp7-studio .pill:focus-visible,.kp7-studio input:focus-visible,.kp7-studio select:focus-visible{outline:3px solid #f2c98b;outline-offset:3px}
+.kp7-journey{--kp7-progress:0;position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(180deg,#040b17,#0b243d 55%,#07182b);color:#fff;padding:clamp(90px,12vw,170px) 0}
+.kp7-journey .wrap{position:relative}.kp7-journey .howgrid{position:relative;z-index:1;gap:clamp(18px,3vw,35px)}
+.kp7-track{position:absolute;left:10%;right:10%;top:55%;height:2px;background:rgba(228,187,127,.22);pointer-events:none}
+.kp7-track span{display:block;width:calc(var(--kp7-progress)*100%);height:100%;background:linear-gradient(90deg,#b88a51,#ffdc9d);box-shadow:0 0 18px rgba(245,199,130,.7);transition:width .12s linear}
+.kp7-journey .step{position:relative;min-height:230px;padding:clamp(24px,3vw,40px);border:1px solid rgba(231,188,124,.38);border-radius:24px;background:linear-gradient(145deg,rgba(23,51,77,.98),rgba(7,21,38,.98));box-shadow:0 20px 70px rgba(0,0,0,.28);color:#f5f5f4}
+.kp7-journey .step:before{content:"";position:absolute;top:-7px;left:32px;width:12px;height:12px;border-radius:50%;background:#f1c98d;box-shadow:0 0 20px #e5b775}
+.kp7-journey .step b{color:#f1c98d}.kp7-journey .step h3{color:#fff}.kp7-journey .step p{color:#c9d6e5}
+@media(max-width:760px){.kp7-track{left:24px;right:auto;top:30%;bottom:15%;height:auto;width:2px}.kp7-track span{width:100%;height:calc(var(--kp7-progress)*100%)}.kp7-studio,.kp7-journey{padding:75px 0}.kp7-journey .step{min-height:0}}
+@media(prefers-reduced-motion:reduce){.kp7-track span{transition:none!important;width:100%!important;height:100%!important}}
