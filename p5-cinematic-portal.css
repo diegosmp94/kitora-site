@@ -1,0 +1,22 @@
+/* P5: cinematic entrance, kept behind stable interactive controls */
+.k-hero-stage{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 70% 45%,#112d4a 0%,#071629 48%,#030a16 100%)}
+.k-hero-stage>.kp5-portal{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;--kp5-depth:0}
+.kp5-portal-halo{position:absolute;width:min(80vw,900px);aspect-ratio:1;top:6%;left:56%;border-radius:50%;background:radial-gradient(circle,rgba(241,186,99,.18),rgba(74,130,185,.09) 35%,transparent 70%);filter:blur(30px);transform:translateX(-50%) scale(calc(.85 + var(--kp5-depth)*.35));animation:kp5Halo 9s ease-in-out infinite alternate}
+.kp5-portal-door{position:absolute;left:57%;top:10%;width:min(31vw,390px);height:75%;border-radius:49% 49% 8px 8px;border:2px solid rgba(239,187,106,.54);box-shadow:0 0 16px rgba(239,187,106,.28),inset 0 0 40px rgba(239,187,106,.16),0 0 130px rgba(239,187,106,.09);transform:perspective(1000px) rotateY(-13deg) scale(calc(.86 + var(--kp5-depth)*.22));transform-origin:center;opacity:.68}
+.kp5-portal-door:before{content:"";position:absolute;inset:12px;border-radius:inherit;border:1px solid rgba(245,211,148,.28);background:linear-gradient(115deg,rgba(242,193,121,.09),rgba(13,46,81,.1) 48%,rgba(235,190,116,.13));box-shadow:inset 0 0 90px rgba(229,179,110,.12)}
+.kp5-portal-door i{position:absolute;inset:8% 20%;border-radius:50%;border-left:1px solid rgba(240,195,130,.2);transform:rotate(15deg)}
+.kp5-portal-door i:nth-child(2){transform:rotate(-15deg)}
+.kp5-portal-door i:nth-child(3){inset:23% 32%;background:radial-gradient(circle,rgba(250,215,150,.36),transparent 70%);filter:blur(25px);border:0;animation:kp5Halo 6s ease-in-out infinite alternate}
+.kp5-portal-floor{position:absolute;inset:72% -10% -25%;transform:perspective(400px) rotateX(67deg);background:repeating-linear-gradient(90deg,transparent 0 9%,rgba(235,185,112,.12) 9.1%,transparent 9.3%),repeating-linear-gradient(0deg,transparent 0 52px,rgba(235,185,112,.12) 53px,transparent 55px);mask-image:linear-gradient(#000,transparent 85%)}
+.kp5-portal-stars{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(248,214,159,.75) 1px,transparent 2px),radial-gradient(circle,rgba(202,223,244,.45) 1px,transparent 2px);background-size:137px 131px,193px 177px;background-position:20px 16px,72px 82px;opacity:.33;animation:kp5Stars 22s linear infinite alternate}
+.k-hero-stage .hero,.k-hero-stage .k-hero-foot{position:relative;z-index:1}
+.kp5-crossroads{background:linear-gradient(135deg,#050f1e,#112b43 55%,#050e1c);position:relative;overflow:hidden;padding:clamp(30px,5vw,70px) 0}
+.kp5-crossroads .k-p3-audiences{gap:clamp(16px,3vw,36px)}
+.kp5-crossroads .k-p3-audiences a{position:relative;isolation:isolate;min-height:180px;display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(236,192,127,.42);background:radial-gradient(ellipse at 70% 10%,rgba(211,164,95,.15),transparent 60%),linear-gradient(140deg,rgba(17,40,65,.96),rgba(5,16,31,.98));color:#f7f4ed;box-shadow:0 25px 70px rgba(0,0,0,.27);transition:box-shadow .4s,border-color .4s,background .4s}
+.kp5-crossroads .k-p3-audiences a span,.kp5-crossroads .k-p3-audiences a small{color:#edc78e}
+.kp5-crossroads .k-p3-audiences a strong{color:#fff}
+.kp5-crossroads .k-p3-audiences a:before{content:"";position:absolute;inset:10px;border:1px solid rgba(235,194,130,.16);border-radius:inherit;pointer-events:none}
+.kp5-crossroads .k-p3-audiences a:hover,.kp5-crossroads .k-p3-audiences a:focus-visible{border-color:#e8bc78;box-shadow:0 25px 90px rgba(227,169,89,.22),inset 0 0 50px rgba(227,169,89,.08)}
+@keyframes kp5Halo{from{opacity:.5;filter:blur(30px)}to{opacity:1;filter:blur(16px)}}@keyframes kp5Stars{to{background-position:75px -50px,18px 30px}}
+@media(max-width:760px){.kp5-portal-door{left:47%;top:12%;width:54vw;height:64%;opacity:.27}.kp5-portal-halo{left:52%;top:14%;width:110vw;opacity:.4}.kp5-portal-floor{opacity:.35}.kp5-crossroads .k-p3-audiences a{min-height:145px}}
+@media(prefers-reduced-motion:reduce){.kp5-portal-halo,.kp5-portal-stars,.kp5-portal-door i{animation:none!important}.kp5-portal-door,.kp5-portal-halo{transform:none!important}}
