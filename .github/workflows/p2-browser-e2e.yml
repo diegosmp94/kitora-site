@@ -21,3 +21,4 @@ jobs:
           node tests/p2-browser-e2e.mjs
           node tests/p2-auth-mocked-e2e.mjs
           node tests/p3-invoice-checks.mjs
+          node tests/p3-invoice-browser-e2e.mjs
