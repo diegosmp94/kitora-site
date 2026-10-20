@@ -1,0 +1,14 @@
+/* P10 — Golden Journey: scroll-scrubbed transition into the closing welcome. */
+body.kitora-home .kp10-journey{--kp10-progress:0;position:relative;isolation:isolate;height:clamp(220px,44vw,470px);overflow:hidden;background:linear-gradient(180deg,#030b17 0%,#07182a 48%,#091f34 100%);pointer-events:none;contain:paint}
+body.kitora-home .kp10-journey:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 90%,rgba(240,185,107,.10),transparent 65%)}
+body.kitora-home .kp10-journey-glow{position:absolute;width:min(78vw,660px);aspect-ratio:1;left:50%;top:50%;border-radius:50%;transform:translate(-50%,-50%) scale(calc(.65 + var(--kp10-progress)*.65));opacity:calc(.12 + var(--kp10-progress)*.55);background:radial-gradient(circle,rgba(244,191,109,.38) 0%,rgba(222,164,91,.11) 34%,transparent 69%);filter:blur(17px);will-change:transform,opacity}
+body.kitora-home .kp10-journey-line{position:absolute;left:50%;top:0;width:2px;height:100%;transform:translateX(-50%) scaleY(var(--kp10-progress));transform-origin:top;background:linear-gradient(180deg,transparent,#f2ca8b 25%,#fff1c8 55%,#e7af6a 80%,transparent);box-shadow:0 0 20px 3px rgba(244,197,124,.35);will-change:transform}
+body.kitora-home .kp10-journey-star{position:absolute;left:50%;top:calc(var(--kp10-progress)*84% + 8%);transform:translate(-50%,-50%) rotate(calc(var(--kp10-progress)*120deg));font-size:clamp(25px,4vw,42px);line-height:1;color:#ffe2ac;text-shadow:0 0 18px rgba(255,205,128,.9);opacity:calc(.1 + var(--kp10-progress)*.9);will-change:top,transform}
+body.kitora-home .kp10-journey-rings{position:absolute;inset:0;display:grid;place-items:center}
+body.kitora-home .kp10-journey-rings i{position:absolute;display:block;width:min(54vw,400px);aspect-ratio:1;border:1px solid rgba(239,195,132,.4);border-radius:50%;transform:scale(calc(.3 + var(--kp10-progress)*1.15));opacity:calc(var(--kp10-progress)*.65)}
+body.kitora-home .kp10-journey-rings i:nth-child(2){width:min(78vw,570px);transform:scale(calc(.2 + var(--kp10-progress)*1.1));opacity:calc(var(--kp10-progress)*.34)}
+body.kitora-home .kp10-journey-rings i:nth-child(3){width:min(100vw,780px);transform:scale(calc(.1 + var(--kp10-progress)*1.05));opacity:calc(var(--kp10-progress)*.18)}
+body.kitora-home .kp10-finale .wrap{opacity:calc(.55 + var(--kp10-reveal,1)*.45);transform:translateY(calc((1 - var(--kp10-reveal,1))*26px));transition:none}
+body.kitora-home .kp10-finale{border-top:1px solid rgba(236,186,116,.14)}
+@media(max-width:767px){body.kitora-home .kp10-journey{height:clamp(190px,55vw,280px)}body.kitora-home .kp10-journey-glow{filter:blur(9px)}body.kitora-home .kp10-journey-rings i:nth-child(3){display:none}}
+@media(prefers-reduced-motion:reduce){body.kitora-home .kp10-journey{--kp10-progress:1!important}body.kitora-home .kp10-finale{--kp10-reveal:1!important}body.kitora-home .kp10-journey *{will-change:auto!important;animation:none!important;transition:none!important}}
