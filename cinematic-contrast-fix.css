@@ -1,0 +1,30 @@
+/* Contrast correction after cinematic P5–P9: WCAG-oriented, mobile-first. */
+/* Some legacy styles force pale card backgrounds after cinematic layers. Explicitly reset both surface and ink. */
+body.kitora-home #plus.kp8-subscription-stage .plans-grid .card,
+body.kitora-home #plus.kp8-subscription-stage .plans-grid .card.featured{background:linear-gradient(145deg,#193651 0%,#0a2038 70%,#071626 100%)!important;color:#f8f9fb!important;border-color:#dfb979!important}
+body.kitora-home #plus.kp8-subscription-stage .plans-grid .card h3{color:#fff!important;opacity:1!important;text-shadow:none!important}
+body.kitora-home #plus.kp8-subscription-stage .plans-grid .card p{color:#e1eaf4!important;opacity:1!important}
+body.kitora-home #plus.kp8-subscription-stage .plans-grid .card .plan-price{color:#ffd49b!important;opacity:1!important}
+body.kitora-home #plus.kp8-subscription-stage .plans-grid .card .plan-price small{color:#e0e8f4!important}
+body.kitora-home #generateur.kp7-studio{background:radial-gradient(ellipse at 50% 0%,#193a56 0%,#091b2e 56%,#040c19 100%)!important}
+body.kitora-home #generateur.kp7-studio .sectionhead h2,
+body.kitora-home #generateur.kp7-studio .sectionhead h2 *{color:#fff!important;opacity:1!important}
+body.kitora-home #generateur.kp7-studio .sectionhead p{color:#e1eaf4!important;opacity:1!important}
+body.kitora-home #generateur.kp7-studio #guestTrialStatus{color:#f8d49c!important;opacity:1!important}
+body.kitora-home #generateur.kp7-studio .builder .panel{background:linear-gradient(145deg,#1a3853,#091b30)!important;color:#fff!important}
+body.kitora-home #generateur.kp7-studio .builder .panel h3,
+body.kitora-home #generateur.kp7-studio .builder .panel label{color:#fff!important}
+body.kitora-home #generateur.kp7-studio .builder .panel p{color:#e0eaf5!important}
+body.kitora-home #formules-kitora.kp8-offer-stage .sectionhead h2,
+body.kitora-home #formules-kitora.kp8-offer-stage .sectionhead h2 *{color:#fff!important;opacity:1!important;text-shadow:none!important}
+body.kitora-home #formules-kitora.kp8-offer-stage .sectionhead p{color:#e0eaf5!important;opacity:1!important}
+body.kitora-home #espaces-kitora.kp8-command-center .card .emoji,
+body.kitora-home #nouveautes.kp8-lab .card .emoji{background:#173a58!important;color:#ffda9f!important;border:1px solid #b99560!important;text-shadow:none!important;opacity:1!important}
+body.kitora-home #espaces-kitora.kp8-command-center .card h3,
+body.kitora-home #nouveautes.kp8-lab .card h3{color:#fff!important;opacity:1!important}
+body.kitora-home #espaces-kitora.kp8-command-center .card p,
+body.kitora-home #nouveautes.kp8-lab .card p{color:#dfe9f3!important;opacity:1!important}
+/* Consistent headings and body copy across cinematic chapters. */
+body.kitora-home :is(.kp6-constellation,.kp6-gallery,.kp7-journey,.kp8-subscription-stage,.kp8-offer-stage,.kp8-command-center,.kp8-lab,.kp9-trial,.kp9-advisor,.kp9-collection,.kp9-finale) .sectionhead h2{color:#fff!important;opacity:1!important}
+body.kitora-home :is(.kp6-constellation,.kp6-gallery,.kp7-journey,.kp8-subscription-stage,.kp8-offer-stage,.kp8-command-center,.kp8-lab,.kp9-trial,.kp9-advisor,.kp9-collection,.kp9-finale) .sectionhead p{color:#e0eaf4!important;opacity:1!important}
+@media(max-width:767px){body.kitora-home #plus.kp8-subscription-stage .plans-grid .card{min-height:0!important}body.kitora-home #generateur.kp7-studio .sectionhead h2{font-size:clamp(2.15rem,9vw,3.4rem)}body.kitora-home #formules-kitora.kp8-offer-stage .sectionhead h2{font-size:clamp(2rem,8vw,3.3rem)}}
