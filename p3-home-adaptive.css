@@ -9,3 +9,5 @@
 @media(max-width:680px){.k-p3-audiences{grid-template-columns:1fr;gap:10px;margin-top:20px}.k-p3-audiences a{padding:15px 16px}.kitora-home .hero .actions{display:flex;flex-wrap:wrap;gap:10px}.kitora-home .hero .actions .pill{min-height:44px;display:inline-flex;align-items:center;justify-content:center}}
 @media(max-width:380px){.kitora-home .hero .actions .pill{width:100%;box-sizing:border-box}.k-p3-audiences a{overflow-wrap:anywhere}}
 @media(prefers-reduced-motion:reduce){.k-p3-audiences a{transition:none}.k-p3-audiences a:hover{transform:none}}
+
+.k-p3-audience-section{background:#071a2d;padding:14px 0 36px}.k-p3-audience-section .k-p3-audiences{margin:0 auto;max-width:1000px}
