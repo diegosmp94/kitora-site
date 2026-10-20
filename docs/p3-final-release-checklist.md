@@ -13,7 +13,7 @@ Date de lancement : 2026-10-20. Branche : `feature/p2-foundations-20261020`. Une
 - [x] Simulateur local de conversion et revenu, avec test Chromium.
 - [ ] Définir un schéma d'événements sans données personnelles : affichage d'offre, début checkout TEST, résultat checkout TEST, activation abonnement.
 - [ ] Implémenter la collecte côté serveur avec contrôle d'accès et consentement applicable, sans clés secrètes dans le client.
-- [ ] Tableau de bord agrégé réservé aux administrateurs ; pas de métriques fictives.
+- [x] Tableau de bord agrégé réservé aux administrateurs pour les commandes TEST, abonnements actifs et accès bibliothèque existants ; aucune métrique fictive.\n- [ ] Tableau de bord de trafic/conversion après instrumentation réelle et validation de la confidentialité.
 - [ ] Vérifier la confidentialité, les politiques RLS, la rétention et les parcours opt-out si nécessaires.
 
 ### Recette globale lots 1, 2 et 3
