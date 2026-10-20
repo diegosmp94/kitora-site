@@ -57,6 +57,6 @@ async function refresh(){
  }catch(error){if(revision!==requestRevision)return;$("healthProtected").hidden=true;status.textContent="Impossible de charger la supervision : "+(error.message||"Erreur.");}
  finally{if(revision===requestRevision)$("healthRefresh").disabled=false}
 }
-db.auth.onAuthStateChange(()=>{requestRevision++;$("healthProtected").hidden=true;$("healthMetrics").replaceChildren();$("healthChecked").textContent="";$("healthStatus").textContent="Session modifiée : relance une vérification pour consulter la supervision.";$("healthRefresh").disabled=false});
+db.auth.onAuthStateChange((event)=>{if(event!=="SIGNED_OUT")return;requestRevision++;$("healthProtected").hidden=true;$("healthMetrics").replaceChildren();$("healthChecked").textContent="";$("healthStatus").textContent="Session modifiée : relance une vérification pour consulter la supervision.";$("healthRefresh").disabled=false});
 $("healthRefresh").addEventListener("click",refresh);
 refresh();
