@@ -25,3 +25,4 @@ jobs:
           node tests/p3-analytics-browser-e2e.mjs
           node tests/p3-commerce-browser-e2e.mjs
           node tests/p3-cart-browser-e2e.mjs
+          node tests/p3-admin-analytics-checks.mjs
