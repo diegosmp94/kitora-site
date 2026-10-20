@@ -1,0 +1,44 @@
+/* Contrast repair — last-loaded layer overrides inherited light-theme rules. */
+body.kitora-home .kp8-subscription-stage .plans-grid>.card,
+body.kitora-home .kp8-subscription-stage .plans-grid>.card.featured{background:linear-gradient(155deg,#17354e,#091a2d 85%)!important;color:#f7f9fc!important;border-color:#d8ac6d!important}
+body.kitora-home .kp8-subscription-stage .plans-grid>.card h3,
+body.kitora-home .kp8-subscription-stage .plans-grid>.card.featured h3{color:#fff!important;opacity:1!important}
+body.kitora-home .kp8-subscription-stage .plans-grid>.card p{color:#d9e5f0!important;opacity:1!important}
+body.kitora-home .kp8-subscription-stage .plans-grid>.card .plan-price{color:#f6cc91!important;opacity:1!important}
+body.kitora-home .kp8-subscription-stage .plans-grid>.card .plan-price small{color:#e3eaf2!important}
+body.kitora-home .kp8-subscription-stage .plan-message{color:#e4eaf1!important}
+body.kitora-home .kp7-studio .sectionhead h2,
+body.kitora-home .kp8-offer-stage .sectionhead h2,
+body.kitora-home .kp8-command-center .sectionhead h2,
+body.kitora-home .kp8-lab .sectionhead h2,
+body.kitora-home .kp9-trial .sectionhead h2,
+body.kitora-home .kp9-advisor .sectionhead h2,
+body.kitora-home .kp9-collection .sectionhead h2{color:#fff!important;opacity:1!important}
+body.kitora-home .kp7-studio .sectionhead p,
+body.kitora-home .kp8-offer-stage .sectionhead p,
+body.kitora-home .kp8-command-center .sectionhead p,
+body.kitora-home .kp8-lab .sectionhead p,
+body.kitora-home .kp9-trial .sectionhead p,
+body.kitora-home .kp9-advisor .sectionhead p,
+body.kitora-home .kp9-collection .sectionhead p{color:#e0e8f2!important;opacity:1!important}
+body.kitora-home .kp7-studio #guestTrialStatus{color:#f1c98b!important;opacity:1!important}
+body.kitora-home .kp7-studio .panel,body.kitora-home .kp7-studio .panel h3,body.kitora-home .kp7-studio .panel label{color:#fff!important;opacity:1!important}
+body.kitora-home .kp7-studio .panel .fineprint,body.kitora-home .kp7-studio .panel .result p{color:#dce7f1!important;opacity:1!important}
+body.kitora-home .kp8-command-center .grid>.card,
+body.kitora-home .kp8-lab .grid>.card{background:linear-gradient(145deg,#193a54,#08192c)!important;color:#f6f8fc!important}
+body.kitora-home .kp8-command-center .grid>.card h3,
+body.kitora-home .kp8-lab .grid>.card h3{color:#fff!important;opacity:1!important}
+body.kitora-home .kp8-command-center .grid>.card p,
+body.kitora-home .kp8-lab .grid>.card p{color:#e0e9f2!important;opacity:1!important}
+body.kitora-home .kp8-command-center .grid>.card .emoji,
+body.kitora-home .kp8-lab .grid>.card .emoji{color:#17324b!important;background:#f4d9af!important;opacity:1!important}
+body.kitora-home .kp8-offer-stage .sectionhead{background:linear-gradient(145deg,#17344c,#07182a)!important}
+body.kitora-home .kp8-offer-stage .sectionhead h2{color:#fff!important}
+body.kitora-home .kp8-offer-stage .sectionhead p{color:#e1eaf4!important}
+body.kitora-home .kp8-subscription-stage .pill,
+body.kitora-home .kp8-command-center .pill,
+body.kitora-home .kp8-lab .pill{background:#205a91;color:#fff!important}
+body.kitora-home .kp8-subscription-stage .pill:hover,
+body.kitora-home .kp8-command-center .pill:hover,
+body.kitora-home .kp8-lab .pill:hover{background:#2869a5}
+@media(max-width:760px){body.kitora-home .kp8-subscription-stage .plans-grid>.card{min-height:0!important}body.kitora-home .kp8-subscription-stage .plans-grid>.card h3{font-size:clamp(1.65rem,6vw,2.3rem)!important}body.kitora-home .kp8-offer-stage .sectionhead h2{font-size:clamp(1.9rem,7vw,3rem)!important}}
