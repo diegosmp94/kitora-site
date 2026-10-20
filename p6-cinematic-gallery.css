@@ -1,0 +1,29 @@
+/* P6 — star constellation journey + illuminated product museum */
+.kp6-constellation{--kp6-scroll:0;position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 50% 48%,#15334f 0%,#07182b 58%,#030b18 100%);color:#fff;padding:clamp(80px,11vw,155px) 0}
+.kp6-constellation>.wrap{position:relative;z-index:2}
+.kp6-constellation .sectionhead h2,.kp6-gallery .sectionhead h2{color:#fff}
+.kp6-constellation .sectionhead p,.kp6-gallery .sectionhead p{color:#c6d4e2}
+.kp6-constellation .sectionhead .eyebrow,.kp6-gallery .sectionhead .eyebrow{color:#f2c88c}
+.kp6-starfield{position:absolute;inset:0;pointer-events:none;z-index:-1;opacity:.65;background:radial-gradient(circle at 18% 20%,rgba(237,196,133,.35) 1px,transparent 3px),radial-gradient(circle at 80% 63%,rgba(237,196,133,.35) 1px,transparent 3px);background-size:155px 141px,213px 183px;transform:translateY(calc(var(--kp6-scroll)*-30px))}
+.kp6-starfield:before{content:"";position:absolute;inset:0;background:linear-gradient(32deg,transparent 29.8%,rgba(234,190,123,.14) 30%,transparent 30.2%),linear-gradient(151deg,transparent 48.8%,rgba(234,190,123,.13) 49%,transparent 49.2%),linear-gradient(80deg,transparent 59.8%,rgba(234,190,123,.1) 60%,transparent 60.2%);mask-image:radial-gradient(ellipse at 50% 50%,#000,transparent 72%)}
+.kp6-starfield i{position:absolute;width:7px;height:7px;background:#f2ca8f;border-radius:50%;box-shadow:0 0 18px #f2ca8f,0 0 45px rgba(242,202,143,.45);left:var(--x);top:var(--y);animation:kp6Twinkle calc(3s + var(--d)*1s) ease-in-out infinite alternate}
+.kp6-starfield i:nth-child(1){--x:12%;--y:18%;--d:1}.kp6-starfield i:nth-child(2){--x:32%;--y:62%;--d:2}.kp6-starfield i:nth-child(3){--x:70%;--y:19%;--d:3}.kp6-starfield i:nth-child(4){--x:88%;--y:69%;--d:4}.kp6-starfield i:nth-child(5){--x:52%;--y:39%;--d:5}.kp6-starfield i:nth-child(6){--x:21%;--y:85%;--d:2}.kp6-starfield i:nth-child(7){--x:79%;--y:89%;--d:1}
+.kp6-constellation .k-choices{position:relative;gap:clamp(16px,2.5vw,32px)}
+.kp6-constellation .k-choice{position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(145deg,rgba(18,47,74,.9),rgba(6,17,33,.95));border:1px solid rgba(232,191,126,.35);color:#fff;box-shadow:0 20px 55px rgba(0,0,0,.25);transition:box-shadow .35s,border-color .35s,background .35s}
+.kp6-constellation .k-choice:before{content:"";position:absolute;inset:-40%;z-index:-1;background:radial-gradient(circle at 50% 30%,rgba(243,192,116,.18),transparent 55%);opacity:.35;transition:opacity .35s}
+.kp6-constellation .k-choice:hover:before,.kp6-constellation .k-choice[aria-pressed=true]:before{opacity:1}
+.kp6-constellation .k-choice:hover,.kp6-constellation .k-choice[aria-pressed=true]{border-color:#f3c889;box-shadow:0 15px 55px rgba(218,164,87,.22),inset 0 0 35px rgba(218,164,87,.06)}
+.kp6-constellation .k-choice strong{color:#fff}.kp6-constellation .k-choice small{color:#c7d6e5}
+.kp6-constellation .k-recommendation{border:1px solid rgba(234,193,130,.4);background:linear-gradient(110deg,rgba(14,40,65,.95),rgba(9,23,41,.97));color:#f7f7f7;box-shadow:0 18px 60px rgba(0,0,0,.2)}
+.kp6-constellation .k-recommendation p{color:#e1e9f0}
+.kp6-gallery{--kp6-scroll:0;position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 50% 5%,#19344c,#060f1e 55%,#030916);padding:clamp(85px,12vw,160px) 0;color:#fff}
+.kp6-gallery:before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(90deg,transparent 0 18%,rgba(231,185,119,.045) 18.1%,transparent 18.3%);transform:perspective(850px) rotateX(10deg) translateY(calc(var(--kp6-scroll)*-25px));pointer-events:none}
+.kp6-gallery .grid{gap:clamp(20px,3vw,36px);perspective:1300px}
+.kp6-gallery .card{position:relative;isolation:isolate;overflow:hidden;border-radius:26px;border:1px solid rgba(231,189,124,.32);background:linear-gradient(145deg,#152d45,#081728 70%,#07111f);box-shadow:0 25px 70px rgba(0,0,0,.3),inset 0 0 45px rgba(234,190,123,.04);color:#f9f7f2;transform:translateY(calc((1 - var(--kp6-scroll))*22px));transition:box-shadow .35s,border-color .35s}
+.kp6-gallery .card:before{content:"";position:absolute;inset:-40% -30% auto;height:100%;z-index:-1;background:radial-gradient(ellipse at 50% 50%,rgba(233,186,115,.2),transparent 60%);pointer-events:none}
+.kp6-gallery .card:hover,.kp6-gallery .card:focus-within{border-color:#f0c789;box-shadow:0 25px 90px rgba(220,161,81,.2)}
+.kp6-gallery .card h3{color:#fff}.kp6-gallery .card p{color:#c6d6e6}.kp6-gallery .card .price{color:#f3cc91}.kp6-gallery .card .emoji{filter:drop-shadow(0 0 22px rgba(238,194,127,.3))}
+.kp6-gallery .fineprint{color:#d6dfeb}
+@keyframes kp6Twinkle{from{opacity:.28;transform:scale(.7)}to{opacity:1;transform:scale(1.35)}}
+@media(max-width:700px){.kp6-constellation,.kp6-gallery{padding:70px 0}.kp6-starfield{opacity:.38}.kp6-gallery .card{transform:none}}
+@media(prefers-reduced-motion:reduce){.kp6-starfield,.kp6-gallery:before,.kp6-gallery .card{transform:none!important}.kp6-starfield i{animation:none!important}.kp6-gallery .card,.kp6-constellation .k-choice{transition:none!important}}
