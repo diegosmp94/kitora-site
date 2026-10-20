@@ -8,7 +8,8 @@ assert.match(home,/Les fonctions payantes restent|Formules payantes en mode test
 assert.doesNotMatch(home,/(plus de [0-9]+ clients|avis vérifiés|élu meilleur)/i);
 for(const path of files){
  const html=readFileSync(path,"utf8");
- assert.match(html,/<body class="kitora-premium">/,path+" premium body missing");
+ assert.match(html,/<body class="kitora-premium"(?:\s+[^>]*)?>/,path+" premium body missing");
+ if(path==="compte.html")assert.match(html,/<body class="kitora-premium" data-kitora-auth-state="pending">/, "Account page must fail closed before session lookup");
  assert.match(html,/premium-product\.css\?v=20261018-premium1/,path+" design CSS missing");
  assert.match(html,/class="kp-context"/,path+" helper missing");
  assert.match(html,/Stripe|TEST/,path+" test mode copy missing");

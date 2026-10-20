@@ -24,7 +24,7 @@ try{
   route.fulfill({contentType:"text/javascript",body:"export function createClient(){return window.__ACCOUNT_TEST_CLIENT__;}"}));
  await page.route("**/subscriber-requests.js*",route=>route.fulfill({contentType:"text/javascript",body:""}));
  await page.addInitScript(()=>{
-  const state={user:null,signup:null,login:null};
+  const state={user:null,signup:null,login:null,reset:null,holdInitial:true,waiters:[]};
   window.__ACCOUNT_TEST_STATE__=state;
   const chain=()=>({select(){return this},eq(){return this},order(){return this},
    async limit(){return{data:[],error:null}},async maybeSingle(){return{data:null,error:null}},
@@ -32,7 +32,7 @@ try{
   window.__ACCOUNT_TEST_CLIENT__={
    from:()=>chain(),
    auth:{
-    getUser:async()=>({data:{user:state.user},error:null}),
+    getUser:async()=>{if(state.holdInitial)await new Promise(resolve=>state.waiters.push(resolve));return{data:{user:state.user},error:null};},
     onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),
     signUp:async options=>{
      state.signup=options;
@@ -45,16 +45,25 @@ try{
      return {data:{user:state.user,session:{access_token:"local-test"}},error:null};
     },
     signOut:async()=>{state.user=null;return {error:null}},
-    resetPasswordForEmail:async()=>({error:null})
+    resetPasswordForEmail:async(email,options)=>{state.reset={email,options};return{error:null}}
    }
   };
  });
  const pageErrors=[];page.on("pageerror",error=>pageErrors.push(error.message));
  await page.goto("http://127.0.0.1:"+server.address().port+"/compte.html",{waitUntil:"load"});
- await page.locator("#accountAuthSection").waitFor({state:"visible"});
+ assert.equal(await page.locator("body").getAttribute("data-kitora-auth-state"),"pending");
+ assert.equal(await page.locator("#accountAuthSection").isVisible(),true);
+ assert.equal(await page.locator("#accountAuthSection").getAttribute("inert"),"");
+ for(const id of ["#commandes","#securite","#abonnement","#demandes-plus","#gestion-abonnement"])
+  assert.equal(await page.locator(id).isVisible(),false,"Private area must not flash during pending: "+id);
+ await page.evaluate(()=>{const s=window.__ACCOUNT_TEST_STATE__;s.holdInitial=false;s.waiters.splice(0).forEach(fn=>fn());});
+ await page.waitForFunction(()=>document.body.dataset.kitoraAuthState==="guest");
+ assert.equal(await page.locator("#accountAuthSection").isVisible(),true);
  assert.equal(await page.locator("#accountAuthSubmit").innerText(),"Se connecter");
- assert.equal(await page.locator("#signupLink").isVisible(),true);
- await page.locator("#signupLink").click();
+ assert.equal(await page.locator("#accountAuthSignupTab").isVisible(),true);
+ for(const id of ["#commandes","#securite","#abonnement","#demandes-plus","#gestion-abonnement"])
+  assert.equal(await page.locator(id).isVisible(),false,"Guest cannot see private section: "+id);
+ await page.locator("#accountAuthSignupTab").click();
  await page.locator("#accountAuthName").fill("Utilisateur démo");
  await page.locator("#accountAuthEmail").fill("nouveau@example.test");
  await page.locator("#accountAuthPassword").fill("safeDemoPass123!");
@@ -72,11 +81,25 @@ try{
  await page.locator("#accountAuthPassword").fill("safeDemoPass123!");
  await page.locator("#accountAuthSubmit").click();
  await page.locator("#accountAuthSection").waitFor({state:"hidden"});
+ assert.equal(await page.locator("body").getAttribute("data-kitora-auth-state"),"member");
  assert.equal(await page.locator("#logoutBtn").isVisible(),true);
- assert.equal(await page.locator("#signupLink").isVisible(),false);
+ assert.equal(await page.locator("#accountAuthSection").isVisible(),false);
+ assert.equal(await page.locator("#commandes").isVisible(),true);
+ assert.equal(await page.locator("#securite").isVisible(),true);
  await page.locator("#logoutBtn").click();
  await page.locator("#accountAuthSection").waitFor({state:"visible"});
- assert.equal(await page.locator("#signupLink").isVisible(),true);
+ assert.equal(await page.locator("body").getAttribute("data-kitora-auth-state"),"guest");
+ assert.equal(await page.locator("#commandes").isVisible(),false);
+ assert.equal(await page.locator("#accountAuthSignupTab").isVisible(),true);
+ await page.locator("#accountGuestReset summary").click();
+ await page.locator("#guestResetEmail").fill("demo@example.test");
+ await page.locator("#guestResetSubmit").click();
+ await page.getByText("Si cette adresse correspond à un compte",{exact:false}).waitFor();
+ assert.equal((await page.evaluate(()=>window.__ACCOUNT_TEST_STATE__.reset)).email,"demo@example.test");
+ await page.setViewportSize({width:390,height:844});
+ assert.equal(await page.locator("#accountAuthSignupTab").isVisible(),true);
+ const box=await page.locator("#accountAuthSection .panel").boundingBox();
+ assert.ok(box&&box.x>=-1&&box.x+box.width<=391,"Auth panel must fit mobile viewport");
  assert.deepEqual(pageErrors,[]);
- console.log("Kitora account auth UI: signup, email confirmation state, login failure/success and logout passed.");
+ console.log("Kitora guest gate: no flash, signup, login, member UI, logout, reset and mobile passed (mocked Supabase).");
 }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
