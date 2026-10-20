@@ -1,0 +1,12 @@
+/* Emergency contrast repair: legacy section backgrounds override P6/P7 surfaces on iPhone. */
+body.kitora-home #kits.kp6-gallery,body.kitora-home #comment.kp7-journey{background:linear-gradient(155deg,#0d2943 0%,#07182b 65%,#030b17 100%)!important;color:#f7f9fc!important}
+body.kitora-home #kits.kp6-gallery .sectionhead h2,body.kitora-home #comment.kp7-journey .sectionhead h2{color:#fff!important;opacity:1!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}
+body.kitora-home #kits.kp6-gallery .sectionhead p,body.kitora-home #comment.kp7-journey .sectionhead p{color:#e1ebf6!important;opacity:1!important;-webkit-text-fill-color:#e1ebf6!important}
+body.kitora-home #kits.kp6-gallery .sectionhead .eyebrow,body.kitora-home #comment.kp7-journey .sectionhead .eyebrow{color:#50341c!important;-webkit-text-fill-color:#50341c!important;background:#f6e4ca!important}
+body.kitora-home #kits.kp6-gallery .card,body.kitora-home #comment.kp7-journey .howgrid .step{background:linear-gradient(145deg,#1a3853,#07182c)!important;color:#f8f9fb!important}
+body.kitora-home #kits.kp6-gallery .card h3,body.kitora-home #comment.kp7-journey .howgrid .step h3{color:#fff!important;opacity:1!important}
+body.kitora-home #kits.kp6-gallery .card p,body.kitora-home #comment.kp7-journey .howgrid .step p{color:#e1eaf5!important;opacity:1!important}
+body.kitora-home #comment.kp7-journey .howgrid .step b{color:#f3c991!important}
+/* Ensure all section headers remain legible even if a legacy light background wins. */
+body.kitora-home #kits.kp6-gallery .sectionhead,body.kitora-home #comment.kp7-journey .sectionhead{position:relative;z-index:1}
+@media(max-width:767px){body.kitora-home #kits.kp6-gallery,body.kitora-home #comment.kp7-journey{padding-top:72px;padding-bottom:72px}body.kitora-home #kits.kp6-gallery .sectionhead h2,body.kitora-home #comment.kp7-journey .sectionhead h2{font-size:clamp(2rem,8.4vw,3.5rem)!important;line-height:1.12!important}}
