@@ -1,0 +1,12 @@
+/* iPhone hotfix: restore dark section surface before applying light text. */
+body.kitora-home section#k-orientation.kp6-constellation{background:radial-gradient(ellipse at 50% 12%,#173954 0%,#081c30 62%,#040d1b 100%)!important;color:#f8fafc!important}
+body.kitora-home section#k-orientation.kp6-constellation .sectionhead h2,body.kitora-home section#k-orientation.kp6-constellation #k-orientation-title{color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important;text-shadow:none!important}
+body.kitora-home section#k-orientation.kp6-constellation .sectionhead p{color:#e0eaf4!important;-webkit-text-fill-color:#e0eaf4!important;opacity:1!important}
+body.kitora-home section#k-orientation.kp6-constellation .sectionhead .eyebrow{background:#f4e0c0!important;color:#52351e!important;-webkit-text-fill-color:#52351e!important;opacity:1!important}
+body.kitora-home section#k-orientation.kp6-constellation .k-choices .k-choice{background:linear-gradient(150deg,#193953,#081b30)!important;color:#fff!important;border-color:#d4ad77!important}
+body.kitora-home section#k-orientation.kp6-constellation .k-choices .k-choice strong{color:#fff!important;opacity:1!important}
+body.kitora-home section#k-orientation.kp6-constellation .k-choices .k-choice small{color:#e0e9f4!important;opacity:1!important}
+body.kitora-home section#k-orientation.kp6-constellation .k-choices .k-choice[aria-pressed=true]{border-color:#f4cd91!important;box-shadow:0 0 0 2px rgba(244,205,145,.35),0 20px 45px rgba(0,0,0,.2)!important}
+body.kitora-home section#k-orientation.kp6-constellation .k-recommendation{background:#112e47!important;color:#f6f9fc!important;border-color:#d4ad77!important}
+body.kitora-home section#k-orientation.kp6-constellation .k-recommendation :is(h3,p,span,strong){color:#f5f8fc!important}
+@media(max-width:767px){body.kitora-home section#k-orientation.kp6-constellation{padding-top:72px;padding-bottom:72px}body.kitora-home section#k-orientation.kp6-constellation .sectionhead h2{font-size:clamp(2rem,8.5vw,3.3rem)!important;line-height:1.12!important}}
