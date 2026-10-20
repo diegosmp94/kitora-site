@@ -36,6 +36,7 @@ jobs:
           node tests/plus-generation-smoke.mjs
           node tests/check-plus-completion.mjs
           node tests/check-plus-local-export.mjs
+          node tests/check-plus-job-tracking.mjs
           node tests/payment-security.mjs
           node tests/production-launch-guardrails.mjs
           node tests/stripe-reconciliation-readiness.mjs
