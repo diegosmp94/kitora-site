@@ -20,7 +20,7 @@ let browser;
 try{
  for(let i=0;i<40;i++){try{if((await fetch(origin+"/kitora3-studio.html")).ok)break}catch{}await sleep(250)}
  browser=await chromium.launch({headless:true});const page=await browser.newPage({acceptDownloads:true});
- await page.route(/cdn\\.jsdelivr\\.net\\/npm\\/@supabase\\/supabase-js/,route=>route.fulfill({status:200,contentType:"text/javascript",body:mock}));
+ await page.route(url=>url.hostname==="cdn.jsdelivr.net" && url.pathname.includes("supabase-js"),route=>route.fulfill({status:200,contentType:"text/javascript",body:mock}));
  const errors=[];page.on("pageerror",e=>errors.push(e.message));
  await page.goto(origin+"/kitora3-studio.html",{waitUntil:"domcontentloaded"});
  await page.locator("#app").waitFor({state:"visible"});
