@@ -28,3 +28,4 @@ jobs:
           node tests/p3-admin-analytics-checks.mjs
           node tests/p3-admin-analytics-browser-e2e.mjs
           node tests/p3-organization-browser-e2e.mjs
+          node tests/p3-b2b-organization-checks.mjs
