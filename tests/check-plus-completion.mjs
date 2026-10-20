@@ -23,7 +23,8 @@ assert.match(js,/result\?\.configured===false/,"Disabled provider must not be mi
 assert.match(js,/job_status==="queued"/,"Queue feedback missing");
 assert.match(js,/job_status==="processing"/,"Processing feedback missing");
 assert.match(js,/currentRequestId=data\.id/,"New request must be tracked");
-assert.match(js,/await updateGeneration\(\)/,"Automatic queue request missing");
+assert.match(js,/const response=await generateFor\(currentRequestId\)/,"New dossier must trigger exactly one intentional queue request");
+assert.match(js,/await fetchPlusStatus\(\)/,"Refresh must read trusted server status");
 assert.match(js,/labRefreshGeneration/,"Status refresh must be user-driven");
 assert.match(js,/window\.|message\.textContent/,"Status text must remain text-safe");
 assert.match(sql,/DROP POLICY IF EXISTS subscriber_create_active_only/);

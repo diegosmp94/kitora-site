@@ -11,7 +11,7 @@ const choices={
  organisation:{category:"organisation",header:"Planning personnalisé et priorités",details:"Décomposer les objectifs en actions réalistes, respecter les contraintes de temps et proposer une méthode de suivi."},
  creation:{category:"projet",header:"Plan de création de contenu",details:"Définir l'objectif, le public, des idées originales, les étapes de production et les indicateurs de progression."}
 };
-let authorizedUser=null,checking=0,currentRequestId=null,requestInFlight=false;
+let authorizedUser=null,historyUser=null,checking=0,currentRequestId=null,requestInFlight=false,submitInFlight=false,historyRevision=0;
 function compose(){
  const type=choices[$("labType").value]||choices.projet;
  const topic=$("labTopic").value.trim(),deadline=$("labDeadline").value.trim();
@@ -55,6 +55,66 @@ async function exportBrief(type){
 exportPdfButton.addEventListener("click",()=>void exportBrief("pdf"));
 exportTxtButton.addEventListener("click",()=>void exportBrief("txt"));
 
+const historyList=$("labHistoryList"),historyMessage=$("labHistoryMessage");
+const historyRefresh=$("labHistoryRefresh"),usageText=$("labUsage");
+function describeStatus(job){
+ if(job.has_result||job.job_status==="completed")return "Document IA prêt";
+ return {queued:"En attente dans la file",processing:"Génération en cours",failed:"Génération non aboutie",not_started:"Brief enregistré — IA non lancée"}[job.job_status]||"Statut inconnu";
+}
+async function fetchPlusStatus(){
+ const {data:{user},error}=await client.auth.getUser();
+ if(error||!user||!historyUser||user.id!==historyUser)throw Error("Session non valide.");
+ const {data:{session},error:sessionError}=await client.auth.getSession();
+ if(sessionError||!session?.access_token)throw Error("Connexion requise.");
+ const response=await fetch("https://yxjxizxzjubhjaxskksh.supabase.co/functions/v1/kitora-plus-status",{
+  method:"GET",headers:{"apikey":"sb_publishable_K6y-xwSJdAKhAccH698lgw_cp79fnbW",
+   "Authorization":"Bearer "+session.access_token},cache:"no-store",signal:AbortSignal.timeout(12000)
+ });
+ let data;try{data=await response.json()}catch{throw Error("Réponse du suivi illisible.")}
+ if(!response.ok||!Array.isArray(data.history))throw Error(data?.error||"Statut des demandes indisponible.");
+ return data;
+}
+async function loadHistory(){
+ if(!historyUser)return;
+ const identity=historyUser,revision=++historyRevision;
+ historyRefresh.disabled=true;historyMessage.textContent="Mise à jour de l’historique…";
+ try{
+  const data=await fetchPlusStatus();
+  if(revision!==historyRevision||identity!==historyUser)return;
+  const used=Math.min(data.quota_limit||0,Math.max(0,data.quota_used||0));
+  usageText.textContent=data.eligible?
+   "Quota IA du mois (UTC) : "+used+" / "+data.quota_limit+" réservations. Les exports préparatoires n’en consomment pas.":
+   "Abonnement Plus/Ultimate inactif : consultation de l’historique uniquement.";
+  historyList.replaceChildren();
+  for(const item of data.history){
+   const card=document.createElement("article");card.className="lab-history-card";
+   const heading=document.createElement("h3");heading.textContent=String(item.title||"Dossier personnel");
+   const meta=document.createElement("p");
+   const date=new Date(item.created_at);
+   meta.textContent=(Number.isFinite(date.getTime())?date.toLocaleDateString("fr-FR"):"Date inconnue")+" · "+String(item.format||"pdf").toUpperCase();
+   const state=document.createElement("p");state.textContent=describeStatus(item);
+   const link=document.createElement("a");link.href="compte.html#demandes-plus";link.className="lab-follow-link";link.textContent="Voir le dossier et ses exports →";
+   card.append(heading,meta,state,link);
+   if(data.eligible){
+    const btn=document.createElement("button");btn.type="button";btn.className="btn";btn.textContent="Suivre ce dossier";
+    btn.addEventListener("click",()=>{
+     currentRequestId=item.id;
+     showGeneration({ready:item.has_result,job_status:item.job_status,message:describeStatus(item)});
+     progress.scrollIntoView({behavior:"auto",block:"nearest"});
+    });
+    card.append(btn);
+   }
+   historyList.append(card);
+  }
+  historyMessage.textContent=data.history.length?
+   data.history.length+" dossier(s) chargé(s) depuis ton compte."+(data.has_more?" Affichage limité aux 20 derniers.":""):
+   "Aucun dossier enregistré pour le moment.";
+ }catch(e){
+  if(revision===historyRevision&&identity===historyUser)historyMessage.textContent="Historique indisponible : "+(e instanceof Error?e.message:"Erreur inconnue");
+ }finally{if(revision===historyRevision&&identity===historyUser)historyRefresh.disabled=false}
+}
+historyRefresh.addEventListener("click",()=>void loadHistory());
+
 function showGeneration(result){
  progress.hidden=false;
  const queued=result?.job_status==="queued",processing=result?.job_status==="processing";
@@ -91,13 +151,15 @@ async function generateFor(requestId){
  return result;
 }
 async function check(){
- const attempt=++checking;authorizedUser=null;currentRequestId=null;
+ const attempt=++checking;authorizedUser=null;historyUser=null;historyRevision++;currentRequestId=null;
+ historyList.replaceChildren();historyRefresh.disabled=true;historyMessage.textContent="Connexion requise pour accéder à l’historique.";usageText.textContent="";
  form.hidden=true;progress.hidden=true;refreshButton.disabled=true;updateExportAccess(false);quota.textContent="";
  status.textContent="Vérification de l’abonnement…";
  try{
   const {data:{user},error}=await client.auth.getUser();
   if(attempt!==checking)return;
   if(error||!user){status.textContent="Connecte-toi pour accéder à l'espace exclusif Kitora Plus.";return}
+  historyUser=user.id;void loadHistory();
   const {subscription:sub,error:subError}=await getKitoraSubscription(client,user.id);
   if(attempt!==checking)return;
   if(subError)throw Error("Vérification de l'abonnement indisponible.");
@@ -113,27 +175,27 @@ async function check(){
  }catch(e){if(attempt===checking)status.textContent="Impossible de confirmer l'accès : "+e.message}
 }
 async function updateGeneration(){
- if(!currentRequestId||requestInFlight)return;
- const id=currentRequestId;
+ if(!currentRequestId||requestInFlight||!historyUser)return;
+ const id=currentRequestId,identity=historyUser;
  requestInFlight=true;refreshButton.disabled=true;
  try{
-  const {data,error}=await client.from("subscriber_requests").select("id,ai_result,ai_generated_at").eq("id",id).eq("user_id",authorizedUser).maybeSingle();
-  if(error)throw Error("Impossible de consulter le dossier.");
-  if(!data)throw Error("Demande introuvable.");
-  if(data.ai_generated_at&&data.ai_result){showGeneration({ready:true});return}
-  const result=await generateFor(id);
-  if(currentRequestId===id)showGeneration(result);
+  const data=await fetchPlusStatus();
+  if(identity!==historyUser||id!==currentRequestId)return;
+  const item=data.history.find(entry=>entry.id===id);
+  if(!item){generation.textContent="Dossier non trouvé dans les 20 plus récents. Ouvre Mon espace.";return}
+  showGeneration({ready:item.has_result,job_status:item.job_status,message:describeStatus(item)});
  }catch(e){
-  generation.textContent="Actualisation impossible : "+(e instanceof Error?e.message:"Erreur inattendue")+". Le dossier reste accessible depuis Mon espace.";
+  if(identity===historyUser)generation.textContent="Statut temporairement indisponible : "+(e instanceof Error?e.message:"Erreur inattendue");
  }finally{
   requestInFlight=false;
-  if(currentRequestId===id&&authorizedUser&&generation.textContent.indexOf("généré et enregistré")<0)refreshButton.disabled=false;
+  if(currentRequestId===id&&identity===historyUser&&!generation.textContent.includes("généré et enregistré"))refreshButton.disabled=false;
  }
 }
 refreshButton.addEventListener("click",()=>void updateGeneration());
 form.addEventListener("submit",async event=>{
  event.preventDefault();
- if(!authorizedUser||requestInFlight||!form.reportValidity())return;
+ if(!authorizedUser||submitInFlight||!form.reportValidity())return;
+ submitInFlight=true;
  const topic=$("labTopic").value.trim();
  if(topic.length<5){message.textContent="Précise un sujet d’au moins cinq caractères.";return}
  const btn=$("labSubmit");btn.disabled=true;
@@ -147,9 +209,11 @@ form.addEventListener("submit",async event=>{
   currentRequestId=data.id;progress.hidden=false;
   generation.textContent="Dossier enregistré. Vérification de la disponibilité du moteur IA…";
   message.textContent="Ta demande Plus est enregistrée. Elle est consultable dans Mon espace, même si l'IA est indisponible.";
-  await updateGeneration();
+  const response=await generateFor(currentRequestId);
+  showGeneration(response);
+  void loadHistory();
  }catch(e){message.textContent="Envoi impossible : "+(e instanceof Error?e.message:"Erreur inattendue")}
- finally{btn.disabled=false}
+ finally{btn.disabled=false;submitInFlight=false}
 });
-client.auth.onAuthStateChange(()=>{authorizedUser=null;form.hidden=true;updateExportAccess(false);setTimeout(()=>void check(),0)});
+client.auth.onAuthStateChange(()=>{authorizedUser=null;historyUser=null;historyRevision++;form.hidden=true;updateExportAccess(false);historyList.replaceChildren();usageText.textContent="";setTimeout(()=>void check(),0)});
 void check();

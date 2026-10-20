@@ -51,9 +51,29 @@ try{
    await route.fulfill({status:200,headers:{"access-control-allow-origin":"*"},contentType:"application/json",
     body:JSON.stringify({ready:false,configured:false,message:"Moteur IA désactivé. Aucune tâche ajoutée."})});
   });
+  let statusRequests=0;
+  await page.route("https://yxjxizxzjubhjaxskksh.supabase.co/functions/v1/kitora-plus-status",async route=>{
+   statusRequests++;
+   assert.equal(route.request().method(),"GET");
+   assert.equal(route.request().headers().authorization,"Bearer mock-client-jwt");
+   const eligible=fixture.allowed;
+   await route.fulfill({status:200,contentType:"application/json",headers:{"access-control-allow-origin":"*"},
+    body:JSON.stringify({eligible,quota_limit:eligible?10:0,quota_used:eligible?2:0,
+     history:[{id:"hist-123",title:"<img src=x onerror=alert(1)>",format:"pdf",created_at:"2026-10-20T09:30:00Z",job_status:"queued",has_result:false}],
+     has_more:false})});
+  });
   await page.goto(base+"/plus-lab.html",{waitUntil:"domcontentloaded"});
   await page.waitForFunction(()=>!document.getElementById("labEligibility").textContent.includes("Vérification"));
   assert.equal(await page.locator("#labForm").isVisible(),fixture.allowed,fixture.name+": access mismatch");
+  if(fixture.user){
+   await page.waitForFunction(()=>document.querySelector("#labHistoryMessage")?.textContent?.includes("dossier(s) chargé(s)"));
+   assert.equal(await page.locator("#labHistoryList img").count(),0,"Untrusted titles must render as plain text");
+   assert.equal(await page.locator("#labHistoryList .lab-history-card").count(),1,"Own requests should appear");
+   assert.ok(statusRequests>0,"Authenticated status endpoint must be used");
+  }else {
+   assert.equal(statusRequests,0,"Anonymous users may not query Plus history");
+   assert.equal(await page.locator("#labHistoryRefresh").isDisabled(),true);
+  }
   if(fixture.allowed){
    await page.locator("#labTopic").fill("Apprendre l'espagnol niveau débutant");
    await page.locator("#labFormat").selectOption("pdf");
@@ -66,7 +86,14 @@ try{
    await page.locator("#labSubmit").click();
    await page.waitForFunction(()=>document.querySelector("#labGenerationStatus")?.textContent.includes("Moteur IA non activé"));
    assert.equal(called,1,fixture.name+": generation endpoint should be reached exactly once");
+   await page.locator("#labHistoryList .lab-history-card button").first().click();
+   assert.match(await page.locator("#labGenerationStatus").textContent(),/file/);
+   const beforeStatusRefresh=called;
+   await page.locator("#labRefreshGeneration").click();
+   await page.waitForFunction(()=>document.querySelector("#labGenerationStatus")?.textContent?.includes("file"));
+   assert.equal(called,beforeStatusRefresh,"Refreshing status must never re-trigger a billable generation");
    assert.equal(await page.locator("#labGenerationPanel").isVisible(),true);
+   await page.waitForFunction(()=>!document.querySelector("#labRefreshGeneration").disabled);
    assert.equal(await page.locator("#labRefreshGeneration").isEnabled(),true);
   }else {
    assert.equal(called,0,fixture.name+": no AI endpoint for non subscriber");
