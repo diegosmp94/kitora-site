@@ -1,0 +1,27 @@
+/* P8 — subscriptions as lit podiums, workspaces as a command center */
+.kp8-subscription-stage,.kp8-offer-stage,.kp8-command-center,.kp8-lab{position:relative;isolation:isolate;overflow:hidden;color:#f7f5f0;padding:clamp(80px,10vw,145px) 0}
+.kp8-subscription-stage{background:radial-gradient(ellipse at 50% 0%,#284560,#071626 60%,#030b17)}
+.kp8-offer-stage{background:radial-gradient(ellipse at 85% 35%,#203f59,#08182b 65%,#030a16)}
+.kp8-command-center{background:radial-gradient(ellipse at 50% 30%,#163c58,#071727 60%,#030a15)}
+.kp8-lab{background:radial-gradient(ellipse at 10% 15%,#1b3550,#071527 65%,#030a16)}
+.kp8-subscription-stage:before,.kp8-offer-stage:before,.kp8-command-center:before,.kp8-lab:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 110%,rgba(231,179,105,.14),transparent 55%),repeating-linear-gradient(90deg,transparent 0 19%,rgba(226,183,121,.045) 19.1%,transparent 19.2%)}
+.kp8-subscription-stage .sectionhead h2,.kp8-offer-stage .sectionhead h2,.kp8-command-center .sectionhead h2,.kp8-lab .sectionhead h2{color:#fff}
+.kp8-subscription-stage .sectionhead p,.kp8-offer-stage .sectionhead p,.kp8-command-center .sectionhead p,.kp8-lab .sectionhead p{color:#c9d8e6}
+.kp8-subscription-stage .eyebrow,.kp8-offer-stage .eyebrow,.kp8-command-center .eyebrow,.kp8-lab .eyebrow{color:#f0c68a}
+.kp8-subscription-stage .plans-grid{perspective:1000px;gap:clamp(20px,3vw,40px)}
+.kp8-subscription-stage .card,.kp8-command-center .card,.kp8-lab .card{position:relative;overflow:hidden;border:1px solid rgba(236,190,125,.38);border-radius:24px;background:linear-gradient(150deg,rgba(27,55,79,.98),rgba(7,21,38,.98));color:#f7f6f3;box-shadow:0 28px 80px rgba(0,0,0,.28),inset 0 0 35px rgba(240,189,116,.04);transition:box-shadow .35s,border-color .35s}
+.kp8-subscription-stage .card:before,.kp8-command-center .card:before,.kp8-lab .card:before{content:"";position:absolute;top:0;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,#f0c88d,transparent);opacity:.8;pointer-events:none}
+.kp8-subscription-stage .card:hover,.kp8-subscription-stage .card:focus-within,.kp8-command-center .card:hover,.kp8-command-center .card:focus-within,.kp8-lab .card:hover,.kp8-lab .card:focus-within{border-color:#f2cb91;box-shadow:0 26px 90px rgba(224,167,88,.18)}
+.kp8-subscription-stage .card h3,.kp8-command-center .card h3,.kp8-lab .card h3{color:#fff}
+.kp8-subscription-stage .card p,.kp8-command-center .card p,.kp8-lab .card p{color:#c8d6e5}
+.kp8-subscription-stage .plan-price{color:#f2cc94}
+.kp8-subscription-stage .fineprint,.kp8-command-center .micro,.kp8-lab .micro{color:#d0dbe7}
+.kp8-offer-stage .sectionhead{max-width:980px;margin-inline:auto;padding:clamp(25px,4vw,55px);border:1px solid rgba(236,192,130,.35);border-radius:28px;background:linear-gradient(145deg,rgba(28,54,76,.7),rgba(6,19,36,.85));box-shadow:0 30px 100px rgba(0,0,0,.2)}
+.kp8-offer-stage .pill{margin:6px 5px}
+.kp8-command-center .grid,.kp8-lab .grid{gap:clamp(18px,2.5vw,30px)}
+.kp8-command-center .card,.kp8-lab .card{min-height:240px}
+.kp8-command-center .emoji,.kp8-lab .emoji{filter:drop-shadow(0 0 15px rgba(235,187,117,.3))}
+.kp8-command-center .card a,.kp8-lab .card a{position:relative;z-index:1}
+.kp8-subscription-stage .pill:focus-visible,.kp8-offer-stage .pill:focus-visible,.kp8-command-center .pill:focus-visible,.kp8-lab .pill:focus-visible{outline:3px solid #f3c98b;outline-offset:3px}
+@media(max-width:700px){.kp8-subscription-stage,.kp8-offer-stage,.kp8-command-center,.kp8-lab{padding:65px 0}.kp8-offer-stage .sectionhead{padding:25px 18px}.kp8-command-center .card,.kp8-lab .card{min-height:0}}
+@media(prefers-reduced-motion:reduce){.kp8-subscription-stage .card,.kp8-command-center .card,.kp8-lab .card{transition:none!important}}
