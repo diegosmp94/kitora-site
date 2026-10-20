@@ -1,0 +1,19 @@
+/* P10 mobile editorial refinement: no giant dead spacer or slide-like chapter breaks. */
+@media(max-width:767px){
+ body.kitora-home .kp9-collection{padding-top:48px!important;padding-bottom:24px!important;background:linear-gradient(180deg,#081a2c,#071827)!important}
+ body.kitora-home .kp9-collection .sectionhead{padding:clamp(24px,6vw,32px) 20px!important;border-radius:24px!important;box-shadow:0 12px 35px rgba(0,0,0,.14)!important}
+ body.kitora-home .kp9-collection .sectionhead h2{font-size:clamp(2rem,8.3vw,3rem)!important;line-height:1.12!important;letter-spacing:-.035em!important}
+ body.kitora-home .kp9-collection .sectionhead p{font-size:1rem!important;line-height:1.6!important}
+ body.kitora-home .kp10-journey{height:80px!important;min-height:0!important;max-height:80px!important;background:linear-gradient(180deg,#071827,#0b2033)!important}
+ body.kitora-home .kp10-journey:before{background:radial-gradient(ellipse at 50% 100%,rgba(238,184,108,.17),transparent 68%)!important}
+ body.kitora-home .kp10-journey-rings{display:none!important}
+ body.kitora-home .kp10-journey-glow{width:200px!important;filter:blur(12px)!important;opacity:.25!important}
+ body.kitora-home .kp10-journey-line{height:85%!important;left:50%!important;box-shadow:0 0 9px 1px rgba(244,197,124,.25)!important}
+ body.kitora-home .kp10-journey-star{font-size:20px!important}
+ body.kitora-home .kp9-finale.kp10-finale{min-height:0!important;padding:38px 0 62px!important;background:linear-gradient(180deg,#0b2033,#112b42 85%,#152d42)!important}
+ body.kitora-home .kp9-finale.kp10-finale .wrap{opacity:1!important;transform:none!important}
+ body.kitora-home .kp9-finale.kp10-finale h2{font-size:clamp(2.2rem,9vw,3.4rem)!important;line-height:1.13!important;letter-spacing:-.04em!important}
+ body.kitora-home .kp9-finale.kp10-finale p{font-size:1rem!important;line-height:1.65!important}
+ body.kitora-home .kp9-finale.kp10-finale .kp9-finale-horizon{opacity:.35!important}
+}
+@media(prefers-reduced-motion:reduce){body.kitora-home .kp10-journey{--kp10-progress:1!important}body.kitora-home .kp9-finale.kp10-finale .wrap{opacity:1!important;transform:none!important}}
