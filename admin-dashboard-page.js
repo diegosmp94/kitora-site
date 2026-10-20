@@ -26,5 +26,5 @@ try{
  }catch(e){if(revision!==bootRevision)return;status.textContent="Administration accessible, mais statistiques générales indisponibles.";console.warn("Kitora admin dashboard:",e)}
 }catch(e){if(revision!==bootRevision)return;status.textContent=e.message||"Accès non autorisé."; $("adminPages").hidden=true;$("adminStats").hidden=true;}
 }
-db.auth.onAuthStateChange(()=>{bootRevision++;resetAdminView();$("adminStatus").textContent="Vérification des droits d’accès…";queueMicrotask(()=>void boot())});
+db.auth.onAuthStateChange(()=>{bootRevision++;if(document.readyState==="loading")return;resetAdminView();$("adminStatus").textContent="Vérification des droits d’accès…";queueMicrotask(()=>void boot())});
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
