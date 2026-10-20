@@ -93,6 +93,7 @@ try{
    await page.waitForFunction(()=>document.querySelector("#labGenerationStatus")?.textContent?.includes("file"));
    assert.equal(called,beforeStatusRefresh,"Refreshing status must never re-trigger a billable generation");
    assert.equal(await page.locator("#labGenerationPanel").isVisible(),true);
+   await page.waitForFunction(()=>!document.querySelector("#labRefreshGeneration").disabled);
    assert.equal(await page.locator("#labRefreshGeneration").isEnabled(),true);
   }else {
    assert.equal(called,0,fixture.name+": no AI endpoint for non subscriber");
