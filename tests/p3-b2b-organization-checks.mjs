@@ -1,0 +1,13 @@
+import assert from "node:assert/strict";
+import {readFile} from "node:fs/promises";
+const js=await readFile("organisation-pro.js","utf8");
+const html=await readFile("organisation-pro.html","utf8");
+assert.match(js,/getUser\(\)/,"Authenticated user must be checked");
+assert.match(js,/\.eq\("owner_id",uid\)/,"Organization writes must be owner-scoped");
+assert.match(js,/\.eq\("organization_id",org\.id\)/,"Member writes must be organization-scoped");
+assert.match(js,/\.update\(\{role:next\}\)/,"Member roles must be editable");
+assert.match(js,/\.update\(\{billing_email:email\|\|null\}\)/,"Billing email must be editable");
+assert.match(js,/\.delete\(\)/,"Member and organization removal must be supported");
+assert.match(html,/id="org-list"/,"Organization list must exist");
+assert.doesNotMatch(js,/service_role|sk_live_|sk_test_/i,"No privileged keys in public client");
+console.log("P3 B2B organization source checks PASS");

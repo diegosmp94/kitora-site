@@ -31,7 +31,7 @@ try{
   if(path==="admin.html"){
    assert.ok(await page.locator("#adminPages").isHidden(),"guest may not see privileged quick actions");
    await page.locator("#adminPages").evaluate(el=>el.hidden=false); // visual shell test; not an auth simulation
-   assert.equal(await page.locator(".ka-shortcut").count(),6,"six admin sections");
+   assert.equal(await page.locator(".ka-shortcut").count(),7,"seven admin sections including analytics");
   }else{
    const protectedPanel=page.locator(path==="admin-health.html"?"#healthProtected":"#adminProtected");
    assert.ok(await protectedPanel.isHidden(),"guest may not see admin page before authorization");
