@@ -4,3 +4,11 @@ assert.ok(js.includes("Sauvegarde tes changements avant de dupliquer."),"unsaved
 // Unified navigation audit across customer-facing landing pages.
 for(const page of ["index.html","compte.html","aide.html","kits.html","kitora3-studio.html"]){const source=readFileSync(page,"utf8"),head=source.slice(source.indexOf("<header"),source.indexOf("</header>")+9);assert.ok(head.includes("kitora-header"),page+" must use shared header");assert.ok(head.includes("kitora-mobile"),page+" must support mobile navigation");assert.ok(head.includes('href="kits.html"'),page+" must link to kits");assert.ok(source.includes("header.css"),page+" must load shared stylesheet")}
 console.log("Kitora shared navigation consistency checks succeeded.");
+
+// P2 functional contract: templates, Markdown export, session invalidation and cache freshness.
+for(const id of ["newBrief","newPlan","exportMarkdown"])assert.match(html,new RegExp('id="'+id+'"'),"missing P2 Studio control: "+id);
+for(const token of ["createFromTemplate(","kitora_user_documents","sessionRevision","auth.onAuthStateChange","exportMarkdown"])assert.ok(js.includes(token),"missing Studio P2 behavior: "+token);
+assert.match(html,/kitora3\.js\?v=20261020-p2-auth2/,"Studio must invalidate stale cached scripts");
+for(const page of ["admin.html","admin-users.html","admin-health.html"]){const content=readFileSync(page,"utf8");assert.match(content,/20261020-p2-auth2/,"missing admin security script cache invalidation: "+page)}
+for(const script of ["admin-dashboard-page.js","admin-users-page.js","admin-health-page.js"]){const content=readFileSync(script,"utf8");assert.ok(content.includes("onAuthStateChange"),"missing auth invalidation: "+script);const check=spawnSync(process.execPath,["--check",script],{encoding:"utf8"});assert.equal(check.status,0,script+": "+check.stderr)}
+console.log("Kitora P2 Studio and admin security regression checks succeeded.");
