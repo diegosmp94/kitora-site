@@ -6,7 +6,7 @@
 <meta name="description" content="Kitora Studio : des outils numériques singuliers pour donner une forme à tes idées.">
 <title>Kitora Studio</title>
 <link rel="stylesheet" href="home-legacy-extracted.css?v=20261018-experience2">
-<meta property="og:type" content="website"><meta property="og:site_name" content="Kitora"><meta property="og:title" content="Kitora Studio"><meta property="og:description" content="Kitora Studio — Des outils numériques pour donner une forme à tes idées."><meta property="og:image" content="https://diegosmp94.github.io/kitora-site/social-preview.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://diegosmp94.github.io/kitora-site/index.html"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Kitora Studio"><meta name="twitter:image" content="https://diegosmp94.github.io/kitora-site/social-preview.png"><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="stylesheet" href="footer.css"><link rel="stylesheet" href="header.css?v=20261018-navfix2"><link rel="stylesheet" href="home-v1-motion.css?v=20261018-home1"><link rel="stylesheet" href="home-v2-cinema.css?v=20261018-cinema1"><link rel="stylesheet" href="experience-2-home.css?v=20261018-e2"><link rel="stylesheet" href="premium-home.css?v=20261018-premium1"><link rel="stylesheet" href="p3-home-adaptive.css?v=20261020-p3"><link rel="stylesheet" href="p3-cinematic-story.css?v=1"><link rel="stylesheet" href="p4-cinematic-editorial.css?v=1"><link rel="stylesheet" href="p5-cinematic-portal.css?v=1"></head>
+<meta property="og:type" content="website"><meta property="og:site_name" content="Kitora"><meta property="og:title" content="Kitora Studio"><meta property="og:description" content="Kitora Studio — Des outils numériques pour donner une forme à tes idées."><meta property="og:image" content="https://diegosmp94.github.io/kitora-site/social-preview.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://diegosmp94.github.io/kitora-site/index.html"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Kitora Studio"><meta name="twitter:image" content="https://diegosmp94.github.io/kitora-site/social-preview.png"><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="stylesheet" href="footer.css"><link rel="stylesheet" href="header.css?v=20261018-navfix2"><link rel="stylesheet" href="home-v1-motion.css?v=20261018-home1"><link rel="stylesheet" href="home-v2-cinema.css?v=20261018-cinema1"><link rel="stylesheet" href="experience-2-home.css?v=20261018-e2"><link rel="stylesheet" href="premium-home.css?v=20261018-premium1"><link rel="stylesheet" href="p3-home-adaptive.css?v=20261020-p3"><link rel="stylesheet" href="p3-cinematic-story.css?v=1"><link rel="stylesheet" href="p4-cinematic-editorial.css?v=1"><link rel="stylesheet" href="p5-cinematic-portal.css?v=1"><link rel="stylesheet" href="p6-cinematic-gallery.css?v=1"></head>
 <body class="kitora-home" data-design="porto-20261017">
 <a class="k-skip-link" href="#contenu-principal">Aller au contenu principal</a>
 <div class="kitora-strip">KITORA STUDIO <span>✦</span> Des idées aux projets, un kit à la fois</div>
@@ -141,10 +141,10 @@
  </div>
  <div class="kp4-showcase-outro"><span>LE PROCHAIN CHAPITRE T'APPARTIENT</span><a href="#k-orientation">Choisir mon parcours <span aria-hidden="true">↗</span></a></div>
 </section>
-  <section class="k-orientation" id="k-orientation" aria-labelledby="k-orientation-title">
+  <section class="k-orientation kp6-constellation" id="k-orientation" aria-labelledby="k-orientation-title">
     <div class="wrap">
       <div class="sectionhead" data-k-reveal><span class="eyebrow">UN ESPACE POUR TOI</span><h2 id="k-orientation-title">Par quoi veux-tu commencer ?</h2><p>Choisis ton objectif et découvre le premier outil qui peut t'aider. Tu peux changer à tout moment.</p></div>
-      <div class="k-choices" role="group" aria-label="Ton objectif">
+      <div class="kp6-starfield" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="k-choices" role="group" aria-label="Ton objectif">
         <button class="k-choice" type="button" data-k-need="apprendre" aria-pressed="false" data-k-reveal><span aria-hidden="true">📚</span><strong>Je veux apprendre</strong><small>Révisions, fiches et méthodes pour avancer dans tes cours.</small></button>
         <button class="k-choice" type="button" data-k-need="organiser" aria-pressed="true" data-k-reveal><span aria-hidden="true">🗓️</span><strong>Je veux m'organiser</strong><small>Des projets structurés, un agenda clair, moins de dispersion.</small></button>
         <button class="k-choice" type="button" data-k-need="creer" aria-pressed="false" data-k-reveal><span aria-hidden="true">✦</span><strong>Je veux créer</strong><small>Transformer une idée en feuille de route et en livrable.</small></button>
@@ -156,7 +156,7 @@
     </div>
   </section>
 
-  <section id="kits" style="background:#f3f4fa">
+  <section id="kits" class="kp6-gallery">
     <div class="wrap">
       <div class="sectionhead" data-k-reveal><span class="eyebrow">LA COLLECTION · 01</span><h2>Des outils avec une intention.</h2><p>Commence gratuitement, puis choisis des ressources plus complètes lorsque tu en as besoin.</p></div>
       <div class="grid">
@@ -354,5 +354,5 @@ authForm.addEventListener('submit',async e=>{
 Object.assign(window,{kitoraPdfKit:()=>({...currentKit,steps:[...(currentKit.steps||[])]}),toast,generatePreset,buildKit,downloadKit,downloadKitPdf:()=>window.kitoraDownloadPdf?.()||toast("Le module PDF se charge. Réessaie dans un instant.")});
 initSupabaseAuth();
 </script>
-<script src="p5-cinematic-portal.js?v=1" defer></script><script src="p4-cinematic-editorial.js?v=1" defer></script><script src="p3-cinematic-story.js?v=1" defer></script><script src="home-v1-motion.js?v=20261018-home1" defer></script><script src="home-v2-cinema.js?v=20261018-cinema1" defer></script><script src="free-trials.js?v=20261018-guest3" defer></script><script src="language.js?v=20261018-users1" defer></script><script src="pdf-kit.js" defer></script></body>
+<script src="p6-cinematic-gallery.js?v=1" defer></script><script src="p5-cinematic-portal.js?v=1" defer></script><script src="p4-cinematic-editorial.js?v=1" defer></script><script src="p3-cinematic-story.js?v=1" defer></script><script src="home-v1-motion.js?v=20261018-home1" defer></script><script src="home-v2-cinema.js?v=20261018-cinema1" defer></script><script src="free-trials.js?v=20261018-guest3" defer></script><script src="language.js?v=20261018-users1" defer></script><script src="pdf-kit.js" defer></script></body>
 </html>
