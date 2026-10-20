@@ -19,3 +19,15 @@ jobs:
           node-version: '22'
       - run: node tests/check-kitora3.mjs
       - run: node tests/check-release-readiness.mjs
+      - name: Public deployment reachability (diagnostic only)
+        shell: bash
+        run: |
+          set -uo pipefail
+          for url in "https://diegosmp94.github.io/kitora-site/" "https://diegosmp94.github.io/kitora-site/kitora3-studio.html"; do
+            echo "Checking public URL: $url"
+            if curl --location --silent --show-error --max-time 20 --output /dev/null --write-out 'HTTP %{http_code} | remote %{remote_ip} | TLS %{ssl_verify_result} | total %{time_total}s\\n' "$url"; then
+              echo "Public HTTP probe completed; browser-level access still requires E2E verification."
+            else
+              echo "::warning::Public deployment unreachable from GitHub runner; inspect Pages publication or network policy."
+            fi
+          done
